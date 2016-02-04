@@ -38,11 +38,11 @@ function on_paint(gr) {
 
 在编辑器里编辑以上代码后，WSHMP 的面板应该显示的是这些东西：
 
-![](https://raw.githubusercontent.com/elia-is-me/WSH-Script-Tutorials/master/images/doc1/Pic_201602040010.png)
+![](https://raw.githubusercontent.com/elia-is-me/WSH-Script-Tutorials/master/images/doc1/Pic_20160204010.png)
 
 看起来不过是一些简单的图形，或者文字。不过要意识到：再复杂的界面，都是这些简单的图形文字组成的，只不过他们图形画的很精致，他们的文字排版很好。而形状更复杂的图标等等则做成图片或字体。
 
-![](https://raw.githubusercontent.com/elia-is-me/WSH-Script-Tutorials/master/images/doc1/Pic_201602040011.png)
+![](https://raw.githubusercontent.com/elia-is-me/WSH-Script-Tutorials/master/images/doc1/Pic_20160204011.png)
 
 比如看上面这个例子，看起来很复杂，实际不过是用 `gr.DrawImage()` 画图标，用 `gr.FillSolidRect()` 画背景色以及进度条，`gr.FillEllipse()` 画的进度条上的圆，`gr.GdiDrawText()` 画的进度条两边的时间而已。只不过在哪里画，画多大这些，需要事先设计好——哪怕偏离一个像素，就可能会导致看起来不自然。
 
@@ -83,7 +83,7 @@ function on_paint(gr) {
 
 这次我们画个看起来更简单点的东西：黑灰色的背景，中间是绿色的文字背景，然后是 "hello world" 这样的文字。
 
-![](https://raw.githubusercontent.com/elia-is-me/WSH-Script-Tutorials/master/images/doc1/Pic_201602040013.png)
+![](https://raw.githubusercontent.com/elia-is-me/WSH-Script-Tutorials/master/images/doc1/Pic_20160204013.png)
 
 可以分析下，这个简单的图包括三个要素：两个矩形+一句文字，仅此而已。
 
