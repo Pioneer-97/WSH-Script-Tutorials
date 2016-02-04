@@ -44,6 +44,7 @@ WSH Panel Mod Plus 是第三方插件，理所当然的要你自己下载安装�
 - [插件安装教程（参考）]()
 
 安装好之后，要编辑布局，新建一个 WSHMP 面板显示在你的界面上，DUI 编辑布局很简单：
+
 ![执行菜单命令](https://raw.githubusercontent.com/elia-is-me/WSH-Script-Tutorials/master/images/doc1/Pic_20160204004.png)
 
 ![右键单击](https://raw.githubusercontent.com/elia-is-me/WSH-Script-Tutorials/master/images/doc1/Pic_20160204005.png)
@@ -51,12 +52,15 @@ WSH Panel Mod Plus 是第三方插件，理所当然的要你自己下载安装�
 ![选择](https://raw.githubusercontent.com/elia-is-me/WSH-Script-Tutorials/master/images/doc1/Pic_20160204006.png)
 
 当看到这个界面时，准备工作完毕：
+
 ![初始界面](https://raw.githubusercontent.com/elia-is-me/WSH-Script-Tutorials/master/images/doc1/Pic_20160204007.png)
 
 然后鼠标单击，打开编辑器，删掉里面的内容，就可以开始编辑自己的脚本了。
+
 ![脚本编辑器](https://raw.githubusercontent.com/elia-is-me/WSH-Script-Tutorials/master/images/doc1/Pic_20160204008.png)
 
 默认的字体不太好看，你可以换成自己喜欢的字体，在`首选项 > WSH 面板加强版 > （右边）style.default`里，双击，修改字体名称和字号。
+
 ![脚本编辑器](https://raw.githubusercontent.com/elia-is-me/WSH-Script-Tutorials/master/images/doc1/Pic_20160204009.png)
 
 在下载的插件包里，有 doc 和 samples 两个文件夹，里面分别是**接口文档**和**实例**，这两个东西很重要，因为只要踏入 WSH 脚本的坑这两个文件夹里的东西以后是要常用到的。
@@ -64,11 +68,5 @@ WSH Panel Mod Plus 是第三方插件，理所当然的要你自己下载安装�
 > 多余的话：凡开始编程的人一般都会遇到选择哪个编辑器的问题，其实 WSHMP 自带的就是很好的编辑器，带提示，自动缩进，高亮等等，还可以折叠，可以显示控制台（很有用）。其它的话，notepad++，evernote，sublime3 等等都是挺好的编辑器，如果是编程新手的话只要注意别被拐骗到 vim 或者 emacs 的坑里的话基本不会有问题。
 
 本篇教程到这里，可能废话居多，不过没办法本人就这么个样子...下篇开始脚本篇。
-
-。
-
-
-
-
 
 
