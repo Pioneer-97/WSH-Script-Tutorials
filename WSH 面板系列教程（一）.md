@@ -1,6 +1,6 @@
-﻿WSH 面板系列教程（一）
+﻿# WSH 面板系列教程（一）
 
-标签（空格分隔）： WSH JScript
+标签（空格分隔）： WSH JScript foobar2000
 
 ---
 
@@ -8,12 +8,7 @@
 
 WSH 面板是 foobar2000 的一个面板组件，它提供了自定义 foobar2000 的面板样式的功能。WSH 面板使用 JavaScript 作为脚本语言，并且提供了许多 foobar2000 的底层接口，所以它可以实现许许多多复杂的、奇葩的功能。也正因为有了它，所以 foobar2000 变得很复杂，非常复杂。
 
-> 人们常说 foobar2000 太复杂了难用，其实 foobar2000
-> 本不是个非常复杂的玩意，它就是个播放器，功能有限，界面简陋……只不过后来出现个叫 musicmusic 的人，他带来了
-> ColumnUI，foobar2000 于是稍微变的有那么复杂了一点，顺便还带坏了 peter 把原来的界面弄得也复杂了一点；后来又出现个叫
-> ssenna 的人，他带来了 PanelStackSplitter（面板栈分离器）和 ELPlaylist（以及ESPlaylist），这下
-> foobar2000 就称不上简单了；后来不知道谁弄了个 WSH Panel，坑了以后 Wang T.P.接手弄了个 WSH Panel
-> Mod……从此 foobar2000 再也洗不清『复杂』的恶名了……（此中省略 Panel UI 不谈）
+> 人们常说 foobar2000 太复杂了难用，其实 foobar2000 本不是个非常复杂的玩意，它就是个播放器，功能有限，界面简陋……只不过后来出现个叫 musicmusic 的人，他带来了 ColumnUI，foobar2000 于是稍微变的有那么复杂了一点，顺便还带坏了 peter 把原来的界面弄得也复杂了一点；后来又出现个叫 ssenna 的人，他带来了 PanelStackSplitter（面板栈分离器）和 ELPlaylist（以及ESPlaylist），这下 foobar2000 就称不上简单了；后来不知道谁弄了个 WSH Panel，坑了以后 Wang T.P.接手弄了个 WSH Panel Mod……从此 foobar2000 再也洗不清『复杂』的恶名了……（此中省略 Panel UI 不谈）
 
 这里先介绍一下 WSH 面板的谱系：WSH 面板最初是 WSH Panel，由于太古老，本人也不知它的作者是谁，只知道这玩意容易崩溃且接口有限，能做的东西很少，后来 Wang T.P.（某个中国的大牛）接手开发，做了个 WSH Panel Mod，解决了容易崩溃的问题，并且新增了许多接口，这下这东西的名声开始显赫了。Marc2003 在官方论坛开了个专门讨论WSH脚本的帖子，这个帖子飙到 179 页接近 4500 楼，各种各样的大神开始给 WSH 面板写脚本，从开始的简单到后面的越来越复杂……
 
