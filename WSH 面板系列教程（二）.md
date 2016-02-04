@@ -4,7 +4,7 @@
 
 ---
 
-WSHMP 的脚本语言是 Javascript，不过不是大家可能通常知道的那个 Javascript——在网页前端或者后端非常流行的那个——我们要写的是有 Javascript 语法的一种脚本语言，更准确点叫 ECMScript。所以如果还不会 Javascript 的就不要抱着厚教材学怎么写 JS 了，参考下 [W3cschool](http://www.w3school.com.cn/js/index.asp)（只需要参考 JS 教程 和 JS 对象两部分就行，DOM 等其它的不需要看）。
+WSHMP 的脚本语言是 Javascript，不过不是大家可能通常知道的那个 Javascript——在网页前端或者后端非常流行的那个——我们要写的是有 Javascript 语法的一种脚本语言，更准确点叫 ECMAScript。所以如果还不会 Javascript 的就不要抱着厚教材学怎么写 JS 了，参考下 [W3cschool](http://www.w3school.com.cn/js/index.asp)（只需要参考 JS 教程 和 JS 对象两部分就行，DOM 等其它的不需要看）。
 
 插件包里的文档，接口在 `interface.txt` 里，回调函数（事件函数）在 `callbacks.txt` 里。
 
