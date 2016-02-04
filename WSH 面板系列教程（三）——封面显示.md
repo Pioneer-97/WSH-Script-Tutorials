@@ -32,6 +32,10 @@ function on_metadb_changed(metadb, fromhook) {
     if (g_metadb) {
         // 如果获取到了句柄，那就发个获取封面的消息
         utils.GetAlbumArtAsync(window.ID, g_metadb, AlbumArtId.front);
+    } else {
+        // 没获取到，则刷新图片
+        g_img = null;
+        window.Repaint();
     }
 }
 // 脚本载入的时候立即就执行一次找封面的任务
