@@ -1,0 +1,259 @@
+//窗口风格 详见http://msdn.microsoft.com/en-us/library/windows/desktop/ms632600%28v=vs.85%29.aspx
+//扩展窗口风格 详见http://msdn.microsoft.com/en-us/library/windows/desktop/ff700543%28v=vs.85%29.aspx
+
+
+interface IWindow{
+Properties:
+   (read,write) Left;//窗口左坐标
+   (read,write) Top; 
+   (read,write) Width; 
+   (read,write) Height; 
+   (read,write) Style; //窗口风格
+   (read,write) ExStyle;//窗口扩展风格
+   (read,write) Caption;//窗口标题
+Methods:
+	IWindow GetChild(class_name,index);//获取类名为class_name的第index个面板
+	//flag=1 同GetParent
+	//flag=2 获取根窗口句柄
+	//详见 http://msdn.microsoft.com/en-us/library/windows/desktop/ms633502%28v=vs.85%29.aspx
+	IWindow GetAncestor(flag = 1);
+	void SetParent(IWindow parent);
+	void SendMsg(msg,wp,lp);
+	//详细及flag见 http://msdn.microsoft.com/en-us/library/windows/desktop/ms633548%28v=vs.85%29.aspx 
+	void Show(flag);
+	void Move(x,y,w,h,redraw = false);
+	boolean IsVisible();
+	boolean IsMinimized();
+	boolean IsMaximized();
+	//vista+
+	//mode = 0时，l t r b对应左/上/右/底边距
+	//mode = 1时，对应点(l,t)与(r,b)为左上/右下的矩形区域
+	void CreateGlass( l, r, t , b, mode = 0);
+	//color 透明色
+	void SetWindowTransparency(opacity,color);
+	int MsgBox(caption,prompt,type);
+	String InputBox(caption="",prompt="",defval="",num_only = false);
+	//mode：
+	// 0 打开文件 1 保存文件 2 打开目录
+	// 打开目录时，参数除title 其他忽略
+	String FileDialog(mode = 0,title="Open",filetype="All Files|*.*",defext="*");
+	IGdiBitmap PrintWindow(client_only = false);
+}
+
+interface IPrivateFontCollection{
+Properties:
+	(readonly) FamilyCount;
+Methods:
+	int AddFont(path);
+	IGdiFont GetFont(name,size,style);
+}
+
+//实验性质
+interface IHttpRequest{
+Methods:
+    void AddHeader(str);
+    void AddPostData(name,value);
+    String Run(url);
+    int RunAsync(window_id, url);//异步url请求，返回cookie值，完成后调用on_http_run_done(cookie,string);
+}
+
+interface WSHUtils{
+Methods:
+	IWindow GetWND(class_name);
+	IWindow CreateWND(window_id);
+	IWindow ReleaseCapture();
+	boolean IsAeroEnabled();
+	IGdiBitmap DecodeBase64Image(str);
+	String GetClipboardText();
+	void SetClipboardText(str);
+	void PlaySound(path,flag);
+	HCURSOR LoadCursorX(path);
+	HCURSOR SetCursorX(handle);
+	void ReleaseCursorX(handle);
+	boolean IsVistaOrGreater();
+	//详见http://msdn.microsoft.com/en-us/library/windows/desktop/dd318700%28v=vs.85%29.aspx
+	String LCMapString(str,lcid,flag);
+	//type_str:
+	//"GET"
+	//"POST"
+	IHttpRequest CreateHttpRequest(type_str);
+	VBArray GetWindowsVersion();
+}
+
+interface IThemeManager {
+Methods:
+	//Vista+
+	void DrawThemeTextEx(IGdiGraphics, text, color, x, y, w, h, iGlowSize = 5 , format = 0);
+}
+
+interface IGdiUtils {
+Methods:
+	//返回值0：成功
+	int AddFontResEx( path,fl=0);
+	//fl必须与AddFontResEx中的值相同
+	int RemoveFontResEx( path,fl=0);
+	IPrivateFontCollection CreatePrivateFontCollection();
+	IGdiBitmap CloneGraphics(IGdiGraphics,x,y,w,h);
+}
+
+interface IGdiGraphics{
+Methods:
+  void FillPie(x,y,w,h,start_angle,sweep_angle,color);
+  void DrawPie(x,y,w,h,start_angle,sweep_angle,color);
+}
+
+interface IFbPlaylistManager {
+Methods:
+   string PlaylistGetAutoName(playlistIndex);//自动获取播放列表名称（根据列表曲目）
+   //锁定播放列表
+   //FLAGs:
+   //FLAG_ADD = 0x00000001
+   //FLAG_REMOVE = 0x00000002
+   //FLAG_REORDER  = 0x00000004
+   //FLAG_REPLACE  = 0x00000008
+   //FLAG_RENAME = 0x00000010
+   //FLAG_REMOVE_PLAYLIST = 0x00000020
+   void PlaylistLock(playlistIndex,flag);
+   //注：锁定后的播放列表index更改后，请使用更改后的new_index进行unlock
+   void PlaylistUnlock(playlistIndex);
+   void ProcessLocationsAsync(urls);//完成后调用on_process_locations_done(metadbs)
+}
+
+//improve
+interface IFbTitleFormat {
+Methods:
+    //对于foobar2000 v1.3.0 以上，请注意fromfile参数
+    String Eval(force = false,fromfile = false);
+    String EvalWithMetadb(IFbMetadbHandle,fromfile = false);
+    void Dispose();
+}
+
+interface IFbMetadbHandle {
+Methods:
+    //
+    IFbFileInfo GetFileInfo(fromfile = false);
+    void UpdateFileInfo(IFbFileInfo,force = false);
+}
+
+interface IFbUtils {
+Methods:
+    void ShowPreferences(guid_str="");
+    boolean LoadPlaylistV2(path);
+    boolean SavePlaylistV2(path,handles,overwrite = false);//当overwrite=true时，将备份原文件为"原播放列表文件名.bak"
+}
+
+interface IWSHUtils {
+Methods:
+    //输出设置页面GUID至控制台
+    void PrintPreferencePageGUID();
+    //pattern: 设置项-显示-封面模板方式，即按行分割，e.g.   "c:\\%album%.jpg\ncover.jpg";
+    IGdiBitmap GetAlbumArtV3(metadb, pattern , art_id = 0, need_stub = true, load_embed = true , use_fallback = true);
+}
+
+//示例：
+//var WS_CAPTION = 0x00C00000;
+//获取DUI界面下fb主窗口。注意，如果同时打开多个DUI的foobar2000，不要用此方法获取
+//var fb_wnd = utils.GetWND("{97E27FAA-C0B3-4b8e-A693-ED7881E99FC1}"); //DUI
+//fb_wnd.Left += 1;//将主窗口位置向右移动1
+//fb_wnd.Style &= ~WS_CAPTION;//去除主窗口WS_CAPTION风格
+//fb_wnd.Style |= WS_CAPTION;//主窗口加上WS_CAPTION风格
+//fb_wnd.Caption = "主窗口标题";//设置窗口标题(文本)
+//fb.trace(fb_wnd.Caption);//获取窗口文本
+
+//var wsh_wnd = fb_wnd.GetChild("uie_wsh_panel_mod_plus_class",2);//获取第2个wsh plus面板的窗口对象
+//var fb_wnd2 = wsh_wnd.GetAncestor(2);//获取根窗口
+//var my_pfc = gdi.CreatePrivateFontCollection();//创建一个私有字体集合
+//my_pfc.AddFont("c:\\文泉驿正黑.ttf");//添加一个字体
+//my_pfc.AddFont("c:\\华康少女体.ttf");//再添加一个字体
+//my_pfc.AddFont("c:\\华文细黑.ttf");//还是...添加一个字体
+//fb.trace(my_pfc.FamilyCount);//现在集合里面有3个字体了
+//var font1 = my_pfc.GetFont("华康少女文字W5(P)",38,0);//在集合中取得一个IGdiFont对象，大小38，常规字型
+//var img = gdi.CreateImage(200,200);//创建一张200*200大小的图片，初始透明
+//var g = img.GetGraphics();//获取图片的一个IGdiGraphics接口的对象
+//g.FillSolidRect(1,2,199,198,0xef000000);//以点(1,2)为左上角，画一个长199，宽198的黑色矩形
+//g.DrawString("示例文字",font1,0xEFFFFFFF,0,0,200,200);//用上面的font1画个文字，注:flag请用helper.txt里面的StringFormat()设置，颜色使用RGB(r,g,b)。
+//img.ReleaseGraphics(g);//用完记得释放这个IGdiGraphics接口的对象;
+//在on_paint(gr){} 中可以用gr.DrawImage(img,....);
+
+fb.IsMediaLibraryEnabled();
+fb.GetAllItemsInMediaLibrary();
+fb.QueryMulti(handles,query_string);
+fb.GetMainMenuCommandStatus(command);
+
+GetMainMenuCommandStatus返回flag
+flag_disabled = 1,
+flag_checked = 2,
+flag_radiochecked = 4,
+
+window.CreateToolTip("Segoe UI", 32, 1)
+IFbMetadbHandleList.CalcTotalDuration() handle list method. returns the total in seconds.
+IFbMetadbHandleList.CalcTotalSize() handle list method. returns the total in bytes.
+utils.FormatDuration(seconds). returns a string like "3wk 2d 1:30:21"
+utils.FormatFileSize(bytes). returns a string like "7.9 GB"
+
+fb.GetQueryItems(source_handlelist, query)
+fb.GetQueryItems(handle_list, query); (IFbMetadbHandleList)
+/*
+example1: var fav_playlist_items = fb.GetQueryItems(plman.GetPlaylistItems(plman.ActivePlaylist), "rating IS 5");
+example2: var fav_library_items = fb.GetQueryItems(fb.GetLibraryItems(), "rating IS 5");
+results are unsorted
+
+NOTE: use try/catch to handle invalid queries. An empty handle list will be returned if the query is valid but there are no results.
+*/
+
+plman.ClearPlaylist(playlistIndex)
+plman.AddLocations(playlistIndex, paths[, select])
+fb.ShowLibrarySearchUI(query)
+
+fb.GetLibraryRelativePath(handle)
+
+/*example
+var items = fb.GetLibraryItems();
+items.OrderByPath();
+var current = "";
+var folders = [];
+for (var i = 0; i < items.Count; i++) {    
+    var temp = items.Item(i).Path.replace(fb.GetLibraryRelativePath(items.Item(i)), "");
+    if (temp != current) {
+        current = temp;
+        folders.push(current);
+    }
+}
+fb.ShowPopupMessage(folders.join("\n"));
+*/
+
+IFbMetadbHandleList.UpdateFileInfoSimple(field1, value1 [, filed2, value2 [,...] ] [, multivalue_fields]);
+
+IFbMetadbHandleList.UpdateFileInfoArray([field1, value1,field2, value2....]);
+
+/*example
+var toRemoveArray=Array();
+var toKeepArray=["album","artist","composer","date","genre","title","tracknumber"];
+var track_FileInfo = plist_items.Item(0).GetFileInfo();
+for (var i = 0; i <= track_FileInfo.MetaCount; i++) {
+       if(!arrayContains(toKeepArray , track_FileInfo.MetaName(i))) {
+           toRemoveArray[toRemoveArray.length]=track_FileInfo.MetaName(i);
+           toRemoveArray[toRemoveArray.length]="";
+       }
+}
+plist_items.UpdateFileInfoArray(toRemoveArray);
+*/
+
+
+ESLyric相关
+
+比如设置背景
+windows.NotifyOthers("_eslyric_set_background_image_",gdi.CreateImage(44,22));
+windows.NotifyOthers("_eslyric_set_background_color_",RGB(25,50,100));
+
+_eslyric_set_text_color_normal_
+_eslyric_set_text_color_highlight_
+_eslyric_set_background_color_
+_eslyric_set_text_font_
+_eslyric_set_text_titleformat_fallback_
+_eslyric_set_text_fallback_
+_eslyric_set_background_image_
+
+设置颜色的后面的参数都是 RGB(xx,xx,xx)
+设置字体的就是 IGdiFont
+图片IGdiBitmap
