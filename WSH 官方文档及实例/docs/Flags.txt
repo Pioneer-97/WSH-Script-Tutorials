@@ -127,6 +127,14 @@ TTDT_RESHOW                =   1;
 TTDT_AUTOPOP               =   2;
 TTDT_INITIAL               =   3;
 
+// Used in plman.PlaylistLock()
+PL_LOCK_ADD = 0x00000001
+PL_LOCK_REMOVE_ITEM = 0x00000002
+PL_LOCK_REORDER = 0x00000004
+PL_LOCK_REPLACE = 0x00000008
+PL_LOCK_RENAME = 0x00000010
+PL_LOCK_REMOVE_PLAYLIST = 0x00000020
+
 // Used in gdi.Font(), can be combined
 // For more information, see: http://msdn.microsoft.com/en-us/library/ms534124(VS.85).aspx
 FontStyle = {

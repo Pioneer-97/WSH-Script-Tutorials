@@ -1,0 +1,1268 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>E:\GitHub\WSH-Script-Tutorials\WSH 官方文档及实例\docs\Interfaces.txt.html</title>
+<meta name="Generator" content="Vim/7.4">
+<meta name="plugin-version" content="vim7.4_v1">
+<meta name="syntax" content="java">
+<meta name="settings" content="number_lines,use_css,no_foldcolumn,expand_tabs,line_ids,prevent_copy=">
+<meta name="colorscheme" content="mermaid">
+<style type="text/css">
+<!--
+pre { font-family: monospace; color: #d4d4d4; background-color: #1e1e1e; }
+body { font-family: monospace; color: #d4d4d4; background-color: #1e1e1e; }
+* { font-size: 1em; }
+.Number { color: #9fdf77; background-color: #1e1e1e; padding-bottom: 1px; }
+.Constant { color: #cea3ce; background-color: #1e1e1e; padding-bottom: 1px; }
+.Identifier { color: #569cd6; background-color: #1e1e1e; padding-bottom: 1px; }
+.LineNr { color: #5a5a5a; background-color: #1e1e1e; padding-bottom: 1px; }
+.Statement { color: #569cd6; background-color: #1e1e1e; padding-bottom: 1px; }
+.Comment { color: #608b4e; background-color: #1e1e1e; padding-bottom: 1px; }
+.Type { color: #87ceeb; background-color: #1e1e1e; padding-bottom: 1px; }
+-->
+</style>
+
+<script type='text/javascript'>
+<!--
+
+/* function to open any folds containing a jumped-to line before jumping to it */
+function JumpToLine()
+{
+  var lineNum;
+  lineNum = window.location.hash;
+  lineNum = lineNum.substr(1); /* strip off '#' */
+
+  if (lineNum.indexOf('L') == -1) {
+    lineNum = 'L'+lineNum;
+  }
+  lineElem = document.getElementById(lineNum);
+  /* Always jump to new location even if the line was hidden inside a fold, or
+   * we corrected the raw number to a line ID.
+   */
+  if (lineElem) {
+    lineElem.scrollIntoView(true);
+  }
+  return true;
+}
+if ('onhashchange' in window) {
+  window.onhashchange = JumpToLine;
+}
+
+-->
+</script>
+</head>
+<body onload='JumpToLine();'>
+<pre id='vimCodeElement'>
+<span id="L1" class="LineNr">   1 </span><span class="Comment">// vi&#0058;set ft=java ff=dos ts=4 sts=4 sw=4:</span>
+<span id="L2" class="LineNr">   2 </span>
+<span id="L3" class="LineNr">   3 </span><span class="Comment">/*</span>
+<span id="L4" class="LineNr">   4 </span><span class="Comment">This is the interfaces help file for WSH Panel Mod Plus, so be careful that some</span>
+<span id="L5" class="LineNr">   5 </span><span class="Comment">interfaces are not available for WSH Panel Mod 1.5.6 or JScript Panel 1.xx.</span>
+<span id="L6" class="LineNr">   6 </span>
+<span id="L7" class="LineNr">   7 </span><span class="Comment">For the reason that marc2003 removed some obsolete interfaces, I commentted</span>
+<span id="L8" class="LineNr">   8 </span><span class="Comment">those obsolete ones reminding you not to use them any more. But they are still</span>
+<span id="L9" class="LineNr">   9 </span><span class="Comment">available for the perpose of being compatible with the earlier scripts.</span>
+<span id="L10" class="LineNr">  10 </span><span class="Comment">*/</span>
+<span id="L11" class="LineNr">  11 </span>
+<span id="L12" class="LineNr">  12 </span><span class="Comment">// Global objects:</span>
+<span id="L13" class="LineNr">  13 </span><span class="Comment">//   window - IFbWindow</span>
+<span id="L14" class="LineNr">  14 </span><span class="Comment">//   gdi - IGdiUtils</span>
+<span id="L15" class="LineNr">  15 </span><span class="Comment">//   fb - IFbUtils</span>
+<span id="L16" class="LineNr">  16 </span><span class="Comment">//   utils - IWSHUtils</span>
+<span id="L17" class="LineNr">  17 </span><span class="Comment">//   plman - IFbPlaylistManager</span>
+<span id="L18" class="LineNr">  18 </span>
+<span id="L19" class="LineNr">  19 </span><span class="Type">interface</span> IGdiFont {
+<span id="L20" class="LineNr">  20 </span><span class="Statement">Properties</span>:
+<span id="L21" class="LineNr">  21 </span>    (readonly) <span class="Type">int</span> Height;
+<span id="L22" class="LineNr">  22 </span>    <span class="Comment">// [1.5.0 Preview 2] New:</span>
+<span id="L23" class="LineNr">  23 </span>    (readonly) String Name(langid = <span class="Number">0</span>);
+<span id="L24" class="LineNr">  24 </span>    <span class="Comment">// [1.5.0 Preview 2] New:</span>
+<span id="L25" class="LineNr">  25 </span>    (readonly) <span class="Type">float</span> Size;
+<span id="L26" class="LineNr">  26 </span>    <span class="Comment">// [1.5.0 Preview 2] New:</span>
+<span id="L27" class="LineNr">  27 </span>    (readonly) <span class="Type">int</span> Style;
+<span id="L28" class="LineNr">  28 </span><span class="Statement">Methods</span>:
+<span id="L29" class="LineNr">  29 </span>    <span class="Type">void</span> Dispose();
+<span id="L30" class="LineNr">  30 </span>}
+<span id="L31" class="LineNr">  31 </span>
+<span id="L32" class="LineNr">  32 </span><span class="Type">interface</span> IGdiBitmap {
+<span id="L33" class="LineNr">  33 </span><span class="Statement">Properties</span>:
+<span id="L34" class="LineNr">  34 </span>    (readonly) <span class="Type">int</span> Width;
+<span id="L35" class="LineNr">  35 </span>    (readonly) <span class="Type">int</span> Height;
+<span id="L36" class="LineNr">  36 </span>
+<span id="L37" class="LineNr">  37 </span><span class="Statement">Methods</span>:
+<span id="L38" class="LineNr">  38 </span>    IGdiBitmap Clone(x, y, w, h);
+<span id="L39" class="LineNr">  39 </span>    <span class="Type">void</span> RotateFlip(mode);
+<span id="L40" class="LineNr">  40 </span>    IGdiBitmap ApplyAlpha(alpha);
+<span id="L41" class="LineNr">  41 </span>    <span class="Comment">// Changes will be saved in the current bitmap</span>
+<span id="L42" class="LineNr">  42 </span>    <span class="Type">boolean</span> ApplyMask(IGdiBitmap);
+<span id="L43" class="LineNr">  43 </span>    <span class="Comment">// Create a DDB bitmap from IGdiBitmap, which is used in GdiDrawBitmap()</span>
+<span id="L44" class="LineNr">  44 </span>    IGdiRawBitmap CreateRawBitmap();
+<span id="L45" class="LineNr">  45 </span>    <span class="Comment">// NOTE: Don't forget to use ReleaseGraphics() after operations on IGdiGraphics interface is done.</span>
+<span id="L46" class="LineNr">  46 </span>    IGdiGraphics GetGraphics();
+<span id="L47" class="LineNr">  47 </span>    <span class="Type">void</span> ReleaseGraphics(IGdiGraphics);
+<span id="L48" class="LineNr">  48 </span>    <span class="Type">void</span> BoxBlur(radius, iteration = <span class="Number">1</span>);
+<span id="L49" class="LineNr">  49 </span>    <span class="Comment">// [1.5.0 Beta 5]: Changed: Add parameter &quot;interpolationMode&quot;.</span>
+<span id="L50" class="LineNr">  50 </span>    <span class="Comment">// See Flags.txt meanings of modes.</span>
+<span id="L51" class="LineNr">  51 </span>    IGdiBitmap Resize(w, h, interpolationMode = <span class="Number">0</span>);
+<span id="L52" class="LineNr">  52 </span>    <span class="Comment">// [1.5.5]:</span>
+<span id="L53" class="LineNr">  53 </span>    VBArray GetColorScheme(max_count);
+<span id="L54" class="LineNr">  54 </span>    <span class="Comment">// [Plus 1.5.6 2014-10-07] New;</span>
+<span id="L55" class="LineNr">  55 </span>    <span class="Comment">// format:  </span>
+<span id="L56" class="LineNr">  56 </span>    <span class="Comment">// default - &quot;image/png&quot;,</span>
+<span id="L57" class="LineNr">  57 </span>    <span class="Comment">// supported - &quot;image/bmp&quot;</span>
+<span id="L58" class="LineNr">  58 </span>    <span class="Comment">//             &quot;image/jpeg&quot;</span>
+<span id="L59" class="LineNr">  59 </span>    <span class="Comment">//             &quot;image/gif&quot;</span>
+<span id="L60" class="LineNr">  60 </span>    <span class="Comment">//             &quot;image/tiff&quot;</span>
+<span id="L61" class="LineNr">  61 </span>    <span class="Comment">//   e.g.: var img = gdi.CreateImage(1, 1);</span>
+<span id="L62" class="LineNr">  62 </span>    <span class="Comment">//         img.SaveAs(&quot;D:\\img.png&quot;);</span>
+<span id="L63" class="LineNr">  63 </span>    <span class="Type">boolean</span> SaveAs(path, format = <span class="Constant">&quot;image/png&quot;</span>);
+<span id="L64" class="LineNr">  64 </span>    <span class="Type">void</span> Dispose();
+<span id="L65" class="LineNr">  65 </span>}
+<span id="L66" class="LineNr">  66 </span>
+<span id="L67" class="LineNr">  67 </span><span class="Type">interface</span> IGdiRawBitmap {
+<span id="L68" class="LineNr">  68 </span><span class="Statement">Properties</span>:
+<span id="L69" class="LineNr">  69 </span>    (readonly) <span class="Type">int</span> Width;
+<span id="L70" class="LineNr">  70 </span>    (readonly) <span class="Type">int</span> Height;
+<span id="L71" class="LineNr">  71 </span><span class="Statement">Methods</span>:
+<span id="L72" class="LineNr">  72 </span>    <span class="Type">void</span> Dispose();
+<span id="L73" class="LineNr">  73 </span>}
+<span id="L74" class="LineNr">  74 </span>
+<span id="L75" class="LineNr">  75 </span><span class="Type">interface</span> IGdiGraphics {
+<span id="L76" class="LineNr">  76 </span><span class="Statement">Methods</span>:
+<span id="L77" class="LineNr">  77 </span>    <span class="Type">void</span> FillSolidRect(x, y, w, h, color);
+<span id="L78" class="LineNr">  78 </span>    <span class="Comment">// [1.3.4] Updated:</span>
+<span id="L79" class="LineNr">  79 </span>    <span class="Comment">// focus: Specify where the center color will be at its highest intensity, from 0.0 to 1.0</span>
+<span id="L80" class="LineNr">  80 </span>    <span class="Type">void</span> FillGradRect(x, y, w, h, angle, color1, color2, focus = <span class="Number">1.0</span>);
+<span id="L81" class="LineNr">  81 </span>    <span class="Type">void</span> FillRoundRect(x, y, w, h, arc_width, arc_height, color);
+<span id="L82" class="LineNr">  82 </span>    <span class="Type">void</span> FillEllipse(x, y, w, h, color);
+<span id="L83" class="LineNr">  83 </span>    <span class="Comment">// [1.3,2] New:</span>
+<span id="L84" class="LineNr">  84 </span>    <span class="Comment">// fillmode: 0 - Alternate, 1 - Winding</span>
+<span id="L85" class="LineNr">  85 </span>    <span class="Comment">// points is either a VBArray or JScript array.</span>
+<span id="L86" class="LineNr">  86 </span>    <span class="Type">void</span> FillPolygon(color, fillmode, points);
+<span id="L87" class="LineNr">  87 </span>    <span class="Type">void</span> DrawLine(x1, y1, x2, y2, line_width, color);
+<span id="L88" class="LineNr">  88 </span>    <span class="Type">void</span> DrawRect(x, y, w, h, line_width, color);
+<span id="L89" class="LineNr">  89 </span>    <span class="Type">void</span> DrawRoundRect(x, y, w, h, arc_width, arc_height, line_width, color);
+<span id="L90" class="LineNr">  90 </span>    <span class="Type">void</span> DrawEllipse(x, y, w, h, line_width, color);
+<span id="L91" class="LineNr">  91 </span>    <span class="Comment">// [1.3.2] New:</span>
+<span id="L92" class="LineNr">  92 </span>    <span class="Comment">// points is either a VBArray or JScript array.</span>
+<span id="L93" class="LineNr">  93 </span>    <span class="Type">void</span> DrawPolygon(color, line_width, points);
+<span id="L94" class="LineNr">  94 </span>    <span class="Type">void</span> DrawString(str, IGdiFont, color, x, y, w, h, flags = <span class="Number">0</span>);
+<span id="L95" class="LineNr">  95 </span>    <span class="Comment">// [1.3.0] Updated:</span>
+<span id="L96" class="LineNr">  96 </span>    <span class="Comment">// Returns a VBArray (also see utils.Glob()):</span>
+<span id="L97" class="LineNr">  97 </span>    <span class="Comment">//  index | meaning</span>
+<span id="L98" class="LineNr">  98 </span>    <span class="Comment">//   [0] left   (DT_CALCRECT) </span>
+<span id="L99" class="LineNr">  99 </span>    <span class="Comment">//   [1] top    (DT_CALCRECT)</span>
+<span id="L100" class="LineNr"> 100 </span>    <span class="Comment">//   [2] right  (DT_CALCRECT)</span>
+<span id="L101" class="LineNr"> 101 </span>    <span class="Comment">//   [3] bottom (DT_CALCRECT)</span>
+<span id="L102" class="LineNr"> 102 </span>    <span class="Comment">//   [4] characters drawn</span>
+<span id="L103" class="LineNr"> 103 </span>    <span class="Comment">// Always faster than DrawString and returns chars drawed</span>
+<span id="L104" class="LineNr"> 104 </span>    VBArray GdiDrawText(str, IGdiFont, color, x, y, w, h, format = <span class="Number">0</span>);
+<span id="L105" class="LineNr"> 105 </span>    <span class="Type">void</span> DrawImage(IGdiBitmap, dstX, dstY, dstW, dstH, srcX, srcY, srcW, srcH, angle = <span class="Number">0</span>, alpha = <span class="Number">255</span>);
+<span id="L106" class="LineNr"> 106 </span>    <span class="Comment">// Always faster than DrawImage, do not support alpha channel</span>
+<span id="L107" class="LineNr"> 107 </span>    <span class="Type">void</span> GdiDrawBitmap(IGdiRawBitmap, dstX, dstY, dstW, dstH, srcX, srcY, srcW, srcH);
+<span id="L108" class="LineNr"> 108 </span>    <span class="Comment">// Used with GDI+ functions, such as DrawString().</span>
+<span id="L109" class="LineNr"> 109 </span>    IMeasureStringInfo MeasureString(str, IGdiFont, x, y, w, h, flags = <span class="Number">0</span>);
+<span id="L110" class="LineNr"> 110 </span>    <span class="Comment">// Used with GDI functions, such as GdiDrawText().</span>
+<span id="L111" class="LineNr"> 111 </span>    uint CalcTextWidth(str, IGdiFont);
+<span id="L112" class="LineNr"> 112 </span>    <span class="Comment">// [1.3.5] New:</span>
+<span id="L113" class="LineNr"> 113 </span>    <span class="Comment">// Note that it will only calulate one line text height.</span>
+<span id="L114" class="LineNr"> 114 </span>    uint CalcTextHeight(str, IGdiFont);
+<span id="L115" class="LineNr"> 115 </span>    <span class="Comment">// [1.3.5] New:</span>
+<span id="L116" class="LineNr"> 116 </span>    <span class="Comment">// Returns a VBArray</span>
+<span id="L117" class="LineNr"> 117 </span>    <span class="Comment">//  index | meaning</span>
+<span id="L118" class="LineNr"> 118 </span>    <span class="Comment">//   [0] text line 1</span>
+<span id="L119" class="LineNr"> 119 </span>    <span class="Comment">//   [1] width of text line 1 (in pixel)</span>
+<span id="L120" class="LineNr"> 120 </span>    <span class="Comment">//   [2] text line 2</span>
+<span id="L121" class="LineNr"> 121 </span>    <span class="Comment">//   [3] width of text line 2 (in pixel)</span>
+<span id="L122" class="LineNr"> 122 </span>    <span class="Comment">//   .</span>
+<span id="L123" class="LineNr"> 123 </span>    <span class="Comment">//   .</span>
+<span id="L124" class="LineNr"> 124 </span>    <span class="Comment">//   .</span>
+<span id="L125" class="LineNr"> 125 </span>    <span class="Comment">//   [2n + 2] text line n</span>
+<span id="L126" class="LineNr"> 126 </span>    <span class="Comment">//   [2n + 3] width of text line n (in pixel)</span>
+<span id="L127" class="LineNr"> 127 </span>    VBArray EstimateLineWrap(str, IGdiFont, max_width);
+<span id="L128" class="LineNr"> 128 </span>    <span class="Comment">// See Flags.txt meanings of modes.</span>
+<span id="L129" class="LineNr"> 129 </span>    <span class="Type">void</span> SetTextRenderingHint(mode);
+<span id="L130" class="LineNr"> 130 </span>    <span class="Comment">// See Flags.txt meanings of modes.</span>
+<span id="L131" class="LineNr"> 131 </span>    <span class="Type">void</span> SetSmoothingMode(mode);
+<span id="L132" class="LineNr"> 132 </span>    <span class="Comment">// See Flags.txt meanings of modes.</span>
+<span id="L133" class="LineNr"> 133 </span>    <span class="Type">void</span> SetInterpolationMode(mode);
+<span id="L134" class="LineNr"> 134 </span>    <span class="Type">void</span> GdiAlphaBlend(IGdiRawBitmap, dstX, dstY, dstW, dstH, srcX, srcY, srcW, srcH, alpha = <span class="Number">255</span>);
+<span id="L135" class="LineNr"> 135 </span>    <span class="Comment">// [Plus 1.5.6] New</span>
+<span id="L136" class="LineNr"> 136 </span>    <span class="Type">void</span> FillPie(x, y, w, h, start_angle, sweep_angle, color);
+<span id="L137" class="LineNr"> 137 </span>    <span class="Type">void</span> DrawPie(x, y, w, h, line_width, start_angle, sweep_angle, color);
+<span id="L138" class="LineNr"> 138 </span>}
+<span id="L139" class="LineNr"> 139 </span>
+<span id="L140" class="LineNr"> 140 </span>
+<span id="L141" class="LineNr"> 141 </span><span class="Type">interface</span> IMeasureStringInfo {
+<span id="L142" class="LineNr"> 142 </span><span class="Statement">Properties</span>:
+<span id="L143" class="LineNr"> 143 </span>    (readonly) <span class="Type">float</span> x;
+<span id="L144" class="LineNr"> 144 </span>    (readonly) <span class="Type">float</span> y;
+<span id="L145" class="LineNr"> 145 </span>    (readonly) <span class="Type">float</span> Width;
+<span id="L146" class="LineNr"> 146 </span>    (readonly) <span class="Type">float</span> Height;
+<span id="L147" class="LineNr"> 147 </span>    (readonly) <span class="Type">int</span> lines;
+<span id="L148" class="LineNr"> 148 </span>    (readonly) <span class="Type">int</span> chars;
+<span id="L149" class="LineNr"> 149 </span>}
+<span id="L150" class="LineNr"> 150 </span>
+<span id="L151" class="LineNr"> 151 </span>
+<span id="L152" class="LineNr"> 152 </span><span class="Type">interface</span> IGdiUtils {
+<span id="L153" class="LineNr"> 153 </span><span class="Statement">Methods</span>:
+<span id="L154" class="LineNr"> 154 </span>    IGdiFont Font(name, ptSize, style = <span class="Number">0</span>);
+<span id="L155" class="LineNr"> 155 </span>    IGdiBitmap Image(path);
+<span id="L156" class="LineNr"> 156 </span>    <span class="Comment">// Create an image. By default, this image is transparent</span>
+<span id="L157" class="LineNr"> 157 </span>    IGdiBitmap CreateImage(w, h);
+<span id="L158" class="LineNr"> 158 </span>    <span class="Comment">// [1.3.0] Add: pngmode</span>
+<span id="L159" class="LineNr"> 159 </span>    IStyleTextRender CreateStyleTextRender(pngmode = <span class="Constant">false</span>);
+<span id="L160" class="LineNr"> 160 </span>    <span class="Comment">// [1.3.2] New:</span>
+<span id="L161" class="LineNr"> 161 </span>    <span class="Comment">// Returns a unique ID of this task.</span>
+<span id="L162" class="LineNr"> 162 </span>    uint LoadImageAsync(window_id, path);
+<span id="L163" class="LineNr"> 163 </span>    <span class="Comment">// [ Plus 1.5.6 ] New:</span>
+<span id="L164" class="LineNr"> 164 </span>    <span class="Comment">// 返回值0：成功</span>
+<span id="L165" class="LineNr"> 165 </span>    <span class="Type">int</span> AddFontResEx(path, fl=<span class="Number">0</span>);
+<span id="L166" class="LineNr"> 166 </span>    <span class="Comment">// [ Plus 1.5.6 ] New:</span>
+<span id="L167" class="LineNr"> 167 </span>    <span class="Comment">// fl必须与AddFontResEx中的值相同</span>
+<span id="L168" class="LineNr"> 168 </span>    <span class="Type">int</span> RemoveFontResEx( path,fl=<span class="Number">0</span>);
+<span id="L169" class="LineNr"> 169 </span>    IPrivateFontCollection CreatePrivateFontCollection();
+<span id="L170" class="LineNr"> 170 </span>    IGdiBitmap CloneGraphics(IGdiGraphics,x,y,w,h);
+<span id="L171" class="LineNr"> 171 </span>}
+<span id="L172" class="LineNr"> 172 </span>
+<span id="L173" class="LineNr"> 173 </span>
+<span id="L174" class="LineNr"> 174 </span><span class="Type">interface</span> IStyleTextRender {
+<span id="L175" class="LineNr"> 175 </span><span class="Statement">Methods</span>:
+<span id="L176" class="LineNr"> 176 </span>    <span class="Comment">// ---- Outline Mode ----</span>
+<span id="L177" class="LineNr"> 177 </span>    <span class="Type">void</span> OutLineText(text_color, outline_color, outline_width);
+<span id="L178" class="LineNr"> 178 </span>    <span class="Type">void</span> DoubleOutLineText(text_color, outline_color1, outline_color2, outline_width1, outline_width2);
+<span id="L179" class="LineNr"> 179 </span>    <span class="Type">void</span> GlowText(text_color, glow_color, glow_width);
+<span id="L180" class="LineNr"> 180 </span>    <span class="Comment">// ---- Shadow ----</span>
+<span id="L181" class="LineNr"> 181 </span>    <span class="Type">void</span> EnableShadow(enable);
+<span id="L182" class="LineNr"> 182 </span>    <span class="Comment">// if you have a *global* IStyleTextRender instance once called EnableShadow(), </span>
+<span id="L183" class="LineNr"> 183 </span>    <span class="Comment">//   it's recommended to call ResetShadow() then.</span>
+<span id="L184" class="LineNr"> 184 </span>    <span class="Type">void</span> ResetShadow();
+<span id="L185" class="LineNr"> 185 </span>    <span class="Comment">// Mode: Default shadow, used in solid shadow color</span>
+<span id="L186" class="LineNr"> 186 </span>    <span class="Type">void</span> Shadow(color, thickness, offset_x, offset_y);
+<span id="L187" class="LineNr"> 187 </span>    <span class="Comment">// Mode: Soft shadow</span>
+<span id="L188" class="LineNr"> 188 </span>    <span class="Type">void</span> DiffusedShadow(color, thickness, offset_x, offset_y);
+<span id="L189" class="LineNr"> 189 </span>    <span class="Comment">// While using DiffusedShadow(), these two methods below are useful</span>
+<span id="L190" class="LineNr"> 190 </span>    <span class="Type">void</span> SetShadowBackgroundColor(color, width, height);
+<span id="L191" class="LineNr"> 191 </span>    <span class="Type">void</span> SetShadowBackgroundImage(img);
+<span id="L192" class="LineNr"> 192 </span>    <span class="Comment">// ---- Render ----</span>
+<span id="L193" class="LineNr"> 193 </span>    <span class="Comment">// Not recommended, if the flags contains something as &quot;center&quot;, this won't </span>
+<span id="L194" class="LineNr"> 194 </span>    <span class="Comment">//  work properly, because it's lack of width and height information.</span>
+<span id="L195" class="LineNr"> 195 </span>    <span class="Type">boolean</span> RenderStringPoint(g, str, font, x, y[, flags]);
+<span id="L196" class="LineNr"> 196 </span>    <span class="Type">boolean</span> RenderStringRect(g, str, font, x, y, w, h[, flags]);
+<span id="L197" class="LineNr"> 197 </span>    <span class="Comment">// [1.3.0] New</span>
+<span id="L198" class="LineNr"> 198 </span>    <span class="Comment">// Only in pngmode, the image should be a transparent image created by gdi.CreateImage().</span>
+<span id="L199" class="LineNr"> 199 </span>    <span class="Type">void</span> SetPngImage(IGdiBitmap);
+<span id="L200" class="LineNr"> 200 </span>}
+<span id="L201" class="LineNr"> 201 </span>
+<span id="L202" class="LineNr"> 202 </span>
+<span id="L203" class="LineNr"> 203 </span><span class="Type">interface</span> IFbFileInfo {
+<span id="L204" class="LineNr"> 204 </span><span class="Statement">Properties</span>:
+<span id="L205" class="LineNr"> 205 </span>    (readonly) <span class="Type">int</span> MetaCount;
+<span id="L206" class="LineNr"> 206 </span>    (readonly) <span class="Type">int</span> InfoCount;
+<span id="L207" class="LineNr"> 207 </span>
+<span id="L208" class="LineNr"> 208 </span><span class="Statement">Methods</span>:
+<span id="L209" class="LineNr"> 209 </span>    <span class="Type">int</span> MetaValueCount(idx);
+<span id="L210" class="LineNr"> 210 </span>    <span class="Comment">// returns idx</span>
+<span id="L211" class="LineNr"> 211 </span>    <span class="Type">int</span> MetaFind(name);
+<span id="L212" class="LineNr"> 212 </span>    <span class="Comment">// returns idx</span>
+<span id="L213" class="LineNr"> 213 </span>    <span class="Type">int</span> InfoFind(name);
+<span id="L214" class="LineNr"> 214 </span>    String MetaName(idx);
+<span id="L215" class="LineNr"> 215 </span>    String MetaValue(idx, vidx);
+<span id="L216" class="LineNr"> 216 </span>    <span class="Type">void</span> MetaRemoveField(name);
+<span id="L217" class="LineNr"> 217 </span>    <span class="Type">int</span> MetaAdd(name, value);
+<span id="L218" class="LineNr"> 218 </span>    <span class="Type">void</span> MetaInsertValue(idx, vidx, value);
+<span id="L219" class="LineNr"> 219 </span>    String InfoName(idx);
+<span id="L220" class="LineNr"> 220 </span>    String InfoValue(idx);
+<span id="L221" class="LineNr"> 221 </span>    <span class="Type">void</span> MetaSet(name, value);
+<span id="L222" class="LineNr"> 222 </span>    <span class="Type">void</span> Dispose();
+<span id="L223" class="LineNr"> 223 </span>}
+<span id="L224" class="LineNr"> 224 </span>
+<span id="L225" class="LineNr"> 225 </span>
+<span id="L226" class="LineNr"> 226 </span><span class="Type">interface</span> IFbMetadbHandle {
+<span id="L227" class="LineNr"> 227 </span><span class="Statement">Properties</span>:
+<span id="L228" class="LineNr"> 228 </span>    (readonly) String Path;
+<span id="L229" class="LineNr"> 229 </span>    (readonly) String RawPath;
+<span id="L230" class="LineNr"> 230 </span>    (readonly) <span class="Type">int</span> SubSong;
+<span id="L231" class="LineNr"> 231 </span>    (readonly) int64 FileSize;
+<span id="L232" class="LineNr"> 232 </span>    (readonly) <span class="Type">double</span> Length;
+<span id="L233" class="LineNr"> 233 </span>
+<span id="L234" class="LineNr"> 234 </span><span class="Statement">Methods</span>:
+<span id="L235" class="LineNr"> 235 </span>    <span class="Comment">// [ Plus 1.5.6 ] CHG: 对于foobar2000 v1.3.0 以上，请注意参数</span>
+<span id="L236" class="LineNr"> 236 </span>    IFbFileInfo GetFileInfo();
+<span id="L237" class="LineNr"> 237 </span>    <span class="Comment">// [Obsolete] do not use, use UpdateFileInfoSimple instead.</span>
+<span id="L238" class="LineNr"> 238 </span>    <span class="Comment">//void UpdateFileInfo(IFbFileInfo, force = false);</span>
+<span id="L239" class="LineNr"> 239 </span>    <span class="Comment">// It's recommended to use this method if you want to update tags</span>
+<span id="L240" class="LineNr"> 240 </span>    <span class="Comment">// if value is a empty string, field will be removed</span>
+<span id="L241" class="LineNr"> 241 </span>    <span class="Comment">// [Optional] multivalue_fields is a semicolon-separated list contains fields name which need to be treated as multivalue.</span>
+<span id="L242" class="LineNr"> 242 </span>    <span class="Comment">// Usage: meta.UpdateFileInfoSimple(&quot;ARTIST&quot;, &quot;Enigma&quot;, &quot;GENRE&quot;, &quot;Downtempo;Ambient&quot;, &quot;GENRE&quot;);</span>
+<span id="L243" class="LineNr"> 243 </span>    <span class="Comment">//     GENRE will be treated as a multivalue field. So GENRE[0] = &quot;Downtempo&quot;, GENRE[1] = &quot;Ambient</span>
+<span id="L244" class="LineNr"> 244 </span>    <span class="Type">void</span> UpdateFileInfoSimple(field1, value1 [, filed2, value2 [,<span class="Identifier">...</span>] ] [, multivalue_fields]);
+<span id="L245" class="LineNr"> 245 </span>    <span class="Comment">// [Plus 1.5.7] New: from Jscript Panel</span>
+<span id="L246" class="LineNr"> 246 </span>    <span class="Type">void</span> UpdateFileInfoArray([filed1, value1, field2, value2, <span class="Identifier">...</span>])
+<span id="L247" class="LineNr"> 247 </span>    <span class="Comment">// [1.3.2] New</span>
+<span id="L248" class="LineNr"> 248 </span>    <span class="Comment">// Compare two IFbMetadbHandle instances, pointer only.</span>
+<span id="L249" class="LineNr"> 249 </span>    <span class="Comment">//   If you want to compare them physically, use the &quot;RawPath&quot; property, and compare these two values.</span>
+<span id="L250" class="LineNr"> 250 </span>    <span class="Type">boolean</span> Compare(IFbMetadbHandle);
+<span id="L251" class="LineNr"> 251 </span>    <span class="Type">void</span> Dispose();
+<span id="L252" class="LineNr"> 252 </span>}
+<span id="L253" class="LineNr"> 253 </span>
+<span id="L254" class="LineNr"> 254 </span>
+<span id="L255" class="LineNr"> 255 </span><span class="Comment">// [1.4.0] New:</span>
+<span id="L256" class="LineNr"> 256 </span><span class="Comment">// [1.4.0 Beta 2] Updated:</span>
+<span id="L257" class="LineNr"> 257 </span><span class="Type">interface</span> IFbMetadbHandleList
+<span id="L258" class="LineNr"> 258 </span>{
+<span id="L259" class="LineNr"> 259 </span><span class="Statement">Properties</span>:
+<span id="L260" class="LineNr"> 260 </span>    (readonly) uint Count;
+<span id="L261" class="LineNr"> 261 </span>    <span class="Comment">// [1.5.0 Preview 6]: Changed, now writable.</span>
+<span id="L262" class="LineNr"> 262 </span>    (read, write) IFbMetadbHandle Item(idx);
+<span id="L263" class="LineNr"> 263 </span>
+<span id="L264" class="LineNr"> 264 </span><span class="Statement">Methods</span>:
+<span id="L265" class="LineNr"> 265 </span>    IFbMetadbHandleList Clone();
+<span id="L266" class="LineNr"> 266 </span>    <span class="Comment">// [1.5.0 Preview 6]: New:</span>
+<span id="L267" class="LineNr"> 267 </span>    uint Insert(index, handle);
+<span id="L268" class="LineNr"> 268 </span>    <span class="Comment">// [1.5.0 Preview 6]: New:</span>
+<span id="L269" class="LineNr"> 269 </span>    uint InsertRange(index, handles);
+<span id="L270" class="LineNr"> 270 </span>    uint Add(handle);
+<span id="L271" class="LineNr"> 271 </span>    <span class="Comment">// [1.5.0 Preview 6]: New:</span>
+<span id="L272" class="LineNr"> 272 </span>    <span class="Type">void</span> AddRange(handles);
+<span id="L273" class="LineNr"> 273 </span>    <span class="Type">void</span> RemoveById(UINT idx);
+<span id="L274" class="LineNr"> 274 </span>    <span class="Type">void</span> Remove(handle);
+<span id="L275" class="LineNr"> 275 </span>    <span class="Comment">// [1.5.0 Preview 6]: New:</span>
+<span id="L276" class="LineNr"> 276 </span>    <span class="Type">void</span> RemoveRange(from, num);
+<span id="L277" class="LineNr"> 277 </span>    <span class="Type">void</span> RemoveAll();
+<span id="L278" class="LineNr"> 278 </span>    <span class="Comment">// Sort and remove duplicates</span>
+<span id="L279" class="LineNr"> 279 </span>    <span class="Type">void</span> Sort();
+<span id="L280" class="LineNr"> 280 </span>    <span class="Comment">// If sorted, use BSearch instead</span>
+<span id="L281" class="LineNr"> 281 </span>    uint Find(handle);
+<span id="L282" class="LineNr"> 282 </span>    <span class="Comment">// Only works when sorted, faster than Find()</span>
+<span id="L283" class="LineNr"> 283 </span>    uint BSearch(handle);
+<span id="L284" class="LineNr"> 284 </span>    <span class="Comment">// Must be sorted</span>
+<span id="L285" class="LineNr"> 285 </span>    <span class="Type">void</span> MakeIntersection(handles);
+<span id="L286" class="LineNr"> 286 </span>    <span class="Comment">// Must be sorted</span>
+<span id="L287" class="LineNr"> 287 </span>    <span class="Type">void</span> MakeUnion(handles);
+<span id="L288" class="LineNr"> 288 </span>    <span class="Comment">// Must be sorted</span>
+<span id="L289" class="LineNr"> 289 </span>    <span class="Type">void</span> MakeDifference(handles);
+<span id="L290" class="LineNr"> 290 </span>    <span class="Type">void</span> Dispose();
+<span id="L291" class="LineNr"> 291 </span>    <span class="Comment">// [1.5.0 Preview 4]: New:</span>
+<span id="L292" class="LineNr"> 292 </span>    <span class="Comment">// titleformatObject: an instance of IFbTitleFormat.</span>
+<span id="L293" class="LineNr"> 293 </span>    <span class="Comment">// direction: integer, ascending while &gt;0.</span>
+<span id="L294" class="LineNr"> 294 </span>    <span class="Type">void</span> OrderByFormat(titleformatObject, direction);
+<span id="L295" class="LineNr"> 295 </span>    <span class="Comment">// [1.5.0 Preview 4]: New:</span>
+<span id="L296" class="LineNr"> 296 </span>    <span class="Type">void</span> OrderByPath();
+<span id="L297" class="LineNr"> 297 </span>    <span class="Comment">// [1.5.0 Preview 4]: New:</span>
+<span id="L298" class="LineNr"> 298 </span>    <span class="Type">void</span> OrderByRelativePath();
+<span id="L299" class="LineNr"> 299 </span>    <span class="Comment">// [Plus 1.5.7] New: Merge from Jscript Panel by marc2003</span>
+<span id="L300" class="LineNr"> 300 </span>    <span class="Comment">//handle list method. returns the total in seconds.</span>
+<span id="L301" class="LineNr"> 301 </span>    IFbMetadbHandleList CalcTotalDuration();
+<span id="L302" class="LineNr"> 302 </span>    <span class="Comment">// handle list method. returns the total in bytes.</span>
+<span id="L303" class="LineNr"> 303 </span>    IFbMetadbHandleList CalcTotalSize();
+<span id="L304" class="LineNr"> 304 </span>}
+<span id="L305" class="LineNr"> 305 </span>
+<span id="L306" class="LineNr"> 306 </span><span class="Type">interface</span> IFbTitleFormat {
+<span id="L307" class="LineNr"> 307 </span><span class="Statement">Methods</span>:
+<span id="L308" class="LineNr"> 308 </span>    <span class="Comment">// [Plus 1.5.6 ] CHG: 对于 foobar2000 1.3.0 以上，注意 fromfile 参数</span>
+<span id="L309" class="LineNr"> 309 </span>    <span class="Comment">// By default, returns a valid value if there is track playing.</span>
+<span id="L310" class="LineNr"> 310 </span>    <span class="Comment">// force: while true, Eval() will always return a valid value even there is no playing track, useful for</span>
+<span id="L311" class="LineNr"> 311 </span>    <span class="Comment">//   title formatting without track-related fields like &quot;%title%&quot;, &quot;%artist%&quot;, etc.</span>
+<span id="L312" class="LineNr"> 312 </span>    String Eval(force = <span class="Constant">false</span>, fromfile = <span class="Constant">false</span>);
+<span id="L313" class="LineNr"> 313 </span>    String EvalWithMetadb(IFbMetadbHandle, fromfile = <span class="Constant">false</span>);
+<span id="L314" class="LineNr"> 314 </span>    <span class="Type">void</span> Dispose();
+<span id="L315" class="LineNr"> 315 </span>}
+<span id="L316" class="LineNr"> 316 </span>
+<span id="L317" class="LineNr"> 317 </span>
+<span id="L318" class="LineNr"> 318 </span><span class="Type">interface</span> IMenuObj {
+<span id="L319" class="LineNr"> 319 </span><span class="Statement">Properties</span>:
+<span id="L320" class="LineNr"> 320 </span>    <span class="Comment">// [1.5.0 Beta 2]: NOTE: In order to create popup menus, please use AppendTo() method.</span>
+<span id="L321" class="LineNr"> 321 </span>    (readonly) uint ID;
+<span id="L322" class="LineNr"> 322 </span>
+<span id="L323" class="LineNr"> 323 </span><span class="Statement">Methods</span>:
+<span id="L324" class="LineNr"> 324 </span>    <span class="Comment">// flags: see Flags.txt.</span>
+<span id="L325" class="LineNr"> 325 </span>    <span class="Type">void</span> AppendMenuItem(flags, item_id, text);
+<span id="L326" class="LineNr"> 326 </span>    <span class="Comment">// Same as AppendMenuItem(MF_SEPARATOR,...,...)</span>
+<span id="L327" class="LineNr"> 327 </span>    <span class="Type">void</span> AppendMenuSeparator();
+<span id="L328" class="LineNr"> 328 </span>    <span class="Comment">// [1.3.2] Changed:</span>
+<span id="L329" class="LineNr"> 329 </span>    <span class="Comment">// Add bypos parameter.</span>
+<span id="L330" class="LineNr"> 330 </span>    <span class="Type">void</span> EnableMenuItem(id_or_pos, enable, bypos = <span class="Constant">false</span>);
+<span id="L331" class="LineNr"> 331 </span>    <span class="Comment">// [1.3.0] Changed: </span>
+<span id="L332" class="LineNr"> 332 </span>    <span class="Comment">// check is now a boolean value.</span>
+<span id="L333" class="LineNr"> 333 </span>    <span class="Comment">// [1.3.2] Changed:</span>
+<span id="L334" class="LineNr"> 334 </span>    <span class="Comment">// Add bypos parameter.</span>
+<span id="L335" class="LineNr"> 335 </span>    <span class="Type">void</span> CheckMenuItem(id_or_pos, check, bypos = <span class="Constant">false</span>);
+<span id="L336" class="LineNr"> 336 </span>    <span class="Comment">// [1.3.2] Changed:</span>
+<span id="L337" class="LineNr"> 337 </span>    <span class="Comment">// Add bypos parameter.</span>
+<span id="L338" class="LineNr"> 338 </span>    <span class="Type">void</span> CheckMenuRadioItem(first, last, check, bypos = <span class="Constant">false</span>);
+<span id="L339" class="LineNr"> 339 </span>    <span class="Comment">// [1.4.0 Beta 3] Updated:</span>
+<span id="L340" class="LineNr"> 340 </span>    <span class="Comment">// flags: Control popup positions and animations. (See Flags.txt)</span>
+<span id="L341" class="LineNr"> 341 </span>    <span class="Type">int</span> TrackPopupMenu(x, y, flags = <span class="Number">0</span>);
+<span id="L342" class="LineNr"> 342 </span>    <span class="Comment">// [1.5.0 Beta 2] New:</span>
+<span id="L343" class="LineNr"> 343 </span>    <span class="Type">void</span> AppendTo(parentMenu, flags, text);
+<span id="L344" class="LineNr"> 344 </span>    <span class="Type">void</span> Dispose();
+<span id="L345" class="LineNr"> 345 </span>}
+<span id="L346" class="LineNr"> 346 </span>
+<span id="L347" class="LineNr"> 347 </span>
+<span id="L348" class="LineNr"> 348 </span><span class="Type">interface</span> IContextMenuManager {
+<span id="L349" class="LineNr"> 349 </span><span class="Statement">Methods</span>:
+<span id="L350" class="LineNr"> 350 </span>    <span class="Comment">// [1.4.0] Changed: accept handle list.</span>
+<span id="L351" class="LineNr"> 351 </span>    <span class="Type">void</span> InitContext(handle_or_handles);
+<span id="L352" class="LineNr"> 352 </span>    <span class="Type">void</span> InitNowPlaying();
+<span id="L353" class="LineNr"> 353 </span>    <span class="Type">void</span> BuildMenu(IMenuObj, base_id, max_id);
+<span id="L354" class="LineNr"> 354 </span>    <span class="Type">boolean</span> ExecuteByID(id);
+<span id="L355" class="LineNr"> 355 </span>    <span class="Type">void</span> Dispose();
+<span id="L356" class="LineNr"> 356 </span>}
+<span id="L357" class="LineNr"> 357 </span>
+<span id="L358" class="LineNr"> 358 </span>
+<span id="L359" class="LineNr"> 359 </span><span class="Type">interface</span> IMainMenuManager {
+<span id="L360" class="LineNr"> 360 </span><span class="Statement">Methods</span>:
+<span id="L361" class="LineNr"> 361 </span>    <span class="Comment">// NOTE: Only root menu name</span>
+<span id="L362" class="LineNr"> 362 </span>    <span class="Type">void</span> Init(root_name);
+<span id="L363" class="LineNr"> 363 </span>    <span class="Comment">// NOTE: the last param is count, not max_id, this is different from what IContextMenuManager does.</span>
+<span id="L364" class="LineNr"> 364 </span>    <span class="Type">void</span> BuildMenu(IMenuObj, base_id, count);
+<span id="L365" class="LineNr"> 365 </span>    <span class="Type">boolean</span> ExecuteByID(id);
+<span id="L366" class="LineNr"> 366 </span>    <span class="Type">void</span> Dispose();
+<span id="L367" class="LineNr"> 367 </span>}
+<span id="L368" class="LineNr"> 368 </span>
+<span id="L369" class="LineNr"> 369 </span>
+<span id="L370" class="LineNr"> 370 </span><span class="Type">interface</span> IFbProfiler {
+<span id="L371" class="LineNr"> 371 </span><span class="Statement">Properties</span>:
+<span id="L372" class="LineNr"> 372 </span>    <span class="Comment">// in ms</span>
+<span id="L373" class="LineNr"> 373 </span>    <span class="Type">int</span> Time;
+<span id="L374" class="LineNr"> 374 </span>
+<span id="L375" class="LineNr"> 375 </span><span class="Statement">Methods</span>:
+<span id="L376" class="LineNr"> 376 </span>    <span class="Type">void</span> Reset();
+<span id="L377" class="LineNr"> 377 </span>    <span class="Type">void</span> Print();
+<span id="L378" class="LineNr"> 378 </span>}
+<span id="L379" class="LineNr"> 379 </span>
+<span id="L380" class="LineNr"> 380 </span><span class="Comment">// [1.5.0 Preview 7] New:</span>
+<span id="L381" class="LineNr"> 381 </span><span class="Type">interface</span> IFbUiSelectionHolder{
+<span id="L382" class="LineNr"> 382 </span><span class="Statement">Methods</span>:
+<span id="L383" class="LineNr"> 383 </span>    <span class="Comment">// REMEMBER: Call Dispose() after use in time.</span>
+<span id="L384" class="LineNr"> 384 </span>    <span class="Type">void</span> Dispose();
+<span id="L385" class="LineNr"> 385 </span>
+<span id="L386" class="LineNr"> 386 </span>    <span class="Comment">// Sets the selected items.</span>
+<span id="L387" class="LineNr"> 387 </span>    <span class="Comment">// It should not to clear the selection</span>
+<span id="L388" class="LineNr"> 388 </span>    <span class="Type">void</span> SetSelection(handles);
+<span id="L389" class="LineNr"> 389 </span>    <span class="Comment">// Sets selected items to playlist selection and enables tracking.</span>
+<span id="L390" class="LineNr"> 390 </span>    <span class="Comment">// When the playlist selection changes, the stored selection is automatically updated.</span>
+<span id="L391" class="LineNr"> 391 </span>    <span class="Comment">// Tracking ends when a set method is called on any ui_selection_holder or when</span>
+<span id="L392" class="LineNr"> 392 </span>    <span class="Comment">// the last reference to this ui_selection_holder is released.</span>
+<span id="L393" class="LineNr"> 393 </span>    <span class="Type">void</span> SetPlaylistSelectionTracking();
+<span id="L394" class="LineNr"> 394 </span>    <span class="Comment">// Sets selected items to the contents of the active playlist and enables tracking.</span>
+<span id="L395" class="LineNr"> 395 </span>    <span class="Comment">// When the active playlist or its contents changes, the stored selection is automatically updated.</span>
+<span id="L396" class="LineNr"> 396 </span>    <span class="Comment">// Tracking ends when a set method is called on any ui_selection_holder or when</span>
+<span id="L397" class="LineNr"> 397 </span>    <span class="Comment">// the last reference to this ui_selection_holder is released.</span>
+<span id="L398" class="LineNr"> 398 </span>    <span class="Type">void</span> SetPlaylistTracking();
+<span id="L399" class="LineNr"> 399 </span>}
+<span id="L400" class="LineNr"> 400 </span>
+<span id="L401" class="LineNr"> 401 </span><span class="Type">interface</span> IFbUtils {
+<span id="L402" class="LineNr"> 402 </span><span class="Statement">Properties</span>:
+<span id="L403" class="LineNr"> 403 </span>    (readonly) String ComponentPath;
+<span id="L404" class="LineNr"> 404 </span>    (readonly) String FoobarPath;
+<span id="L405" class="LineNr"> 405 </span>    (readonly) String ProfilePath;
+<span id="L406" class="LineNr"> 406 </span>    (readonly) <span class="Type">boolean</span> IsPlaying;
+<span id="L407" class="LineNr"> 407 </span>    (readonly) <span class="Type">double</span> PlaybackLength;
+<span id="L408" class="LineNr"> 408 </span>    (readonly) <span class="Type">boolean</span> IsPaused;
+<span id="L409" class="LineNr"> 409 </span>    (read, write) <span class="Type">double</span> PlaybackTime;
+<span id="L410" class="LineNr"> 410 </span>    <span class="Comment">// Known playback orders:</span>
+<span id="L411" class="LineNr"> 411 </span>    <span class="Comment">//      Default: 0,</span>
+<span id="L412" class="LineNr"> 412 </span>    <span class="Comment">//      RepeatPlaylist: 1,</span>
+<span id="L413" class="LineNr"> 413 </span>    <span class="Comment">//      RepeatTrack: 2,</span>
+<span id="L414" class="LineNr"> 414 </span>    <span class="Comment">//      Random: 3,</span>
+<span id="L415" class="LineNr"> 415 </span>    <span class="Comment">//      ShuffleTracks: 4,</span>
+<span id="L416" class="LineNr"> 416 </span>    <span class="Comment">//      ShuffleAlbums: 5,</span>
+<span id="L417" class="LineNr"> 417 </span>    <span class="Comment">//      ShuffleFolders: 6</span>
+<span id="L418" class="LineNr"> 418 </span>    <span class="Comment">//(read, write) uint PlaybackOrder;</span>
+<span id="L419" class="LineNr"> 419 </span>    <span class="Comment">// [1.0.2] New:</span>
+<span id="L420" class="LineNr"> 420 </span>    (read, write) <span class="Type">boolean</span> StopAfterCurrent;
+<span id="L421" class="LineNr"> 421 </span>    (read, write) <span class="Type">boolean</span> CursorFollowPlayback;
+<span id="L422" class="LineNr"> 422 </span>    (read, write) <span class="Type">boolean</span> PlaybackFollowCursor;
+<span id="L423" class="LineNr"> 423 </span>    (read, write) <span class="Type">float</span> Volume;
+<span id="L424" class="LineNr"> 424 </span>    <span class="Comment">// [1.3.2] New:</span>
+<span id="L425" class="LineNr"> 425 </span>    <span class="Comment">//(readonly) uint PlaylistCount;</span>
+<span id="L426" class="LineNr"> 426 </span>    <span class="Comment">// [1.3.2] New:</span>
+<span id="L427" class="LineNr"> 427 </span>    <span class="Comment">//(read, write) uint ActivePlaylist;</span>
+<span id="L428" class="LineNr"> 428 </span>    <span class="Comment">// [1.3.2] New:</span>
+<span id="L429" class="LineNr"> 429 </span>    <span class="Comment">//(read, write) uint PlayingPlaylist;</span>
+<span id="L430" class="LineNr"> 430 </span>    <span class="Comment">// [1.4.0 Beta 4] New:</span>
+<span id="L431" class="LineNr"> 431 </span>    <span class="Comment">//(readonly) uint PlaylistItemCount(idx);</span>
+<span id="L432" class="LineNr"> 432 </span>
+<span id="L433" class="LineNr"> 433 </span><span class="Statement">Methods</span>:
+<span id="L434" class="LineNr"> 434 </span>    <span class="Type">void</span> trace(<span class="Identifier">...</span>);
+<span id="L435" class="LineNr"> 435 </span>    <span class="Comment">// [1.0.4] New:</span>
+<span id="L436" class="LineNr"> 436 </span>    <span class="Comment">// iconid: See Flags.txt for more information</span>
+<span id="L437" class="LineNr"> 437 </span>    <span class="Type">void</span> ShowPopupMessage(msg, title = <span class="Constant">&quot;WSH Panel Mod&quot;</span>, iconid = <span class="Number">0</span>);
+<span id="L438" class="LineNr"> 438 </span>    <span class="Comment">//</span>
+<span id="L439" class="LineNr"> 439 </span>    IFbProfiler CreateProfiler(name = <span class="Constant">&quot;&quot;</span>);
+<span id="L440" class="LineNr"> 440 </span>    IFbTitleFormat TitleFormat(expression);
+<span id="L441" class="LineNr"> 441 </span>    IFbMetadbHandle GetNowPlaying();
+<span id="L442" class="LineNr"> 442 </span>    <span class="Comment">// [1.3.0] Updated:</span>
+<span id="L443" class="LineNr"> 443 </span>    <span class="Comment">// force: if this parameter is set to false, GetFocusItem() will only look for the focus item, otherwise, </span>
+<span id="L444" class="LineNr"> 444 </span>    <span class="Comment">//   if the focus item not found, find the first item of the active playlist.</span>
+<span id="L445" class="LineNr"> 445 </span>    IFbMetadbHandle GetFocusItem(force = <span class="Constant">true</span>);
+<span id="L446" class="LineNr"> 446 </span>    <span class="Comment">// [1.3.2] New:</span>
+<span id="L447" class="LineNr"> 447 </span>    <span class="Comment">// Get Now playing item or selection, as you prefer, in &quot;Display-&gt;Selection viewers&quot; of foobar2000 preferences</span>
+<span id="L448" class="LineNr"> 448 </span>    <span class="Comment">// NOTE: Selection contains but not limited to the playlist.</span>
+<span id="L449" class="LineNr"> 449 </span>    <span class="Comment">// NOTE: The return value may be null.</span>
+<span id="L450" class="LineNr"> 450 </span>    IFbMetadbHandle GetSelection();
+<span id="L451" class="LineNr"> 451 </span>    <span class="Comment">// [1.4.0] New:</span>
+<span id="L452" class="LineNr"> 452 </span>    <span class="Comment">// Works actually like GetSelection(), but returns a list of metadb handles.</span>
+<span id="L453" class="LineNr"> 453 </span>    <span class="Comment">// Always returns a valid IFbMetadbHandleList instance instead of null.</span>
+<span id="L454" class="LineNr"> 454 </span>    <span class="Comment">// flags: 1 - no now playing</span>
+<span id="L455" class="LineNr"> 455 </span>    IFbMetadbHandleList GetSelections(flags = <span class="Number">0</span>);
+<span id="L456" class="LineNr"> 456 </span>    <span class="Comment">// [1.3.2] New:</span>
+<span id="L457" class="LineNr"> 457 </span>    <span class="Comment">// Retrieve what the selection is</span>
+<span id="L458" class="LineNr"> 458 </span>    <span class="Comment">// Returns:</span>
+<span id="L459" class="LineNr"> 459 </span>    <span class="Comment">//   0: undefined (no item)</span>
+<span id="L460" class="LineNr"> 460 </span>    <span class="Comment">//   1: active_playlist_selection</span>
+<span id="L461" class="LineNr"> 461 </span>    <span class="Comment">//   2: caller_active_playlist</span>
+<span id="L462" class="LineNr"> 462 </span>    <span class="Comment">//   3: playlist_manager</span>
+<span id="L463" class="LineNr"> 463 </span>    <span class="Comment">//   4: now_playing</span>
+<span id="L464" class="LineNr"> 464 </span>    <span class="Comment">//   5: keyboard_shortcut_list</span>
+<span id="L465" class="LineNr"> 465 </span>    <span class="Comment">//   6: media_library_viewer</span>
+<span id="L466" class="LineNr"> 466 </span>    uint GetSelectionType();
+<span id="L467" class="LineNr"> 467 </span>    <span class="Comment">// [1.5.0 Preview 7] New:</span>
+<span id="L468" class="LineNr"> 468 </span>    IFbUiSelectionHolder AcquireUiSelectionHolder();
+<span id="L469" class="LineNr"> 469 </span>
+<span id="L470" class="LineNr"> 470 </span>    <span class="Type">void</span> Exit();
+<span id="L471" class="LineNr"> 471 </span>    <span class="Type">void</span> OnTop()
+<span id="L472" class="LineNr"> 472 </span>    <span class="Type">void</span> Hide()
+<span id="L473" class="LineNr"> 473 </span>    <span class="Type">void</span> Restart()
+<span id="L474" class="LineNr"> 474 </span>    <span class="Type">void</span> RemoveDead()
+<span id="L475" class="LineNr"> 475 </span>    <span class="Type">void</span> RemoveDupli()
+<span id="L476" class="LineNr"> 476 </span>    <span class="Type">void</span> Play();
+<span id="L477" class="LineNr"> 477 </span>    <span class="Type">void</span> Stop();
+<span id="L478" class="LineNr"> 478 </span>    <span class="Type">void</span> Pause();
+<span id="L479" class="LineNr"> 479 </span>    <span class="Type">void</span> PlayOrPause();
+<span id="L480" class="LineNr"> 480 </span>    <span class="Type">void</span> Next();
+<span id="L481" class="LineNr"> 481 </span>    <span class="Type">void</span> Prev();
+<span id="L482" class="LineNr"> 482 </span>    <span class="Type">void</span> Random();
+<span id="L483" class="LineNr"> 483 </span>    <span class="Type">void</span> VolumeDown();
+<span id="L484" class="LineNr"> 484 </span>    <span class="Type">void</span> VolumeUp();
+<span id="L485" class="LineNr"> 485 </span>    <span class="Type">void</span> VolumeMute();
+<span id="L486" class="LineNr"> 486 </span>    <span class="Type">void</span> AddDirectory();
+<span id="L487" class="LineNr"> 487 </span>    <span class="Type">void</span> AddFiles();
+<span id="L488" class="LineNr"> 488 </span>    <span class="Type">void</span> ShowConsole();
+<span id="L489" class="LineNr"> 489 </span>    <span class="Type">void</span> LoadPlaylist();
+<span id="L490" class="LineNr"> 490 </span>    <span class="Comment">// [Plus 1.5.6] New:</span>
+<span id="L491" class="LineNr"> 491 </span>    <span class="Type">boolean</span> LoadPlaylistV2(path);
+<span id="L492" class="LineNr"> 492 </span>    <span class="Comment">// 当overwrite = true时，将备份原文件为&quot;原播放列表文件名.bak&quot;</span>
+<span id="L493" class="LineNr"> 493 </span>    <span class="Type">boolean</span> SavePlaylistV2(path,handles,overwrite = <span class="Constant">false</span>);
+<span id="L494" class="LineNr"> 494 </span>    <span class="Type">void</span> SavePlaylist();
+<span id="L495" class="LineNr"> 495 </span>    <span class="Comment">// NOTE: Now playing content only.</span>
+<span id="L496" class="LineNr"> 496 </span>    <span class="Type">boolean</span> RunMainMenuCommand(command);
+<span id="L497" class="LineNr"> 497 </span>    <span class="Comment">// NOTE: Now playing content only.</span>
+<span id="L498" class="LineNr"> 498 </span>    <span class="Comment">// [1.5.0 Preview 2] Changed: Add new &quot;flags&quot; parameter</span>
+<span id="L499" class="LineNr"> 499 </span>    <span class="Comment">// flags:   0 - default (depends on whether SHIFT key is pressed, flag_view_reduced or flag_view_full is selected)</span>
+<span id="L500" class="LineNr"> 500 </span>    <span class="Comment">//          4 - flag_view_reduced</span>
+<span id="L501" class="LineNr"> 501 </span>    <span class="Comment">//          8 - flag_view_full</span>
+<span id="L502" class="LineNr"> 502 </span>    <span class="Type">boolean</span> RunContextCommand(command, flags = <span class="Number">0</span>);
+<span id="L503" class="LineNr"> 503 </span>    <span class="Comment">// [1.4.0] Changed: Accept IFbMetadbHandleList interface for metadb handle list.</span>
+<span id="L504" class="LineNr"> 504 </span>    <span class="Comment">// [1.5.0 Preview 2] Changed: Add new &quot;flags&quot; parameter</span>
+<span id="L505" class="LineNr"> 505 </span>    <span class="Comment">// flags:   0 - default (depends on whether SHIFT key is pressed, flag_view_reduced or flag_view_full is selected)</span>
+<span id="L506" class="LineNr"> 506 </span>    <span class="Comment">//          4 - flag_view_reduced</span>
+<span id="L507" class="LineNr"> 507 </span>    <span class="Comment">//          8 - flag_view_full</span>
+<span id="L508" class="LineNr"> 508 </span>    <span class="Type">boolean</span> RunContextCommandWithMetadb(command, handle_or_handles, flags = <span class="Number">0</span>);
+<span id="L509" class="LineNr"> 509 </span>    IContextMenuManager CreateContextMenuManager();
+<span id="L510" class="LineNr"> 510 </span>    <span class="Type">boolean</span> IsMetadbInMediaLibrary(metadb);
+<span id="L511" class="LineNr"> 511 </span>    <span class="Comment">// [1.3.2] New:</span>
+<span id="L512" class="LineNr"> 512 </span>    <span class="Comment">//String GetPlaylistName(idx);</span>
+<span id="L513" class="LineNr"> 513 </span>    <span class="Comment">// [1.3.2] New:</span>
+<span id="L514" class="LineNr"> 514 </span>    <span class="Comment">// if name is &quot;&quot;, then Create a playlist autonamed with &quot;New Playlist &lt;number&gt;&quot;.</span>
+<span id="L515" class="LineNr"> 515 </span>    <span class="Comment">// return the index of the created playlist.</span>
+<span id="L516" class="LineNr"> 516 </span>    <span class="Comment">//uint CreatePlaylist(idx, name);</span>
+<span id="L517" class="LineNr"> 517 </span>    <span class="Comment">// [1.3.2] New:</span>
+<span id="L518" class="LineNr"> 518 </span>    <span class="Comment">//boolean RemovePlaylist(idx);</span>
+<span id="L519" class="LineNr"> 519 </span>    <span class="Comment">// [1.3.2] New:</span>
+<span id="L520" class="LineNr"> 520 </span>    <span class="Comment">//boolean MovePlaylist(from, to);</span>
+<span id="L521" class="LineNr"> 521 </span>    <span class="Comment">// [1.3.2] New:</span>
+<span id="L522" class="LineNr"> 522 </span>    <span class="Comment">//boolean RenamePlaylist(idx, name);</span>
+<span id="L523" class="LineNr"> 523 </span>    <span class="Comment">// [1.4.1 Beta 6] New:</span>
+<span id="L524" class="LineNr"> 524 </span>    <span class="Comment">// Duplicate all contents from one playlist to a new playlist.</span>
+<span id="L525" class="LineNr"> 525 </span>    <span class="Comment">// NOTE: This method only duplicate contents of the playlist, not its properties (eg. autoplaylist).</span>
+<span id="L526" class="LineNr"> 526 </span>    <span class="Comment">// from: Which index of playlist to copy from.</span>
+<span id="L527" class="LineNr"> 527 </span>    <span class="Comment">// name: New playlist name, when empty, using the same name as 'from'.</span>
+<span id="L528" class="LineNr"> 528 </span>    <span class="Comment">// Returns the index of newly created playlist.</span>
+<span id="L529" class="LineNr"> 529 </span>    <span class="Comment">//uint DuplicatePlaylist(from, name = &quot;&quot;);</span>
+<span id="L530" class="LineNr"> 530 </span>    <span class="Comment">// [1.4.0] New:</span>
+<span id="L531" class="LineNr"> 531 </span>    <span class="Comment">//boolean IsAutoPlaylist(idx);</span>
+<span id="L532" class="LineNr"> 532 </span>    <span class="Comment">// [1.4.0] New:</span>
+<span id="L533" class="LineNr"> 533 </span>    <span class="Comment">// sort: sort string expression.</span>
+<span id="L534" class="LineNr"> 534 </span>    <span class="Comment">// flags: 1 - always sort.</span>
+<span id="L535" class="LineNr"> 535 </span>    <span class="Comment">//boolean CreateAutoPlaylist(idx, name, query, sort = &quot;&quot;, flags = 0);</span>
+<span id="L536" class="LineNr"> 536 </span>    <span class="Comment">// [1.4.0] New:</span>
+<span id="L537" class="LineNr"> 537 </span>    <span class="Comment">//boolean ShowAutoPlaylistUI(idx);</span>
+<span id="L538" class="LineNr"> 538 </span>    <span class="Comment">// [Plus 1.5.6] CHG:</span>
+<span id="L539" class="LineNr"> 539 </span>    <span class="Type">void</span> ShowPreferences(guid_str=<span class="Constant">&quot;&quot;</span>);
+<span id="L540" class="LineNr"> 540 </span>    <span class="Comment">// [Plus 1.5.6 2014-09-25] New;</span>
+<span id="L541" class="LineNr"> 541 </span>    <span class="Comment">// handles: IFbMetadbHandleList</span>
+<span id="L542" class="LineNr"> 542 </span>    <span class="Comment">// query_string: 参考查询表达式帮助</span>
+<span id="L543" class="LineNr"> 543 </span>    <span class="Comment">// results are unsorted.</span>
+<span id="L544" class="LineNr"> 544 </span>    IFbMetadbHandleList QueryMulti(handles, query_string);
+<span id="L545" class="LineNr"> 545 </span>    <span class="Comment">// results are unsorted.</span>
+<span id="L546" class="LineNr"> 546 </span>    IFbMetadbHandleList GetAllItemsInMediaLibrary();
+<span id="L547" class="LineNr"> 547 </span>    <span class="Type">boolean</span> IsMediaLibraryEnabled();
+<span id="L548" class="LineNr"> 548 </span>    <span class="Comment">// [Plus 1.5.6 2014-09-26] New;</span>
+<span id="L549" class="LineNr"> 549 </span>    <span class="Comment">// return flag:     flag_disabled = 1,</span>
+<span id="L550" class="LineNr"> 550 </span>    <span class="Comment">//                  flag_checked = 2,</span>
+<span id="L551" class="LineNr"> 551 </span>    <span class="Comment">//                  flag_radiochecked = 4.</span>
+<span id="L552" class="LineNr"> 552 </span>    <span class="Type">int</span> GetMainMenuCommandStatus(command);
+<span id="L553" class="LineNr"> 553 </span>    <span class="Comment">// [Plus 1.5.7] New: from Jscript Panel</span>
+<span id="L554" class="LineNr"> 554 </span>    <span class="Comment">// same as `IFbMetadbHandleList GetAllItemsInMediaLibrary()'</span>
+<span id="L555" class="LineNr"> 555 </span>    IFbMetadbHandleList GetLibraryItems();
+<span id="L556" class="LineNr"> 556 </span>    <span class="Comment">// same as `IFbMetadbHandleList QueryMulti(handles, query_string)'</span>
+<span id="L557" class="LineNr"> 557 </span>    IFbMetadbHandleList GetQueryItems(source_handlelist, query_string);
+<span id="L558" class="LineNr"> 558 </span>    <span class="Comment">//</span>
+<span id="L559" class="LineNr"> 559 </span>    <span class="Type">void</span> ShowLibrarySearchUI(query_string);
+<span id="L560" class="LineNr"> 560 </span>    <span class="Comment">// </span>
+<span id="L561" class="LineNr"> 561 </span>    String GetLibraryRelativePath(metadb);
+<span id="L562" class="LineNr"> 562 </span>
+<span id="L563" class="LineNr"> 563 </span>}
+<span id="L564" class="LineNr"> 564 </span>
+<span id="L565" class="LineNr"> 565 </span><span class="Comment">// [Obsolete] Please use window.SetInterval() and/or window.SetTimeout()</span>
+<span id="L566" class="LineNr"> 566 </span><span class="Type">interface</span> ITimerObj {
+<span id="L567" class="LineNr"> 567 </span><span class="Statement">Properties</span>:
+<span id="L568" class="LineNr"> 568 </span>    (readonly) uint ID;
+<span id="L569" class="LineNr"> 569 </span>
+<span id="L570" class="LineNr"> 570 </span><span class="Statement">Methods</span>:
+<span id="L571" class="LineNr"> 571 </span>    <span class="Type">void</span> Dispose();
+<span id="L572" class="LineNr"> 572 </span>}
+<span id="L573" class="LineNr"> 573 </span>
+<span id="L574" class="LineNr"> 574 </span><span class="Type">interface</span> IFbTooltip {
+<span id="L575" class="LineNr"> 575 </span><span class="Statement">Properties</span>:
+<span id="L576" class="LineNr"> 576 </span>    (read, write) Text; <span class="Comment">// Set tooltip text</span>
+<span id="L577" class="LineNr"> 577 </span>    <span class="Comment">// [1.5.0 Preview 8]: New:</span>
+<span id="L578" class="LineNr"> 578 </span>    <span class="Comment">// Set if enable tooltip tracking.</span>
+<span id="L579" class="LineNr"> 579 </span>    (writeonly) <span class="Type">boolean</span> TrackActivate;
+<span id="L580" class="LineNr"> 580 </span>    <span class="Comment">// [1.5.0 Preview 8]: New:</span>
+<span id="L581" class="LineNr"> 581 </span>    <span class="Comment">// Used with custom paint only</span>
+<span id="L582" class="LineNr"> 582 </span>    (read, write) <span class="Type">int</span> Width;
+<span id="L583" class="LineNr"> 583 </span>    <span class="Comment">// [1.5.0 Preview 8]: New:</span>
+<span id="L584" class="LineNr"> 584 </span>    <span class="Comment">// Used with custom paint only</span>
+<span id="L585" class="LineNr"> 585 </span>    (read, write) <span class="Type">int</span> Width;
+<span id="L586" class="LineNr"> 586 </span>
+<span id="L587" class="LineNr"> 587 </span><span class="Statement">Methods</span>:
+<span id="L588" class="LineNr"> 588 </span>    <span class="Comment">// NOTE: Don't try to update tooltip text when tooltip is activated, because it will flick in Windows Vista/7.</span>
+<span id="L589" class="LineNr"> 589 </span>    <span class="Type">void</span> Activate();
+<span id="L590" class="LineNr"> 590 </span>    <span class="Type">void</span> Deactivate();
+<span id="L591" class="LineNr"> 591 </span>    <span class="Type">void</span> SetMaxWidth(width);
+<span id="L592" class="LineNr"> 592 </span>    <span class="Type">void</span> Dispose();
+<span id="L593" class="LineNr"> 593 </span>    <span class="Comment">// [1.3.4] New:</span>
+<span id="L594" class="LineNr"> 594 </span>    <span class="Comment">// in milliseconds</span>
+<span id="L595" class="LineNr"> 595 </span>    <span class="Comment">// type: See flags.txt</span>
+<span id="L596" class="LineNr"> 596 </span>    <span class="Type">int</span> GetDelayTime(type);
+<span id="L597" class="LineNr"> 597 </span>    <span class="Comment">// [1.3.4] New:</span>
+<span id="L598" class="LineNr"> 598 </span>    <span class="Comment">// type: See flags.txt</span>
+<span id="L599" class="LineNr"> 599 </span>    <span class="Type">void</span> SetDelayTime(type, time);
+<span id="L600" class="LineNr"> 600 </span>    <span class="Comment">// [1.5.0 Preview 8]: New:</span>
+<span id="L601" class="LineNr"> 601 </span>    <span class="Comment">// NOTE: You should make sure x, y is changed before call, or you will recive a blinking tooltip. </span>
+<span id="L602" class="LineNr"> 602 </span>    <span class="Type">void</span> TrackPosition(x, y);
+<span id="L603" class="LineNr"> 603 </span>}
+<span id="L604" class="LineNr"> 604 </span>
+<span id="L605" class="LineNr"> 605 </span><span class="Comment">// [1.3.1] New interface</span>
+<span id="L606" class="LineNr"> 606 </span><span class="Type">interface</span> IThemeManager {
+<span id="L607" class="LineNr"> 607 </span><span class="Statement">Methods</span>:
+<span id="L608" class="LineNr"> 608 </span>    <span class="Comment">// For parts and stats: <a href="http://msdn.microsoft.com/en-us/library/bb773210%28VS.85%29.aspx">http://msdn.microsoft.com/en-us/library/bb773210%28VS.85%29.aspx</a></span>
+<span id="L609" class="LineNr"> 609 </span>    <span class="Comment">// You get vsstyle.h and vssym32.h (won't included in Flags because they are too large) here:</span>
+<span id="L610" class="LineNr"> 610 </span>    <span class="Comment">//    <a href="http://dl.dropbox.com/u/2451120/vsstyles_h.7z">http://dl.dropbox.com/u/2451120/vsstyles_h.7z</a></span>
+<span id="L611" class="LineNr"> 611 </span>    <span class="Type">void</span> SetPartAndStateID(partid, stateid);
+<span id="L612" class="LineNr"> 612 </span>    <span class="Comment">// NOTE: stateid should be 0, it's unused now.</span>
+<span id="L613" class="LineNr"> 613 </span>    <span class="Type">boolean</span> IsThemePartDefined(partid, stateid = <span class="Number">0</span>);
+<span id="L614" class="LineNr"> 614 </span>    <span class="Comment">// [1.3.2] Updated:</span>
+<span id="L615" class="LineNr"> 615 </span>    <span class="Comment">// clip_*: set clipping area.</span>
+<span id="L616" class="LineNr"> 616 </span>    <span class="Type">void</span> DrawThemeBackground(IGdiGraphics, x, y, w, h, clip_x = <span class="Number">0</span>, clip_y = <span class="Number">0</span>, clip_w = <span class="Number">0</span>, clip_h = <span class="Number">0</span>);
+<span id="L617" class="LineNr"> 617 </span>    <span class="Comment">// [Plus 1.5.6] New:</span>
+<span id="L618" class="LineNr"> 618 </span>    <span class="Comment">// Vista+</span>
+<span id="L619" class="LineNr"> 619 </span>    <span class="Type">void</span> DrawThemeTextEx(IGdiGraphics, text, color, x, y, w, h, iGlowSize = <span class="Number">5</span> , format = <span class="Number">0</span>);
+<span id="L620" class="LineNr"> 620 </span>}
+<span id="L621" class="LineNr"> 621 </span>
+<span id="L622" class="LineNr"> 622 </span><span class="Comment">// [1.4.1 Beta 1] New interface</span>
+<span id="L623" class="LineNr"> 623 </span><span class="Type">interface</span> IDropTargetAction {
+<span id="L624" class="LineNr"> 624 </span><span class="Statement">Properties</span>:
+<span id="L625" class="LineNr"> 625 </span>    <span class="Comment">// [1.4.1 Beta 4] Updated:</span>
+<span id="L626" class="LineNr"> 626 </span>    <span class="Comment">// Set this value to true/false to enable/disable drag and drop.</span>
+<span id="L627" class="LineNr"> 627 </span>    (read, write) bool Parsable;
+<span id="L628" class="LineNr"> 628 </span>    <span class="Comment">// Default: -1 (active playlist)</span>
+<span id="L629" class="LineNr"> 629 </span>    (read, write) <span class="Type">int</span> Playlist;
+<span id="L630" class="LineNr"> 630 </span>    <span class="Comment">// Default: true</span>
+<span id="L631" class="LineNr"> 631 </span>    (read, write) <span class="Type">boolean</span> ToSelect;
+<span id="L632" class="LineNr"> 632 </span>
+<span id="L633" class="LineNr"> 633 </span><span class="Statement">Methods</span>:
+<span id="L634" class="LineNr"> 634 </span>    <span class="Comment">// Parse dropped items as playlist</span>
+<span id="L635" class="LineNr"> 635 </span>    <span class="Type">void</span> ToPlaylist();
+<span id="L636" class="LineNr"> 636 </span>}
+<span id="L637" class="LineNr"> 637 </span>
+<span id="L638" class="LineNr"> 638 </span>
+<span id="L639" class="LineNr"> 639 </span><span class="Type">interface</span> IFbWindow {
+<span id="L640" class="LineNr"> 640 </span><span class="Statement">Properties</span>:
+<span id="L641" class="LineNr"> 641 </span>    (readonly) <span class="Type">int</span> ID;
+<span id="L642" class="LineNr"> 642 </span>    (readonly) <span class="Type">int</span> Width;
+<span id="L643" class="LineNr"> 643 </span>    (readonly) <span class="Type">int</span> Height;
+<span id="L644" class="LineNr"> 644 </span>    <span class="Comment">// [1.3.0] New:</span>
+<span id="L645" class="LineNr"> 645 </span>    <span class="Comment">// Returns: 0 - CUI, 1 - DUI</span>
+<span id="L646" class="LineNr"> 646 </span>    (readonly) <span class="Type">int</span> InstanceType;
+<span id="L647" class="LineNr"> 647 </span>    (read, write) <span class="Type">int</span> MaxWidth;
+<span id="L648" class="LineNr"> 648 </span>    (read, write) <span class="Type">int</span> MaxHeight;
+<span id="L649" class="LineNr"> 649 </span>    (read, write) <span class="Type">int</span> MinWidth;
+<span id="L650" class="LineNr"> 650 </span>    (read, write) <span class="Type">int</span> MinHeight;
+<span id="L651" class="LineNr"> 651 </span>    <span class="Comment">// [1.3.2] New:</span>
+<span id="L652" class="LineNr"> 652 </span>    <span class="Comment">// See Flags.txt for more details</span>
+<span id="L653" class="LineNr"> 653 </span>    (read, write) <span class="Type">int</span> DlgCode;
+<span id="L654" class="LineNr"> 654 </span>    <span class="Comment">// [1.3.3] New:</span>
+<span id="L655" class="LineNr"> 655 </span>    (readonly) <span class="Type">boolean</span> IsTransparent;
+<span id="L656" class="LineNr"> 656 </span>    <span class="Comment">// [1.3.7] New:</span>
+<span id="L657" class="LineNr"> 657 </span>    (readonly) <span class="Type">boolean</span> IsVisible;
+<span id="L658" class="LineNr"> 658 </span>
+<span id="L659" class="LineNr"> 659 </span><span class="Statement">Methods</span>:
+<span id="L660" class="LineNr"> 660 </span>    <span class="Type">void</span> Repaint(force = <span class="Constant">false</span>);
+<span id="L661" class="LineNr"> 661 </span>    <span class="Type">void</span> RepaintRect(x, y, w, h, force = <span class="Constant">false</span>);
+<span id="L662" class="LineNr"> 662 </span>    IMenuObj CreatePopupMenu();
+<span id="L663" class="LineNr"> 663 </span>    <span class="Comment">// [Obsolete] Please use window.SetTimeout() instead.</span>
+<span id="L664" class="LineNr"> 664 </span>    <span class="Comment">// Create an one shot timer, this timer will occur only once.</span>
+<span id="L665" class="LineNr"> 665 </span>    <span class="Comment">//ITimerObj CreateTimerTimeout(timeout);</span>
+<span id="L666" class="LineNr"> 666 </span>    <span class="Comment">// [Obsolete] Please use window.SetInterval() instead.</span>
+<span id="L667" class="LineNr"> 667 </span>    <span class="Comment">// Create an periodic timer, this timer will occur periodicly.</span>
+<span id="L668" class="LineNr"> 668 </span>    <span class="Comment">//ITimerObj CreateTimerInterval(delay);</span>
+<span id="L669" class="LineNr"> 669 </span>    <span class="Comment">// [Obsolete] </span>
+<span id="L670" class="LineNr"> 670 </span>    <span class="Comment">// Instead of KillTimer, you should use ITimerObj.Dispose()</span>
+<span id="L671" class="LineNr"> 671 </span>    <span class="Comment">//void KillTimer(ITimerObj);</span>
+<span id="L672" class="LineNr"> 672 </span>    <span class="Comment">// [1.5.0 Beta 4] New:</span>
+<span id="L673" class="LineNr"> 673 </span>    <span class="Comment">// returns the id or newly created timer</span>
+<span id="L674" class="LineNr"> 674 </span>    uint SetInterval(func, delay);
+<span id="L675" class="LineNr"> 675 </span>    <span class="Comment">// [1.5.0 Beta 4] New:</span>
+<span id="L676" class="LineNr"> 676 </span>    <span class="Comment">// returns the id or newly created timer</span>
+<span id="L677" class="LineNr"> 677 </span>    uint SetTimeout(func, delay);
+<span id="L678" class="LineNr"> 678 </span>    <span class="Comment">// [1.5.0 Beta 4] New;</span>
+<span id="L679" class="LineNr"> 679 </span>    <span class="Type">void</span> ClearTimeout(timerID);
+<span id="L680" class="LineNr"> 680 </span>    <span class="Comment">// [1.5.0 Beta 4] New:</span>
+<span id="L681" class="LineNr"> 681 </span>    <span class="Type">void</span> ClearInterval(timerID);
+<span id="L682" class="LineNr"> 682 </span>    <span class="Comment">// Notify other wsh panels with specified info thru callback function on_notify_data(name, info).</span>
+<span id="L683" class="LineNr"> 683 </span>    <span class="Comment">// [1.3.0] Update:</span>
+<span id="L684" class="LineNr"> 684 </span>    <span class="Comment">//  info can be any type now, but be aware of passing arrays and objects (because they may be unrecognized between</span>
+<span id="L685" class="LineNr"> 685 </span>    <span class="Comment">//     JScript and VBScript). However, VBArrays, strings, booleans, integers and floats, are safe to use.</span>
+<span id="L686" class="LineNr"> 686 </span>    <span class="Type">void</span> NotifyOthers(name, info);
+<span id="L687" class="LineNr"> 687 </span>    <span class="Comment">// These two methods below are in cooperation with callback on_metadb_changed().</span>
+<span id="L688" class="LineNr"> 688 </span>    <span class="Comment">// [1.4.0] Changed:</span>
+<span id="L689" class="LineNr"> 689 </span>    <span class="Comment">// NOTE: Make sure you have read Preprocessors.txt if you are using &quot;feature&quot; directive.</span>
+<span id="L690" class="LineNr"> 690 </span>    <span class="Comment">// [Obsolete] see on_metadb_changed() in Callbacks.txt</span>
+<span id="L691" class="LineNr"> 691 </span>    <span class="Comment">//void WatchMetadb(IFbMetadbHandle);</span>
+<span id="L692" class="LineNr"> 692 </span>    <span class="Comment">// [1.4.0] Changed:</span>
+<span id="L693" class="LineNr"> 693 </span>    <span class="Comment">// NOTE: Make sure you have read Preprocessors.txt if you are using &quot;feature&quot; directive.</span>
+<span id="L694" class="LineNr"> 694 </span>    <span class="Comment">// [Obsolete] see on_metadb_changed() in Callbacks.txt</span>
+<span id="L695" class="LineNr"> 695 </span>    <span class="Comment">//void UnWatchMetadb();</span>
+<span id="L696" class="LineNr"> 696 </span>    <span class="Comment">// Create a tooltip object</span>
+<span id="L697" class="LineNr"> 697 </span>    <span class="Comment">// e.g: window.CreateTooltip(&quot;Segoe UI&quot;, 32, 1);</span>
+<span id="L698" class="LineNr"> 698 </span>    IFbTooltip CreateTooltip(name, size_px, style);
+<span id="L699" class="LineNr"> 699 </span>    <span class="Comment">// Show configuration window of current panel</span>
+<span id="L700" class="LineNr"> 700 </span>    <span class="Type">void</span> ShowConfigure();
+<span id="L701" class="LineNr"> 701 </span>    <span class="Comment">// Show properties window of current panel</span>
+<span id="L702" class="LineNr"> 702 </span>    <span class="Type">void</span> ShowProperties();
+<span id="L703" class="LineNr"> 703 </span>    <span class="Comment">// Get value of name from properties</span>
+<span id="L704" class="LineNr"> 704 </span>    <span class="Comment">// If no value is present, store the defaultval for the name and returns</span>
+<span id="L705" class="LineNr"> 705 </span>    variant GetProperty(name[, defaultval]);
+<span id="L706" class="LineNr"> 706 </span>    <span class="Comment">// Set property value, if val is invalid, the remove it from properties</span>
+<span id="L707" class="LineNr"> 707 </span>    <span class="Comment">// property values will be saved as per-instance config in CUI, and can be exported to FCLs.</span>
+<span id="L708" class="LineNr"> 708 </span>    <span class="Type">void</span> SetProperty(name, val);
+<span id="L709" class="LineNr"> 709 </span>    <span class="Comment">// Retrieve pseudo transparent bakground image.</span>
+<span id="L710" class="LineNr"> 710 </span>    IGdiBitmap GetBackgroundImage();
+<span id="L711" class="LineNr"> 711 </span>    <span class="Comment">// Set mouse cursor</span>
+<span id="L712" class="LineNr"> 712 </span>    <span class="Comment">// For standard cursors, see Flags.txt for more details.</span>
+<span id="L713" class="LineNr"> 713 </span>    <span class="Type">void</span> SetCursor(id);
+<span id="L714" class="LineNr"> 714 </span>    <span class="Comment">// [1.3.0] New:</span>
+<span id="L715" class="LineNr"> 715 </span>    <span class="Comment">// Only valid in CUI</span>
+<span id="L716" class="LineNr"> 716 </span>    <span class="Comment">// for type and client_guid, see Flags.txt</span>
+<span id="L717" class="LineNr"> 717 </span>    uint GetColorCUI(type, client_guid = <span class="Constant">&quot;&quot;</span>);
+<span id="L718" class="LineNr"> 718 </span>    <span class="Comment">// [1.3.0] New:</span>
+<span id="L719" class="LineNr"> 719 </span>    <span class="Comment">// Only valid in CUI</span>
+<span id="L720" class="LineNr"> 720 </span>    <span class="Comment">// for type and client_guid, see Flags.txt</span>
+<span id="L721" class="LineNr"> 721 </span>    <span class="Comment">// NOTE: If 'client_guid' is not an empty string, the 'type' will be ignored.</span>
+<span id="L722" class="LineNr"> 722 </span>    <span class="Comment">//   Say that you can only specify 'type' or 'client_guid' at one time.</span>
+<span id="L723" class="LineNr"> 723 </span>    IGdiFont GetFontCUI(type, client_guid = <span class="Constant">&quot;&quot;</span>);
+<span id="L724" class="LineNr"> 724 </span>    <span class="Comment">// [1.3.0] New:</span>
+<span id="L725" class="LineNr"> 725 </span>    <span class="Comment">// Only valid in DUI</span>
+<span id="L726" class="LineNr"> 726 </span>    <span class="Comment">// for type, see Flags.txt</span>
+<span id="L727" class="LineNr"> 727 </span>    uint GetColorDUI(type);
+<span id="L728" class="LineNr"> 728 </span>    <span class="Comment">// [1.3.0] New:</span>
+<span id="L729" class="LineNr"> 729 </span>    <span class="Comment">// Only valid in DUI</span>
+<span id="L730" class="LineNr"> 730 </span>    <span class="Comment">// for type, see Flags.txt</span>
+<span id="L731" class="LineNr"> 731 </span>    IGdiFont GetFontDUI(type);
+<span id="L732" class="LineNr"> 732 </span>    <span class="Comment">// [1.3.1] New:</span>
+<span id="L733" class="LineNr"> 733 </span>    <span class="Comment">// class list: <a href="http://msdn.microsoft.com/en-us/library/bb773210%28VS.85%29.aspx">http://msdn.microsoft.com/en-us/library/bb773210%28VS.85%29.aspx</a></span>
+<span id="L734" class="LineNr"> 734 </span>    <span class="Comment">// e.g: var theme = window.CreateThemeManager(&quot;Button&quot;);</span>
+<span id="L735" class="LineNr"> 735 </span>    IThemeManager CreateThemeManager(classlist);
+<span id="L736" class="LineNr"> 736 </span>}
+<span id="L737" class="LineNr"> 737 </span>
+<span id="L738" class="LineNr"> 738 </span>
+<span id="L739" class="LineNr"> 739 </span><span class="Type">interface</span> IWSHUtils {
+<span id="L740" class="LineNr"> 740 </span><span class="Statement">Methods</span>:
+<span id="L741" class="LineNr"> 741 </span>    <span class="Comment">// While is_dll is true, check component file name, for example: utils.CheckComponent(&quot;foo_uie_wsh_panel_mod&quot;, true);</span>
+<span id="L742" class="LineNr"> 742 </span>    <span class="Comment">//   otherwise, check the name of the component only.</span>
+<span id="L743" class="LineNr"> 743 </span>    <span class="Type">boolean</span> CheckComponent(name, is_dll = <span class="Constant">false</span>);
+<span id="L744" class="LineNr"> 744 </span>    <span class="Comment">// name: can be either in english or the localized name in your os.</span>
+<span id="L745" class="LineNr"> 745 </span>    <span class="Type">boolean</span> CheckFont(name);
+<span id="L746" class="LineNr"> 746 </span>    <span class="Comment">// For art_id, see Flags.txt: AlbumArtId</span>
+<span id="L747" class="LineNr"> 747 </span>    <span class="Comment">// need_stub: Determine whether querying for stub image to display when there's no album art to show</span>
+<span id="L748" class="LineNr"> 748 </span>    <span class="Comment">// this is set in &quot;Advanced&quot; page of fb2k preferences</span>
+<span id="L749" class="LineNr"> 749 </span>    <span class="Comment">// return null if failed</span>
+<span id="L750" class="LineNr"> 750 </span>    <span class="Comment">// NOTE: filename in rawpath, use IFbMetadbHandle.RawPath to retrieve that value</span>
+<span id="L751" class="LineNr"> 751 </span>    <span class="Comment">//IGdiBitmap GetAlbumArt(rawpath, art_id = 0, need_stub = true);</span>
+<span id="L752" class="LineNr"> 752 </span>    <span class="Comment">// [1.3.0] New;</span>
+<span id="L753" class="LineNr"> 753 </span>    <span class="Comment">// Use this instead of GetAlbumArt() to retrieve album art data (support fb2k 1.0 search patterns).</span>
+<span id="L754" class="LineNr"> 754 </span>    IGdiBitmap GetAlbumArtV2(metadb, art_id = <span class="Number">0</span>, need_stub = <span class="Constant">true</span>);
+<span id="L755" class="LineNr"> 755 </span>    <span class="Comment">// Only read embedded album art</span>
+<span id="L756" class="LineNr"> 756 </span>    IGdiBitmap GetAlbumArtEmbedded(rawpath, art_id = <span class="Number">0</span>);
+<span id="L757" class="LineNr"> 757 </span>    <span class="Comment">// [1.3.0] CHG: Support fb2k 1.0 album art search patterns.</span>
+<span id="L758" class="LineNr"> 758 </span>    <span class="Comment">// [1.3.3] CHG: New no_load parameter, if true, the image will not load into memory. so parameter &quot;image&quot; will be </span>
+<span id="L759" class="LineNr"> 759 </span>    <span class="Comment">//     set to null in on_get_album_art_done() callback.</span>
+<span id="L760" class="LineNr"> 760 </span>    <span class="Comment">// HINT: window_id can be retrieved by window.ID</span>
+<span id="L761" class="LineNr"> 761 </span>    <span class="Comment">// NOTE: This function returns immediately, album art will be sent to on_get_album_art_done() callback as soon as album art is found</span>
+<span id="L762" class="LineNr"> 762 </span>    uint GetAlbumArtAsync(window_id, IFbMetadbHandle, art_id = <span class="Number">0</span>, need_stub = <span class="Constant">true</span>, only_embed = <span class="Constant">false</span>, no_load = <span class="Constant">false</span>);
+<span id="L763" class="LineNr"> 763 </span>    <span class="Comment">// [Plus 1.5.6] New;</span>
+<span id="L764" class="LineNr"> 764 </span>    <span class="Comment">// pattern: 设置项-显示-封面模板方式，即按行分割</span>
+<span id="L765" class="LineNr"> 765 </span>    <span class="Comment">//   e.g.   &quot;c:\\%album%.jpg\ncover.jpg&quot;;</span>
+<span id="L766" class="LineNr"> 766 </span>    IGdiBitmap GetAlbumArtV3(metadb, pattern , art_id = <span class="Number">0</span>, need_stub = <span class="Constant">true</span>, load_embed = <span class="Constant">true</span> , use_fallback = <span class="Constant">true</span>);
+<span id="L767" class="LineNr"> 767 </span>    <span class="Comment">// An INI file should like this:</span>
+<span id="L768" class="LineNr"> 768 </span>    <span class="Comment">// [section]</span>
+<span id="L769" class="LineNr"> 769 </span>    <span class="Comment">// key=val</span>
+<span id="L770" class="LineNr"> 770 </span>    <span class="Comment">// NOTE: ReadINI() return up to 255 characters, more characters will be truncated, so use INI files to read/write simple values</span>
+<span id="L771" class="LineNr"> 771 </span>    String ReadINI(filename, section, key[, defaultval]);
+<span id="L772" class="LineNr"> 772 </span>    <span class="Type">boolean</span> WriteINI(filename, section, key, val);
+<span id="L773" class="LineNr"> 773 </span>    <span class="Comment">// For virtual key codes: <a href="http://msdn.microsoft.com/en-us/library/ms927178.aspx">http://msdn.microsoft.com/en-us/library/ms927178.aspx</a></span>
+<span id="L774" class="LineNr"> 774 </span>    <span class="Type">boolean</span> IsKeyPressed(vkey);
+<span id="L775" class="LineNr"> 775 </span>    <span class="Comment">// Using Microsoft MS-DOS wildcards match type. ex (&quot;*.txt&quot;, &quot;abc?.tx?&quot;)</span>
+<span id="L776" class="LineNr"> 776 </span>    <span class="Type">boolean</span> PathWildcardMatch(pattern, str);
+<span id="L777" class="LineNr"> 777 </span>    <span class="Comment">// [1.4.0] Updated:</span>
+<span id="L778" class="LineNr"> 778 </span>    <span class="Comment">// Returns null if file cannot be read or doesn't exist.</span>
+<span id="L779" class="LineNr"> 779 </span>    <span class="Comment">// If codepabe == 0, text file can be either: UTF-16 with BOM, UTF-8 with BOM and ANSI.</span>
+<span id="L780" class="LineNr"> 780 </span>    <span class="Comment">// You can consider using helper routines for codepage in Codepages.txt.</span>
+<span id="L781" class="LineNr"> 781 </span>    String ReadTextFile(filename, codepage = <span class="Number">0</span>);
+<span id="L782" class="LineNr"> 782 </span>    <span class="Comment">// index: <a href="http://msdn.microsoft.com/en-us/library/ms724371%28VS.85%29.aspx">http://msdn.microsoft.com/en-us/library/ms724371%28VS.85%29.aspx</a></span>
+<span id="L783" class="LineNr"> 783 </span>    <span class="Comment">// Returns 0 if failed.</span>
+<span id="L784" class="LineNr"> 784 </span>    uint GetSysColor(index);
+<span id="L785" class="LineNr"> 785 </span>    <span class="Comment">// index: <a href="http://msdn.microsoft.com/en-us/library/ms724385%28VS.85%29.aspx">http://msdn.microsoft.com/en-us/library/ms724385%28VS.85%29.aspx</a></span>
+<span id="L786" class="LineNr"> 786 </span>    <span class="Comment">// Returns 0 if failed.</span>
+<span id="L787" class="LineNr"> 787 </span>    <span class="Type">int</span> GetSystemMetrics(index);
+<span id="L788" class="LineNr"> 788 </span>    <span class="Comment">// [1.3.0] New</span>
+<span id="L789" class="LineNr"> 789 </span>    <span class="Comment">// for masks, see Flags.txt, you can ignore these two parameters in almost all circumstances.</span>
+<span id="L790" class="LineNr"> 790 </span>    <span class="Comment">// VBArray is supported natived in VBScript and JScript: <a href="http://msdn.microsoft.com/en-us/library/3s0fw3t2%28VS.80%29.aspx">http://msdn.microsoft.com/en-us/library/3s0fw3t2%28VS.80%29.aspx</a></span>
+<span id="L791" class="LineNr"> 791 </span>    <span class="Comment">// If you want to convert it to a JScript array, use .toArray() method.</span>
+<span id="L792" class="LineNr"> 792 </span>    <span class="Comment">// Sample usage: var arr = utils.Glob(&quot;C:\\*.*&quot;).toArray();</span>
+<span id="L793" class="LineNr"> 793 </span>    VBArray Glob(pattern, exc_mask = FILE_ATTRIBUTE_DIRECTORY, inc_mask = <span class="Number">0xffffffff</span>);
+<span id="L794" class="LineNr"> 794 </span>    <span class="Comment">// [1.3.0] New</span>
+<span id="L795" class="LineNr"> 795 </span>    <span class="Comment">// [1.3.2] Updated</span>
+<span id="L796" class="LineNr"> 796 </span>    <span class="Comment">// [1.4.1 Beta 7] Updated: new mode &quot;chardet&quot;</span>
+<span id="L797" class="LineNr"> 797 </span>    <span class="Comment">// Test a file (or path)</span>
+<span id="L798" class="LineNr"> 798 </span>    <span class="Comment">// modes (NOTE: Case sensitive):</span>
+<span id="L799" class="LineNr"> 799 </span>    <span class="Comment">//   &quot;e&quot;: If path exists, return true</span>
+<span id="L800" class="LineNr"> 800 </span>    <span class="Comment">//   &quot;s&quot;: Retrieve file size, in bytes</span>
+<span id="L801" class="LineNr"> 801 </span>    <span class="Comment">//   &quot;d&quot;: If path is a directory, return true</span>
+<span id="L802" class="LineNr"> 802 </span>    <span class="Comment">//   &quot;split&quot;: return a VBArray, array[0] is the directory, arr[1] is the file basename, arr[2] is the file extension.</span>
+<span id="L803" class="LineNr"> 803 </span>    <span class="Comment">//          e.g: var arr = FileTest(&quot;D:\\Somdir\\Somefile.txt&quot;, &quot;split&quot;).toArray();</span>
+<span id="L804" class="LineNr"> 804 </span>    <span class="Comment">//           arr[0] &lt;= &quot;D:\\Somedir\\&quot; (always include backslash at the end)</span>
+<span id="L805" class="LineNr"> 805 </span>    <span class="Comment">//           arr[1] &lt;= &quot;Somefile&quot;</span>
+<span id="L806" class="LineNr"> 806 </span>    <span class="Comment">//           arr[2] &lt;= &quot;.txt&quot;</span>
+<span id="L807" class="LineNr"> 807 </span>    <span class="Comment">//   &quot;chardet&quot;: Guess the charset of a file, and return the codepage of it (it may not be accurate), returns 0 if error occured.</span>
+<span id="L808" class="LineNr"> 808 </span>    VARIANT FileTest(path, mode);
+<span id="L809" class="LineNr"> 809 </span>
+<span id="L810" class="LineNr"> 810 </span>    <span class="Comment">// [Plus 1.5.6] New:</span>
+<span id="L811" class="LineNr"> 811 </span>    IWindow GetWND(class_name);
+<span id="L812" class="LineNr"> 812 </span>    IWindow CreateWND(window_id);
+<span id="L813" class="LineNr"> 813 </span>    IWindow ReleaseCapture();
+<span id="L814" class="LineNr"> 814 </span>    <span class="Type">boolean</span> IsAeroEnabled();
+<span id="L815" class="LineNr"> 815 </span>    IGdiBitmap DecodeBase64Image(str);
+<span id="L816" class="LineNr"> 816 </span>    String GetClipboardText();
+<span id="L817" class="LineNr"> 817 </span>    <span class="Type">void</span> SetClipboardText(str);
+<span id="L818" class="LineNr"> 818 </span>    <span class="Type">void</span> PlaySound(path, flag);
+<span id="L819" class="LineNr"> 819 </span>    HCURSOR LoadCursorX(path);
+<span id="L820" class="LineNr"> 820 </span>    HCURSOR SetCursorX(handle);
+<span id="L821" class="LineNr"> 821 </span>    <span class="Type">void</span> ReleaseCursorX(handle);
+<span id="L822" class="LineNr"> 822 </span>    <span class="Type">boolean</span> IsVistaOrGreater();
+<span id="L823" class="LineNr"> 823 </span>    <span class="Comment">// 详见<a href="http://msdn.microsoft.com/en-us/library/windows/desktop/dd318700%28v=vs.85%29.aspx">http://msdn.microsoft.com/en-us/library/windows/desktop/dd318700%28v=vs.85%29.aspx</a></span>
+<span id="L824" class="LineNr"> 824 </span>    <span class="Comment">// 通常用作简繁转换</span>
+<span id="L825" class="LineNr"> 825 </span>    <span class="Comment">// lcid:    简体中文 = 0x0804 </span>
+<span id="L826" class="LineNr"> 826 </span>    <span class="Comment">//          繁体中文 = 0x0404</span>
+<span id="L827" class="LineNr"> 827 </span>    <span class="Comment">// flag:    LCMAP_SIMPLIFIED_CHINESE = 0x02000000;</span>
+<span id="L828" class="LineNr"> 828 </span>    <span class="Comment">//          LCMAP_TRADITIONAL_CHINESE = 0x04000000</span>
+<span id="L829" class="LineNr"> 829 </span>    String LCMapString(str, lcid, flag);
+<span id="L830" class="LineNr"> 830 </span>    <span class="Comment">// type_str:</span>
+<span id="L831" class="LineNr"> 831 </span>    <span class="Comment">// &quot;GET&quot;</span>
+<span id="L832" class="LineNr"> 832 </span>    <span class="Comment">// &quot;POST&quot;</span>
+<span id="L833" class="LineNr"> 833 </span>    IHttpRequest CreateHttpRequest(type_str);
+<span id="L834" class="LineNr"> 834 </span>    VBArray GetWindowsVersion();
+<span id="L835" class="LineNr"> 835 </span>
+<span id="L836" class="LineNr"> 836 </span>    <span class="Comment">// [Plus 1.5.7] New: Merge from Jscript Panel by marc2003</span>
+<span id="L837" class="LineNr"> 837 </span>    <span class="Comment">// returns a string like &quot;3wk 2d 1:30:21&quot;</span>
+<span id="L838" class="LineNr"> 838 </span>    String FormatDuration(seconds);
+<span id="L839" class="LineNr"> 839 </span>    <span class="Comment">// returns a string like &quot;7.9 GB&quot;</span>
+<span id="L840" class="LineNr"> 840 </span>    String FormatFileSize(bytes);
+<span id="L841" class="LineNr"> 841 </span>
+<span id="L842" class="LineNr"> 842 </span>
+<span id="L843" class="LineNr"> 843 </span>
+<span id="L844" class="LineNr"> 844 </span>}
+<span id="L845" class="LineNr"> 845 </span>
+<span id="L846" class="LineNr"> 846 </span>
+<span id="L847" class="LineNr"> 847 </span><span class="Comment">// [1.5.0] New: new interface for playback queue</span>
+<span id="L848" class="LineNr"> 848 </span><span class="Type">interface</span> IFbPlaybackQueueItem {
+<span id="L849" class="LineNr"> 849 </span><span class="Statement">Methods</span>:
+<span id="L850" class="LineNr"> 850 </span>    <span class="Comment">// item: an instance of IFbPlaybackQueueItem.</span>
+<span id="L851" class="LineNr"> 851 </span>    <span class="Type">boolean</span> Equals(item);
+<span id="L852" class="LineNr"> 852 </span>    <span class="Type">void</span> Dispose();
+<span id="L853" class="LineNr"> 853 </span>
+<span id="L854" class="LineNr"> 854 </span><span class="Statement">Properties</span>:
+<span id="L855" class="LineNr"> 855 </span>    (read, write) IFbMetadbHandle Handle;
+<span id="L856" class="LineNr"> 856 </span>    (read, write) uint PlaylistIndex;
+<span id="L857" class="LineNr"> 857 </span>    (read, write) uint PlaylistItemIndex;
+<span id="L858" class="LineNr"> 858 </span>}
+<span id="L859" class="LineNr"> 859 </span>
+<span id="L860" class="LineNr"> 860 </span><span class="Comment">// [1.5.0 Preview 3] New:</span>
+<span id="L861" class="LineNr"> 861 </span><span class="Type">interface</span> IFbPlayingItemLocation {
+<span id="L862" class="LineNr"> 862 </span><span class="Statement">Properties</span>:
+<span id="L863" class="LineNr"> 863 </span>    (readonly) <span class="Type">boolean</span> IsValid;
+<span id="L864" class="LineNr"> 864 </span>    (readonly) uint PlaylistIndex;
+<span id="L865" class="LineNr"> 865 </span>    (readonly) uint PlaylistItemIndex;
+<span id="L866" class="LineNr"> 866 </span>}
+<span id="L867" class="LineNr"> 867 </span>
+<span id="L868" class="LineNr"> 868 </span>
+<span id="L869" class="LineNr"> 869 </span><span class="Comment">// [1.5.0] New: This interface is added in 1.5.0</span>
+<span id="L870" class="LineNr"> 870 </span><span class="Type">interface</span> IFbPlaylistManager {
+<span id="L871" class="LineNr"> 871 </span><span class="Statement">Methods</span>:
+<span id="L872" class="LineNr"> 872 </span>    <span class="Comment">// [1.5.0 Preview 5]: New:</span>
+<span id="L873" class="LineNr"> 873 </span>    <span class="Comment">// Inserts new items into specified playlist, at specified position.</span>
+<span id="L874" class="LineNr"> 874 </span>    uint InsertPlaylistItems(playlistIndex, base, handles, select = <span class="Constant">false</span>);
+<span id="L875" class="LineNr"> 875 </span>    <span class="Comment">// [1.5.0 Preview 5]: New:</span>
+<span id="L876" class="LineNr"> 876 </span>    uint InsertPlaylistItemsFilter(playlistIndex, base, handles, select = <span class="Constant">false</span>);
+<span id="L877" class="LineNr"> 877 </span>    <span class="Comment">// [1.5.0 Preview 5]: New:</span>
+<span id="L878" class="LineNr"> 878 </span>    <span class="Type">void</span> MovePlaylistSelection(playlistIndex, delta);
+<span id="L879" class="LineNr"> 879 </span>    <span class="Comment">// [1.5.0 Preview 5]: New:</span>
+<span id="L880" class="LineNr"> 880 </span>    <span class="Type">void</span> RemovePlaylistSelection(playlistIndex, crop = <span class="Constant">false</span>);
+<span id="L881" class="LineNr"> 881 </span>    <span class="Comment">// [1.5.0 Preview 4]: New:</span>
+<span id="L882" class="LineNr"> 882 </span>    <span class="Comment">// Note that it's different from fb.GetSelection()</span>
+<span id="L883" class="LineNr"> 883 </span>    IFbMetadbHandleList GetPlaylistSelectedItems(playlistIndex);
+<span id="L884" class="LineNr"> 884 </span>    <span class="Comment">// Get all items into an instance of IFbMetadbHandleList from specified playlist</span>
+<span id="L885" class="LineNr"> 885 </span>    IFbMetadbHandleList GetPlaylistItems(playlistIndex);
+<span id="L886" class="LineNr"> 886 </span>    <span class="Comment">// state = true: select, deselect otherwise</span>
+<span id="L887" class="LineNr"> 887 </span>    <span class="Type">void</span> SetPlaylistSelectionSingle(playlistIndex, itemIndex, state);
+<span id="L888" class="LineNr"> 888 </span>    <span class="Comment">// state = true: select, deselect otherwise</span>
+<span id="L889" class="LineNr"> 889 </span>    <span class="Comment">// affectedItems: array of item indexes, </span>
+<span id="L890" class="LineNr"> 890 </span>    <span class="Comment">// ex&#0058; </span>
+<span id="L891" class="LineNr"> 891 </span>    <span class="Comment">//      affectedItems = [1, 3, 23]; </span>
+<span id="L892" class="LineNr"> 892 </span>    <span class="Comment">//      plman.SetPlaylistSelection(0, affectedItems, false); /* clear selection on item 1, 3 and 23.</span>
+<span id="L893" class="LineNr"> 893 </span>    <span class="Type">void</span> SetPlaylistSelection(playlistIndex, affectedItems, state);
+<span id="L894" class="LineNr"> 894 </span>    <span class="Comment">// Clear selection of specified playlist</span>
+<span id="L895" class="LineNr"> 895 </span>    <span class="Type">void</span> ClearPlaylistSelection(playlistIndex);
+<span id="L896" class="LineNr"> 896 </span>    <span class="Comment">// [1.5.0 Preview 4]: New:</span>
+<span id="L897" class="LineNr"> 897 </span>    <span class="Comment">// Retrieves index of focus item on specified playlist; returns -1 when no item has focus.</span>
+<span id="L898" class="LineNr"> 898 </span>    <span class="Type">int</span> GetPlaylistFocusItemIndex(playlistIndex);
+<span id="L899" class="LineNr"> 899 </span>    IFbMetadbHandle GetPlaylistFocusItemHandle(force);
+<span id="L900" class="LineNr"> 900 </span>    <span class="Type">void</span> SetPlaylistFocusItem(playlistIndex, itemIndex);
+<span id="L901" class="LineNr"> 901 </span>    <span class="Type">void</span> SetPlaylistFocusItemByHandle(playlistIndex, itemHandle);
+<span id="L902" class="LineNr"> 902 </span>    String GetPlaylistName(idx);
+<span id="L903" class="LineNr"> 903 </span>    <span class="Comment">// if name is &quot;&quot;, then Create a playlist autonamed with &quot;New Playlist &lt;number&gt;&quot;.</span>
+<span id="L904" class="LineNr"> 904 </span>    <span class="Comment">// return the index of the created playlist.</span>
+<span id="L905" class="LineNr"> 905 </span>    uint CreatePlaylist(idx, name);
+<span id="L906" class="LineNr"> 906 </span>    <span class="Type">boolean</span> RemovePlaylist(idx);
+<span id="L907" class="LineNr"> 907 </span>    <span class="Type">boolean</span> MovePlaylist(from, to);
+<span id="L908" class="LineNr"> 908 </span>    <span class="Type">boolean</span> RenamePlaylist(idx, name);
+<span id="L909" class="LineNr"> 909 </span>    <span class="Comment">// Duplicate all contents from one playlist to a new playlist.</span>
+<span id="L910" class="LineNr"> 910 </span>    <span class="Comment">// NOTE: This method only duplicate contents of the playlist, not its properties (eg. autoplaylist).</span>
+<span id="L911" class="LineNr"> 911 </span>    <span class="Comment">// from: Which index of playlist to copy from.</span>
+<span id="L912" class="LineNr"> 912 </span>    <span class="Comment">// name: New playlist name, when empty, using the same name as 'from'.</span>
+<span id="L913" class="LineNr"> 913 </span>    <span class="Comment">// Returns the index of newly created playlist.</span>
+<span id="L914" class="LineNr"> 914 </span>    uint DuplicatePlaylist(from, name = <span class="Constant">&quot;&quot;</span>);
+<span id="L915" class="LineNr"> 915 </span>    <span class="Comment">// [1.5.0 Preview 3] New:</span>
+<span id="L916" class="LineNr"> 916 </span>    <span class="Type">void</span> EnsurePlaylistItemVisible(playlistIndex, itemIndex);
+<span id="L917" class="LineNr"> 917 </span>    <span class="Comment">// [1.5.0 Preview 3] New:</span>
+<span id="L918" class="LineNr"> 918 </span>    <span class="Comment">// Retrieves playlist position of currently playing item.</span>
+<span id="L919" class="LineNr"> 919 </span>    <span class="Comment">// On failure (not playing or currently played item has been removed from the playlist it was on when starting),</span>
+<span id="L920" class="LineNr"> 920 </span>    <span class="Comment">//   the property &quot;IsValid&quot; of IFbPlayingItemLocation interface will be set to false.</span>
+<span id="L921" class="LineNr"> 921 </span>    IFbPlayingItemLocation GetPlayingItemLocation();
+<span id="L922" class="LineNr"> 922 </span>    <span class="Comment">// [1.5.0 Preview 3] New:</span>
+<span id="L923" class="LineNr"> 923 </span>    <span class="Comment">// Executes default doubleclick/enter action for specified item on specified playlist (starts playing </span>
+<span id="L924" class="LineNr"> 924 </span>    <span class="Comment">//   the item unless overridden by a lock to do something else).</span>
+<span id="L925" class="LineNr"> 925 </span>    <span class="Type">boolean</span> ExecutePlaylistDefaultAction(playlistIndex, playlistItemIndex);
+<span id="L926" class="LineNr"> 926 </span>    <span class="Comment">// [1.5.0 Preview 4] New:</span>
+<span id="L927" class="LineNr"> 927 </span>    <span class="Type">boolean</span> IsPlaylistItemSelected(playlistIndex, itemIndex);
+<span id="L928" class="LineNr"> 928 </span>    <span class="Comment">// [1.5.0 Preview 5] New:</span>
+<span id="L929" class="LineNr"> 929 </span>    <span class="Comment">// WORKAROUND: In DUI, you cannot run playlist commands of edit menu because they are invalid.</span>
+<span id="L930" class="LineNr"> 930 </span>    <span class="Type">void</span> SetActivePlaylistContext();
+<span id="L931" class="LineNr"> 931 </span>
+<span id="L932" class="LineNr"> 932 </span>    <span class="Comment">// [1.5.0 Preview 2] New:</span>
+<span id="L933" class="LineNr"> 933 </span>    IFbPlaybackQueueItem CreatePlaybackQueueItem();
+<span id="L934" class="LineNr"> 934 </span>    <span class="Comment">// Remove single item from playback queue</span>
+<span id="L935" class="LineNr"> 935 </span>    <span class="Type">void</span> RemoveItemFromPlaybackQueue(index);
+<span id="L936" class="LineNr"> 936 </span>    <span class="Comment">// affectedItems: array of item indexes</span>
+<span id="L937" class="LineNr"> 937 </span>    <span class="Type">void</span> RemoveItemsFromPlaybackQueue(affectedItems);
+<span id="L938" class="LineNr"> 938 </span>    <span class="Type">void</span> AddPlaylistItemToPlaybackQueue(playlistIndex, playlistItemIndex);
+<span id="L939" class="LineNr"> 939 </span>    <span class="Type">void</span> AddItemToPlaybackQueue(IFbMetadbHandle);
+<span id="L940" class="LineNr"> 940 </span>    uint GetPlaybackQueueCount();
+<span id="L941" class="LineNr"> 941 </span>    <span class="Comment">// returns an array of IFbPlaybackQueueItem instances.</span>
+<span id="L942" class="LineNr"> 942 </span>    VBArray GetPlaybackQueueContents();
+<span id="L943" class="LineNr"> 943 </span>    <span class="Comment">// returns -1 on failure.</span>
+<span id="L944" class="LineNr"> 944 </span>    <span class="Type">int</span> FindPlaybackQueueItemIndex(IFbMetadbHandle, playlistIndex, playlistItemIndex);
+<span id="L945" class="LineNr"> 945 </span>    <span class="Type">void</span> FlushPlaybackQueue();
+<span id="L946" class="LineNr"> 946 </span>    <span class="Comment">// This is actually the same as GetPlaybackQueueCount() &gt; 0</span>
+<span id="L947" class="LineNr"> 947 </span>    <span class="Type">boolean</span> IsPlaybackQueueActive();
+<span id="L948" class="LineNr"> 948 </span>
+<span id="L949" class="LineNr"> 949 </span>    <span class="Comment">// [1.5.3] New:</span>
+<span id="L950" class="LineNr"> 950 </span>    <span class="Comment">// Sorts specified playlist - entire playlist or selection only - by specified title formatting pattern, or randomizes the order.</span>
+<span id="L951" class="LineNr"> 951 </span>    <span class="Comment">// playlistIndex: Index of playlist to alter.</span>
+<span id="L952" class="LineNr"> 952 </span>    <span class="Comment">// pattern: Title formatting pattern to sort by. Set to &quot;&quot; to randomize the order of items.</span>
+<span id="L953" class="LineNr"> 953 </span>    <span class="Comment">// selOnly: Set to false to sort/randomize whole playlist, or to true to sort/randomize only selection on the playlist.</span>
+<span id="L954" class="LineNr"> 954 </span>    <span class="Comment">// returns true on success, false on failure (playlist locked etc).</span>
+<span id="L955" class="LineNr"> 955 </span>    <span class="Type">boolean</span> SortByFormat(playlistIndex, pattern, selOnly = <span class="Constant">false</span>);
+<span id="L956" class="LineNr"> 956 </span>
+<span id="L957" class="LineNr"> 957 </span>    <span class="Comment">// [1.5.4] New:</span>
+<span id="L958" class="LineNr"> 958 </span>    <span class="Comment">// direction: 1= Sort ascendingly, -1= Sort descendingly</span>
+<span id="L959" class="LineNr"> 959 </span>    <span class="Type">boolean</span> SortByFormatV2(playlistIndex, pattern, direction = <span class="Number">1</span>);
+<span id="L960" class="LineNr"> 960 </span>
+<span id="L961" class="LineNr"> 961 </span>    <span class="Comment">// [ Plus 1.5.6 ] New:</span>
+<span id="L962" class="LineNr"> 962 </span>    <span class="Comment">// 自动获取播放列表名称（根据列表曲目）</span>
+<span id="L963" class="LineNr"> 963 </span>    String PlaylistGetAutoName(playlistIndex);
+<span id="L964" class="LineNr"> 964 </span>    <span class="Comment">// 锁定播放列表</span>
+<span id="L965" class="LineNr"> 965 </span>    <span class="Comment">// FLAGs:</span>
+<span id="L966" class="LineNr"> 966 </span>    <span class="Comment">// PL_LOCK_ADD = 0x00000001</span>
+<span id="L967" class="LineNr"> 967 </span>    <span class="Comment">// PL_LOCK_REMOVE = 0x00000002</span>
+<span id="L968" class="LineNr"> 968 </span>    <span class="Comment">// PL_LOCK_REORDER = 0x00000004</span>
+<span id="L969" class="LineNr"> 969 </span>    <span class="Comment">// PL_LOCK_REPLACE = 0x00000008</span>
+<span id="L970" class="LineNr"> 970 </span>    <span class="Comment">// PL_LOCK_RENAME = 0x00000010</span>
+<span id="L971" class="LineNr"> 971 </span>    <span class="Comment">// PL_LOCK_REMOVE_PLAYLIST = 0x00000020</span>
+<span id="L972" class="LineNr"> 972 </span>    <span class="Type">void</span> PlaylistLock(playlistIndex, flag);
+<span id="L973" class="LineNr"> 973 </span>    <span class="Comment">// 注：锁定后的播放列表index更改后，请使用更改后的new_index进行unlock</span>
+<span id="L974" class="LineNr"> 974 </span>    <span class="Type">void</span> PlaylistUnlock(playlistIndex);
+<span id="L975" class="LineNr"> 975 </span>    <span class="Comment">// 完成后调用on_process_locations_done(metadbs)</span>
+<span id="L976" class="LineNr"> 976 </span>    <span class="Comment">// urls: JS Array</span>
+<span id="L977" class="LineNr"> 977 </span>    <span class="Type">void</span> ProcessLocationsAsync(urls);
+<span id="L978" class="LineNr"> 978 </span>
+<span id="L979" class="LineNr"> 979 </span>    <span class="Comment">// [Plus 1.5.7] New: from Jscript Panel</span>
+<span id="L980" class="LineNr"> 980 </span>    <span class="Type">void</span> ClearPlaylist(playlistIndex);
+<span id="L981" class="LineNr"> 981 </span>    <span class="Type">void</span> AddLocations(playlistIndex, paths[, select]);
+<span id="L982" class="LineNr"> 982 </span>
+<span id="L983" class="LineNr"> 983 </span>    <span class="Comment">// [Plus 1.5.7] New</span>
+<span id="L984" class="LineNr"> 984 </span>    <span class="Type">boolean</span> IsAutoPlaylist(idx);
+<span id="L985" class="LineNr"> 985 </span>    <span class="Comment">// [Plus 1.5.7] New</span>
+<span id="L986" class="LineNr"> 986 </span>    <span class="Comment">// sort: sort string expression.</span>
+<span id="L987" class="LineNr"> 987 </span>    <span class="Comment">// flags: 1 - always sort.</span>
+<span id="L988" class="LineNr"> 988 </span>    <span class="Type">boolean</span> CreateAutoPlaylist(idx, name, query, sort = <span class="Constant">&quot;&quot;</span>, flags = <span class="Number">0</span>);
+<span id="L989" class="LineNr"> 989 </span>    <span class="Type">boolean</span> ShowAutoPlaylistUI(idx);
+<span id="L990" class="LineNr"> 990 </span>
+<span id="L991" class="LineNr"> 991 </span>
+<span id="L992" class="LineNr"> 992 </span><span class="Statement">Properties</span>:
+<span id="L993" class="LineNr"> 993 </span>    <span class="Comment">// Known playback orders:</span>
+<span id="L994" class="LineNr"> 994 </span>    <span class="Comment">//      Default: 0,</span>
+<span id="L995" class="LineNr"> 995 </span>    <span class="Comment">//      RepeatPlaylist: 1,</span>
+<span id="L996" class="LineNr"> 996 </span>    <span class="Comment">//      RepeatTrack: 2,</span>
+<span id="L997" class="LineNr"> 997 </span>    <span class="Comment">//      Random: 3,</span>
+<span id="L998" class="LineNr"> 998 </span>    <span class="Comment">//      ShuffleTracks: 4,</span>
+<span id="L999" class="LineNr"> 999 </span>    <span class="Comment">//      ShuffleAlbums: 5,</span>
+<span id="L1000" class="LineNr">1000 </span>    <span class="Comment">//      ShuffleFolders: 6</span>
+<span id="L1001" class="LineNr">1001 </span>    (read, write) uint PlaybackOrder;
+<span id="L1002" class="LineNr">1002 </span>    (read, write) uint ActivePlaylist;
+<span id="L1003" class="LineNr">1003 </span>    (read, write) uint PlaylingPlaylist;
+<span id="L1004" class="LineNr">1004 </span>    (readonly) uint PlaylistCount;
+<span id="L1005" class="LineNr">1005 </span>    (readonly) uint PlaylistItemCount;
+<span id="L1006" class="LineNr">1006 </span>    <span class="Comment">// [1.5.0 Preview 9] New:</span>
+<span id="L1007" class="LineNr">1007 </span>    (readonly) IFbPlaylistRecyclerManager PlaylistRecyclerManager;
+<span id="L1008" class="LineNr">1008 </span>}
+<span id="L1009" class="LineNr">1009 </span>
+<span id="L1010" class="LineNr">1010 </span><span class="Comment">// [1.5.0 Preveiw 9] New:</span>
+<span id="L1011" class="LineNr">1011 </span><span class="Type">interface</span> PlaylistRecyclerManager {
+<span id="L1012" class="LineNr">1012 </span><span class="Statement">Properties</span>:
+<span id="L1013" class="LineNr">1013 </span>    <span class="Comment">// Purge multiple content at once.</span>
+<span id="L1014" class="LineNr">1014 </span>    <span class="Comment">// affectedItems is an array contains the indexes.</span>
+<span id="L1015" class="LineNr">1015 </span>    <span class="Type">void</span> Purge(affectedItems);
+<span id="L1016" class="LineNr">1016 </span>    <span class="Type">void</span> Restore(index);
+<span id="L1017" class="LineNr">1017 </span>    <span class="Type">void</span> RestoreById(id);
+<span id="L1018" class="LineNr">1018 </span>    <span class="Comment">// returns the index</span>
+<span id="L1019" class="LineNr">1019 </span>    uint FindById(id);
+<span id="L1020" class="LineNr">1020 </span>
+<span id="L1021" class="LineNr">1021 </span><span class="Statement">Methods</span>:
+<span id="L1022" class="LineNr">1022 </span>    (readonly) uint Count;
+<span id="L1023" class="LineNr">1023 </span>    (readonly) String Name(index);
+<span id="L1024" class="LineNr">1024 </span>    (readonly) IFbMetadbHandleList Content(index);
+<span id="L1025" class="LineNr">1025 </span>    (readonly) uint Id(index);
+<span id="L1026" class="LineNr">1026 </span>}
+<span id="L1027" class="LineNr">1027 </span>
+<span id="L1028" class="LineNr">1028 </span>
+<span id="L1029" class="LineNr">1029 </span><span class="Comment">// [ Plus 1.5.6 ] New: </span>
+<span id="L1030" class="LineNr">1030 </span><span class="Type">interface</span> IWindow {
+<span id="L1031" class="LineNr">1031 </span><span class="Statement">Properties</span>:
+<span id="L1032" class="LineNr">1032 </span>    <span class="Comment">//窗口左坐标</span>
+<span id="L1033" class="LineNr">1033 </span>   (read, write) Left;
+<span id="L1034" class="LineNr">1034 </span>   (read, write) Top;
+<span id="L1035" class="LineNr">1035 </span>   (read, write) Width;
+<span id="L1036" class="LineNr">1036 </span>   (read, write) Height;
+<span id="L1037" class="LineNr">1037 </span>   <span class="Comment">//窗口风格</span>
+<span id="L1038" class="LineNr">1038 </span>   (read, write) Style;
+<span id="L1039" class="LineNr">1039 </span>   <span class="Comment">//窗口扩展风格</span>
+<span id="L1040" class="LineNr">1040 </span>   (read, write) ExStyle;
+<span id="L1041" class="LineNr">1041 </span>   <span class="Comment">//窗口标题</span>
+<span id="L1042" class="LineNr">1042 </span>   (read, write) Caption;
+<span id="L1043" class="LineNr">1043 </span><span class="Statement">Methods</span>:
+<span id="L1044" class="LineNr">1044 </span>    IWindow GetChild(class_name, index);<span class="Comment">//获取类名为class_name的第index个面板</span>
+<span id="L1045" class="LineNr">1045 </span>    <span class="Comment">//flag=1 同GetParent</span>
+<span id="L1046" class="LineNr">1046 </span>    <span class="Comment">//flag=2 获取根窗口句柄</span>
+<span id="L1047" class="LineNr">1047 </span>    <span class="Comment">//详见 <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ms633502%28v=vs.85%29.aspx">http://msdn.microsoft.com/en-us/library/windows/desktop/ms633502%28v=vs.85%29.aspx</a></span>
+<span id="L1048" class="LineNr">1048 </span>    IWindow GetAncestor(flag = <span class="Number">1</span>);
+<span id="L1049" class="LineNr">1049 </span>    <span class="Type">void</span> SetParent(IWindow parent);
+<span id="L1050" class="LineNr">1050 </span>    <span class="Type">void</span> SendMsg(msg, wp, lp);
+<span id="L1051" class="LineNr">1051 </span>    <span class="Comment">//详细及flag见 <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ms633548%28v=vs.85%29.aspx">http://msdn.microsoft.com/en-us/library/windows/desktop/ms633548%28v=vs.85%29.aspx</a> </span>
+<span id="L1052" class="LineNr">1052 </span>    <span class="Type">void</span> Show(flag);
+<span id="L1053" class="LineNr">1053 </span>    <span class="Type">void</span> Move(x, y, w, h, redraw = <span class="Constant">false</span>);
+<span id="L1054" class="LineNr">1054 </span>    <span class="Type">boolean</span> IsVisible();
+<span id="L1055" class="LineNr">1055 </span>    <span class="Type">boolean</span> IsMinimized();
+<span id="L1056" class="LineNr">1056 </span>    <span class="Type">boolean</span> IsMaximized();
+<span id="L1057" class="LineNr">1057 </span>    <span class="Comment">//vista+</span>
+<span id="L1058" class="LineNr">1058 </span>    <span class="Comment">//mode = 0时，l t r b对应左/上/右/底边距</span>
+<span id="L1059" class="LineNr">1059 </span>    <span class="Comment">//mode = 1时，对应点(l,t)与(r,b)为左上/右下的矩形区域</span>
+<span id="L1060" class="LineNr">1060 </span>    <span class="Type">void</span> CreateGlass( l, r, t, b, mode = <span class="Number">0</span>);
+<span id="L1061" class="LineNr">1061 </span>    <span class="Comment">//color 透明色</span>
+<span id="L1062" class="LineNr">1062 </span>    <span class="Type">void</span> SetWindowTransparency(opacity,color);
+<span id="L1063" class="LineNr">1063 </span>    <span class="Type">int</span> MsgBox(caption,prompt,type);
+<span id="L1064" class="LineNr">1064 </span>    String InputBox(caption=<span class="Constant">&quot;&quot;</span>,prompt=<span class="Constant">&quot;&quot;</span>,defval=<span class="Constant">&quot;&quot;</span>,num_only = <span class="Constant">false</span>);
+<span id="L1065" class="LineNr">1065 </span>    <span class="Comment">//mode：</span>
+<span id="L1066" class="LineNr">1066 </span>    <span class="Comment">// 0 打开文件 1 保存文件 2 打开目录</span>
+<span id="L1067" class="LineNr">1067 </span>    <span class="Comment">// 打开目录时，参数除title 其他忽略</span>
+<span id="L1068" class="LineNr">1068 </span>    String FileDialog(mode = <span class="Number">0</span>, title=<span class="Constant">&quot;Open&quot;</span>, filetype=<span class="Constant">&quot;All Files|*.*&quot;</span>, defext=<span class="Constant">&quot;*&quot;</span>);
+<span id="L1069" class="LineNr">1069 </span>    IGdiBitmap PrintWindow(client_only = <span class="Constant">false</span>);
+<span id="L1070" class="LineNr">1070 </span>}
+<span id="L1071" class="LineNr">1071 </span>
+<span id="L1072" class="LineNr">1072 </span>
+<span id="L1073" class="LineNr">1073 </span><span class="Comment">// [ Plus 1.5.6 ] New:</span>
+<span id="L1074" class="LineNr">1074 </span><span class="Type">interface</span> IPrivateFontCollection {
+<span id="L1075" class="LineNr">1075 </span><span class="Statement">Properties</span>:
+<span id="L1076" class="LineNr">1076 </span>    (readonly) FamilyCount;
+<span id="L1077" class="LineNr">1077 </span><span class="Statement">Methods</span>:
+<span id="L1078" class="LineNr">1078 </span>    <span class="Type">int</span> AddFont(path);
+<span id="L1079" class="LineNr">1079 </span>    IGdiFont GetFont(name,size,style);
+<span id="L1080" class="LineNr">1080 </span>}
+<span id="L1081" class="LineNr">1081 </span>
+<span id="L1082" class="LineNr">1082 </span>
+<span id="L1083" class="LineNr">1083 </span><span class="Comment">// [ Plus 1.5.6 ] New</span>
+<span id="L1084" class="LineNr">1084 </span><span class="Comment">//实验性质</span>
+<span id="L1085" class="LineNr">1085 </span><span class="Type">interface</span> IHttpRequest{
+<span id="L1086" class="LineNr">1086 </span><span class="Statement">Methods</span>:
+<span id="L1087" class="LineNr">1087 </span>    <span class="Type">void</span> AddHeader(str);
+<span id="L1088" class="LineNr">1088 </span>    <span class="Type">void</span> AddPostData(name,value);
+<span id="L1089" class="LineNr">1089 </span>    String Run(url);
+<span id="L1090" class="LineNr">1090 </span>    <span class="Comment">//异步url请求，返回cookie值，完成后调用 on_http_run_done(cookie,string);</span>
+<span id="L1091" class="LineNr">1091 </span>    <span class="Type">int</span> RunAsync(window_id, url);
+<span id="L1092" class="LineNr">1092 </span>}
+<span id="L1093" class="LineNr">1093 </span>
+<span id="L1094" class="LineNr">1094 </span>
+<span id="L1095" class="LineNr">1095 </span><span class="Comment">/* Examples:</span>
+<span id="L1096" class="LineNr">1096 </span>
+<span id="L1097" class="LineNr">1097 </span><span class="Comment">var WS_CAPTION = 0x00C00000;</span>
+<span id="L1098" class="LineNr">1098 </span><span class="Comment">// 获取DUI界面下fb主窗口。注意，如果同时打开多个DUI的foobar2000，不要用此方法获取</span>
+<span id="L1099" class="LineNr">1099 </span><span class="Comment">var fb_wnd = utils.GetWND(&quot;{97E27FAA-C0B3-4b8e-A693-ED7881E99FC1}&quot;); //DUI</span>
+<span id="L1100" class="LineNr">1100 </span><span class="Comment">// 将主窗口位置向右移动1</span>
+<span id="L1101" class="LineNr">1101 </span><span class="Comment">fb_wnd.Left += 1;</span>
+<span id="L1102" class="LineNr">1102 </span><span class="Comment">// 去除主窗口WS_CAPTION风格</span>
+<span id="L1103" class="LineNr">1103 </span><span class="Comment">fb_wnd.Style &amp;= ~WS_CAPTION;</span>
+<span id="L1104" class="LineNr">1104 </span><span class="Comment">// 主窗口加上WS_CAPTION风格</span>
+<span id="L1105" class="LineNr">1105 </span><span class="Comment">fb_wnd.Style |= WS_CAPTION;</span>
+<span id="L1106" class="LineNr">1106 </span><span class="Comment">// 设置窗口标题(文本)</span>
+<span id="L1107" class="LineNr">1107 </span><span class="Comment">fb_wnd.Caption = &quot;主窗口标题&quot;;</span>
+<span id="L1108" class="LineNr">1108 </span><span class="Comment">// 获取窗口文本</span>
+<span id="L1109" class="LineNr">1109 </span><span class="Comment">fb.trace(fb_wnd.Caption);</span>
+<span id="L1110" class="LineNr">1110 </span>
+<span id="L1111" class="LineNr">1111 </span><span class="Comment">//获取第2个wsh plus面板的窗口对象</span>
+<span id="L1112" class="LineNr">1112 </span><span class="Comment">var wsh_wnd = fb_wnd.GetChild(&quot;uie_wsh_panel_mod_plus_class&quot;,2);</span>
+<span id="L1113" class="LineNr">1113 </span><span class="Comment">//获取根窗口</span>
+<span id="L1114" class="LineNr">1114 </span><span class="Comment">var fb_wnd2 = wsh_wnd.GetAncestor(2);</span>
+<span id="L1115" class="LineNr">1115 </span>
+<span id="L1116" class="LineNr">1116 </span><span class="Comment">//创建一个私有字体集合</span>
+<span id="L1117" class="LineNr">1117 </span><span class="Comment">var my_pfc = gdi.CreatePrivateFontCollection();</span>
+<span id="L1118" class="LineNr">1118 </span><span class="Comment">//添加一个字体</span>
+<span id="L1119" class="LineNr">1119 </span><span class="Comment">my_pfc.AddFont(&quot;c:\\文泉驿正黑.ttf&quot;);</span>
+<span id="L1120" class="LineNr">1120 </span><span class="Comment">//再添加一个字体</span>
+<span id="L1121" class="LineNr">1121 </span><span class="Comment">my_pfc.AddFont(&quot;c:\\华康少女体.ttf&quot;);</span>
+<span id="L1122" class="LineNr">1122 </span><span class="Comment">//还是...添加一个字体</span>
+<span id="L1123" class="LineNr">1123 </span><span class="Comment">my_pfc.AddFont(&quot;c:\\华文细黑.ttf&quot;);</span>
+<span id="L1124" class="LineNr">1124 </span><span class="Comment">//现在集合里面有3个字体了</span>
+<span id="L1125" class="LineNr">1125 </span><span class="Comment">fb.trace(my_pfc.FamilyCount);</span>
+<span id="L1126" class="LineNr">1126 </span><span class="Comment">//在集合中取得一个IGdiFont对象，大小38，常规字型</span>
+<span id="L1127" class="LineNr">1127 </span><span class="Comment">var font1 = my_pfc.GetFont(&quot;华康少女文字W5(P)&quot;,38,0);</span>
+<span id="L1128" class="LineNr">1128 </span><span class="Comment">//创建一张200*200大小的图片，初始透明</span>
+<span id="L1129" class="LineNr">1129 </span><span class="Comment">var img = gdi.CreateImage(200,200);</span>
+<span id="L1130" class="LineNr">1130 </span><span class="Comment">//获取图片的一个IGdiGraphics接口的对象</span>
+<span id="L1131" class="LineNr">1131 </span><span class="Comment">var g = img.GetGraphics();</span>
+<span id="L1132" class="LineNr">1132 </span><span class="Comment">//以点(1,2)为左上角，画一个长199，宽198的黑色矩形</span>
+<span id="L1133" class="LineNr">1133 </span><span class="Comment">g.FillSolidRect(1,2,199,198,0xef000000);</span>
+<span id="L1134" class="LineNr">1134 </span><span class="Comment">//用上面的font1画个文字，注:flag请用helper.txt里面的StringFormat()设置，颜色使用RGB(r,g,b)。</span>
+<span id="L1135" class="LineNr">1135 </span><span class="Comment">g.DrawString(&quot;示例文字&quot;,font1,0xEFFFFFFF,0,0,200,200);</span>
+<span id="L1136" class="LineNr">1136 </span><span class="Comment">//用完记得释放这个IGdiGraphics接口的对象;</span>
+<span id="L1137" class="LineNr">1137 </span><span class="Comment">img.ReleaseGraphics(g);</span>
+<span id="L1138" class="LineNr">1138 </span><span class="Comment">//在on_paint(gr){} 中可以用gr.DrawImage(img,....);</span>
+<span id="L1139" class="LineNr">1139 </span><span class="Comment">*/</span>
+<span id="L1140" class="LineNr">1140 </span>
+<span id="L1141" class="LineNr">1141 </span><span class="Comment">/*</span>
+<span id="L1142" class="LineNr">1142 </span><span class="Comment">example1: var fav_playlist_items = fb.GetQueryItems(plman.GetPlaylistItems(plman.ActivePlaylist), &quot;rating IS 5&quot;);</span>
+<span id="L1143" class="LineNr">1143 </span><span class="Comment">example2: var fav_library_items = fb.GetQueryItems(fb.GetLibraryItems(), &quot;rating IS 5&quot;);</span>
+<span id="L1144" class="LineNr">1144 </span><span class="Comment">results are unsorted</span>
+<span id="L1145" class="LineNr">1145 </span>
+<span id="L1146" class="LineNr">1146 </span><span class="Comment">NOTE: use try/catch to handle invalid queries. An empty handle list will be returned if the query is valid but there are no results.</span>
+<span id="L1147" class="LineNr">1147 </span><span class="Comment">*/</span>
+<span id="L1148" class="LineNr">1148 </span>
+<span id="L1149" class="LineNr">1149 </span>
+<span id="L1150" class="LineNr">1150 </span><span class="Comment">/*example</span>
+<span id="L1151" class="LineNr">1151 </span><span class="Comment">var items = fb.GetLibraryItems();</span>
+<span id="L1152" class="LineNr">1152 </span><span class="Comment">items.OrderByPath();</span>
+<span id="L1153" class="LineNr">1153 </span><span class="Comment">var current = &quot;&quot;;</span>
+<span id="L1154" class="LineNr">1154 </span><span class="Comment">var folders = [];</span>
+<span id="L1155" class="LineNr">1155 </span><span class="Comment">for (var i = 0; i &lt; items.Count; i++) {    </span>
+<span id="L1156" class="LineNr">1156 </span><span class="Comment">    var temp = items.Item(i).Path.replace(fb.GetLibraryRelativePath(items.Item(i)), &quot;&quot;);</span>
+<span id="L1157" class="LineNr">1157 </span><span class="Comment">    if (temp != current) {</span>
+<span id="L1158" class="LineNr">1158 </span><span class="Comment">        current = temp;</span>
+<span id="L1159" class="LineNr">1159 </span><span class="Comment">        folders.push(current);</span>
+<span id="L1160" class="LineNr">1160 </span><span class="Comment">    }</span>
+<span id="L1161" class="LineNr">1161 </span><span class="Comment">}</span>
+<span id="L1162" class="LineNr">1162 </span><span class="Comment">fb.ShowPopupMessage(folders.join(&quot;\n&quot;));</span>
+<span id="L1163" class="LineNr">1163 </span><span class="Comment">*/</span>
+<span id="L1164" class="LineNr">1164 </span>
+<span id="L1165" class="LineNr">1165 </span>
+<span id="L1166" class="LineNr">1166 </span><span class="Comment">/*example</span>
+<span id="L1167" class="LineNr">1167 </span><span class="Comment">var toRemoveArray=Array();</span>
+<span id="L1168" class="LineNr">1168 </span><span class="Comment">var toKeepArray=[&quot;album&quot;,&quot;artist&quot;,&quot;composer&quot;,&quot;date&quot;,&quot;genre&quot;,&quot;title&quot;,&quot;tracknumber&quot;];</span>
+<span id="L1169" class="LineNr">1169 </span><span class="Comment">var track_FileInfo = plist_items.Item(0).GetFileInfo();</span>
+<span id="L1170" class="LineNr">1170 </span><span class="Comment">for (var i = 0; i &lt;= track_FileInfo.MetaCount; i++) {</span>
+<span id="L1171" class="LineNr">1171 </span><span class="Comment">       if(!arrayContains(toKeepArray , track_FileInfo.MetaName(i))) {</span>
+<span id="L1172" class="LineNr">1172 </span><span class="Comment">           toRemoveArray[toRemoveArray.length]=track_FileInfo.MetaName(i);</span>
+<span id="L1173" class="LineNr">1173 </span><span class="Comment">           toRemoveArray[toRemoveArray.length]=&quot;&quot;;</span>
+<span id="L1174" class="LineNr">1174 </span><span class="Comment">       }</span>
+<span id="L1175" class="LineNr">1175 </span><span class="Comment">}</span>
+<span id="L1176" class="LineNr">1176 </span><span class="Comment">plist_items.UpdateFileInfoArray(toRemoveArray);</span>
+<span id="L1177" class="LineNr">1177 </span><span class="Comment">*/</span>
+<span id="L1178" class="LineNr">1178 </span>
+<span id="L1179" class="LineNr">1179 </span>
+<span id="L1180" class="LineNr">1180 </span><span class="Comment">/* ESLyric相关</span>
+<span id="L1181" class="LineNr">1181 </span>
+<span id="L1182" class="LineNr">1182 </span><span class="Comment">比如设置背景</span>
+<span id="L1183" class="LineNr">1183 </span><span class="Comment">windows.NotifyOthers(&quot;_eslyric_set_background_image_&quot;,gdi.CreateImage(44,22));</span>
+<span id="L1184" class="LineNr">1184 </span><span class="Comment">windows.NotifyOthers(&quot;_eslyric_set_background_color_&quot;,RGB(25,50,100));</span>
+<span id="L1185" class="LineNr">1185 </span>
+<span id="L1186" class="LineNr">1186 </span><span class="Comment">&quot;_eslyric_set_text_color_normal_&quot;</span>
+<span id="L1187" class="LineNr">1187 </span><span class="Comment">&quot;_eslyric_set_text_color_highlight_&quot;</span>
+<span id="L1188" class="LineNr">1188 </span><span class="Comment">&quot;_eslyric_set_background_color_&quot;</span>
+<span id="L1189" class="LineNr">1189 </span><span class="Comment">&quot;_eslyric_set_text_font_&quot;</span>
+<span id="L1190" class="LineNr">1190 </span><span class="Comment">&quot;_eslyric_set_text_titleformat_fallback_&quot;</span>
+<span id="L1191" class="LineNr">1191 </span><span class="Comment">&quot;_eslyric_set_text_fallback_&quot;</span>
+<span id="L1192" class="LineNr">1192 </span><span class="Comment">&quot;_eslyric_set_background_image_&quot;</span>
+<span id="L1193" class="LineNr">1193 </span>
+<span id="L1194" class="LineNr">1194 </span><span class="Comment">设置颜色的后面的参数都是 RGB(xx,xx,xx)</span>
+<span id="L1195" class="LineNr">1195 </span><span class="Comment">设置字体的就是 IGdiFont</span>
+<span id="L1196" class="LineNr">1196 </span><span class="Comment">图片IGdiBitmap</span>
+<span id="L1197" class="LineNr">1197 </span><span class="Comment">*/</span>
+<span id="L1198" class="LineNr">1198 </span>
+<span id="L1199" class="LineNr">1199 </span>
+<span id="L1200" class="LineNr">1200 </span><span class="Comment">/* Changelog</span>
+<span id="L1201" class="LineNr">1201 </span><span class="Comment"> </span>
+<span id="L1202" class="LineNr">1202 </span><span class="Comment">[2016-02-05]</span>
+<span id="L1203" class="LineNr">1203 </span>
+<span id="L1204" class="LineNr">1204 </span><span class="Comment">- ADD: Plus 和 Jscript Panel 的接口</span>
+<span id="L1205" class="LineNr">1205 </span><span class="Comment">- ADD: 一些帮助内容</span>
+<span id="L1206" class="LineNr">1206 </span><span class="Comment">- CHG: 注释掉过期接口</span>
+<span id="L1207" class="LineNr">1207 </span>
+<span id="L1208" class="LineNr">1208 </span><span class="Comment">*/</span>
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->

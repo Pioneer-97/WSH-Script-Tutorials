@@ -528,13 +528,13 @@ Methods:
     // Returns the index of newly created playlist.
     //uint DuplicatePlaylist(from, name = "");
     // [1.4.0] New:
-    boolean IsAutoPlaylist(idx);
+    //boolean IsAutoPlaylist(idx);
     // [1.4.0] New:
     // sort: sort string expression.
     // flags: 1 - always sort.
-    boolean CreateAutoPlaylist(idx, name, query, sort = "", flags = 0);
+    //boolean CreateAutoPlaylist(idx, name, query, sort = "", flags = 0);
     // [1.4.0] New:
-    boolean ShowAutoPlaylistUI(idx);
+    //boolean ShowAutoPlaylistUI(idx);
 	// [Plus 1.5.6] CHG:
     void ShowPreferences(guid_str="");
 	// [Plus 1.5.6 2014-09-25] New;
@@ -694,6 +694,7 @@ Methods:
     // [Obsolete] see on_metadb_changed() in Callbacks.txt
     //void UnWatchMetadb();
     // Create a tooltip object
+	// e.g: window.CreateTooltip("Segoe UI", 32, 1);
     IFbTooltip CreateTooltip(name, size_px, style);
     // Show configuration window of current panel
     void ShowConfigure();
@@ -962,12 +963,12 @@ Methods:
 	String PlaylistGetAutoName(playlistIndex);
 	// 锁定播放列表
 	// FLAGs:
-	// FLAG_ADD = 0x00000001
-	// FLAG_REMOVE = 0x00000002
-	// FLAG_REORDER = 0x00000004
-	// FLAG_REPLACE = 0x00000008
-	// FLAG_RENAME = 0x00000010
-	// FLAG_REMOVE_PLAYLIST = 0x00000020
+	// PL_LOCK_ADD = 0x00000001
+	// PL_LOCK_REMOVE = 0x00000002
+	// PL_LOCK_REORDER = 0x00000004
+	// PL_LOCK_REPLACE = 0x00000008
+	// PL_LOCK_RENAME = 0x00000010
+	// PL_LOCK_REMOVE_PLAYLIST = 0x00000020
 	void PlaylistLock(playlistIndex, flag);
 	// 注：锁定后的播放列表index更改后，请使用更改后的new_index进行unlock
 	void PlaylistUnlock(playlistIndex);
@@ -978,6 +979,15 @@ Methods:
 	// [Plus 1.5.7] New: from Jscript Panel
 	void ClearPlaylist(playlistIndex);
 	void AddLocations(playlistIndex, paths[, select]);
+
+	// [Plus 1.5.7] New
+    boolean IsAutoPlaylist(idx);
+	// [Plus 1.5.7] New
+    // sort: sort string expression.
+    // flags: 1 - always sort.
+    boolean CreateAutoPlaylist(idx, name, query, sort = "", flags = 0);
+    boolean ShowAutoPlaylistUI(idx);
+
 
 Properties:
     // Known playback orders:
@@ -1016,17 +1026,20 @@ Methods:
 }
 
 
-// [ Plus 1.5.6 以后 ] New: 
-// 此部分内容可能违反了官方开发协议
+// [ Plus 1.5.6 ] New: 
 interface IWindow {
 Properties:
-   (read, write) Left;//窗口左坐标
+	//窗口左坐标
+   (read, write) Left;
    (read, write) Top; 
    (read, write) Width; 
    (read, write) Height; 
-   (read, write) Style; //窗口风格
-   (read, write) ExStyle;//窗口扩展风格
-   (read, write) Caption;//窗口标题
+   //窗口风格
+   (read, write) Style; 
+   //窗口扩展风格
+   (read, write) ExStyle;
+   //窗口标题
+   (read, write) Caption;
 Methods:
 	IWindow GetChild(class_name, index);//获取类名为class_name的第index个面板
 	//flag=1 同GetParent
@@ -1079,8 +1092,7 @@ Methods:
 }
 
 
-/*
-Examples:
+/* Examples:
 
 var WS_CAPTION = 0x00C00000;
 // 获取DUI界面下fb主窗口。注意，如果同时打开多个DUI的foobar2000，不要用此方法获取
@@ -1171,13 +1183,13 @@ plist_items.UpdateFileInfoArray(toRemoveArray);
 windows.NotifyOthers("_eslyric_set_background_image_",gdi.CreateImage(44,22));
 windows.NotifyOthers("_eslyric_set_background_color_",RGB(25,50,100));
 
-_eslyric_set_text_color_normal_
-_eslyric_set_text_color_highlight_
-_eslyric_set_background_color_
-_eslyric_set_text_font_
-_eslyric_set_text_titleformat_fallback_
-_eslyric_set_text_fallback_
-_eslyric_set_background_image_
+"_eslyric_set_text_color_normal_"
+"_eslyric_set_text_color_highlight_"
+"_eslyric_set_background_color_"
+"_eslyric_set_text_font_"
+"_eslyric_set_text_titleformat_fallback_"
+"_eslyric_set_text_fallback_"
+"_eslyric_set_background_image_"
 
 设置颜色的后面的参数都是 RGB(xx,xx,xx)
 设置字体的就是 IGdiFont
@@ -1186,7 +1198,9 @@ _eslyric_set_background_image_
 
 
 /* Changelog
+ 
 [2016-02-05]
+
 - ADD: Plus 和 Jscript Panel 的接口
 - ADD: 一些帮助内容
 - CHG: 注释掉过期接口
