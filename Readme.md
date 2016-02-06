@@ -9,3 +9,8 @@
 - [给封面面板添加右键菜单](https://github.com/elia-is-me/WSH-Script-Tutorials/blob/master/WSH%20%E9%9D%A2%E6%9D%BF%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%E2%80%94%E2%80%94%E5%AE%8C%E5%96%84%E5%B0%81%E9%9D%A2%E6%98%BE%E7%A4%BA.md)
 - [按钮](https://github.com/elia-is-me/WSH-Script-Tutorials/blob/master/WSH%20%E9%9D%A2%E6%9D%BF%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%EF%BC%88%E4%BA%94%EF%BC%89%E2%80%94%E2%80%94%E6%8C%89%E9%92%AE.md)
 
+## 扩展阅读
+
+- [插件安装教程](http://user.qzone.qq.com/2547713469/blog/1397568900)
+- [WSH Panel Mod Script 讨论帖](https://hydrogenaud.io/index.php/topic,77883.0.html)
+- [JScript Panel 讨论帖](https://hydrogenaud.io/index.php/topic,110516.0.html)
