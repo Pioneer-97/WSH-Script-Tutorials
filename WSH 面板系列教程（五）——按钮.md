@@ -148,7 +148,9 @@ function TextButton() {
     this.colors = [color1, color2];
 }
 // 在 prototype 上添加方法
-// 我们要画按钮，还要监控它在鼠标按下、松开时的动作， 这些由 draw, lbtn_up, lbtn_down；判断指针是否在按钮上是个比较独立自主的过程，单独用个 is_mouse_over 方法
+// 我们要画按钮，还要监控它在鼠标按下、松开时的动作， 这些由 draw, lbtn_up,
+// lbtn_down；判断指针是否在按钮上是个比较独立自主的过程，单独用个 is_mouse_over
+// 方法
 TextButton.prototype.draw = function(graphic, x, y, w, h) {
     // 设定属性值
     this.x = x;
@@ -219,7 +221,8 @@ button1 = new TextButton("hello", bt_font, bt_color1, bt_color2);
 button2 = new TextButton("world", bt_font, bt_color1, bt_color3);
 
 // 回调(事件)函数
-// 可以看到，每个事件函数都比第一个例子短很多，虽然我们在前面多定义了个构造函数，但如果我们要画的按钮越多的话，那么节省的代码量也会越多（人总是很懒的）
+// 可以看到，每个事件函数都比第一个例子短很多，虽然我们在前面多定义了个构造函数
+// ，但如果我们要画的按钮越多的话，那么节省的代码量也会越多（人总是很懒的）
 
 function on_size() {
     ww = window.Width;
