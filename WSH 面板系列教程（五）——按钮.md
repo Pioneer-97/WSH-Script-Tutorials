@@ -252,6 +252,7 @@ function on_mouse_lbtn_up(x, y, mask) {
 ```
 
 效果图
+
 ![](https://raw.githubusercontent.com/elia-is-me/WSH-Script-Tutorials/master/images/doc1/Pic_20160206003.png)
 
 
