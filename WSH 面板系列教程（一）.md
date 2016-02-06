@@ -34,19 +34,26 @@ Wang T.P.在开发 WSH Panel Mod 的时候是遵守 foobar2000 的开发协议�
 
 ## 事前准备
 
-WSH Panel Mod Plus 是第三方插件，理所当然的要你自己下载安装。
-- [下载地址]()
-- [插件安装教程（参考）]()
+WSH Panel Mod Plus 是第三方插件，理所当然的要你自己下载安装:
+
+- [发布地址](http://tieba.baidu.com/p/3331999537)
+- [插件安装教程（参考）](https://github.com/elia-is-me/WSH-Script-Tutorials/blob/master/%E5%85%B6%E5%AE%83%E6%96%87%E7%AB%A0/foobar2000%20%E7%BB%84%E4%BB%B6%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B.md)
 
 安装好之后，要编辑布局，新建一个 WSHMP 面板显示在你的界面上，DUI 编辑布局很简单：
 
-![执行菜单命令](https://raw.githubusercontent.com/elia-is-me/WSH-Script-Tutorials/master/images/doc1/Pic_20160204004.png)
+- 菜单 > 布局 
+
+![](https://raw.githubusercontent.com/elia-is-me/WSH-Script-Tutorials/master/images/doc1/Pic_20160204004.png)
+
+- 在某块面板上右键 > 替换新用户组件
 
 ![右键单击](https://raw.githubusercontent.com/elia-is-me/WSH-Script-Tutorials/master/images/doc1/Pic_20160204005.png)
 
+- 替换为 WSH 面板加强版
+
 ![选择](https://raw.githubusercontent.com/elia-is-me/WSH-Script-Tutorials/master/images/doc1/Pic_20160204006.png)
 
-当看到这个界面时，准备工作完毕：
+- 当看到这个界面时，准备工作完毕：
 
 ![初始界面](https://raw.githubusercontent.com/elia-is-me/WSH-Script-Tutorials/master/images/doc1/Pic_20160204007.png)
 
@@ -58,7 +65,7 @@ WSH Panel Mod Plus 是第三方插件，理所当然的要你自己下载安装�
 
 ![脚本编辑器](https://raw.githubusercontent.com/elia-is-me/WSH-Script-Tutorials/master/images/doc1/Pic_20160204009.png)
 
-在下载的插件包里，有 doc 和 samples 两个文件夹，里面分别是**接口文档**和**实例**，这两个东西很重要，因为只要踏入 WSH 脚本的坑这两个文件夹里的东西以后是要常用到的。
+在下载的插件包里，有 doc 和 samples 两个文件夹（本 git 仓库里也有），里面分别是**接口文档**和**实例**，这两个东西很重要，因为只要踏入 WSH 脚本的坑这两个文件夹里的东西以后是要常用到的。
 
 > 多余的话：凡开始编程的人一般都会遇到选择哪个编辑器的问题，其实 WSHMP 自带的就是很好的编辑器，带提示，自动缩进，高亮等等，还可以折叠，可以显示控制台（很有用）。其它的话，notepad++，evernote，sublime3 等等都是挺好的编辑器，如果是编程新手的话只要注意别被拐骗到 vim 或者 emacs 的坑里的话基本不会有问题。
 
