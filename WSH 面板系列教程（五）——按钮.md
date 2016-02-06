@@ -163,12 +163,12 @@ TextButton.prototype.draw = function(graphic, x, y, w, h) {
     // 画文字
     graphic.GdiDrawText(this.text, this.font, RGB(255, 255, 255),
         x, y, w, h, DT_CENTER | DT_VCENTER | DT_CALCRECT);
-    }
+}
     
 TextButton.prototype.is_mouse_over = function(x, y) {
     return (x > this.x && x < this.x + this.w &&
         y > this.y && y < this.y + this.h);
-    }
+}
     
 TextButton.prototype.lbtn_down = function(x, y, mask) {
     if (this.is_mouse_over(x, y)) {

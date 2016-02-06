@@ -1,0 +1,123 @@
+﻿// vim:set ft=javascript et:
+
+// ==PREPROCESSOR==
+// @name "Simple Cover Show"
+// @author "Elia"
+// ==/PREPROCESSOR==
+
+var MF_STRING = 0x00000000;
+var DT = 0x00000001 | 0x00000004 | 0x00000400 | 0x00000800;
+var AlbumArtId = {
+	front: 0,
+	back: 1,
+	disc: 2,
+	icon: 3
+};
+var cover_id = 0;
+var keep_aspect_ratio = window.GetProperty("纠正宽高比", true);
+var if_font = gdi.Font("Tahoma", 14);
+
+var ww = 0, 
+	wh = 0;
+var g_img = null;
+var g_metadb = null;
+
+on_metadb_changed();
+
+function on_metadb_changed(metadb, fromhook) {
+	// 
+	g_metadb = fb.IsPlaying ? fb.GetNowPlaying() : null;
+	if (g_metadb) {
+		utils.GetAlbumArtAsync(window.ID, g_metadb, cover_id);
+	} else {
+		g_img = null;
+		window.Repaint();
+	}
+}
+
+function on_playback_new_track(metadb) {
+	on_metadb_changed();
+}
+
+function on_playback_stop(reason) {
+	if (reason != 2) {
+		on_metadb_changed();
+	}
+}
+
+function on_get_album_art_done(metadb, art_id, image, image_path) {
+	// 找到了封面，就存到 g_img 这个全局变量里，
+	// 没找到，image == null, g_img 也会被清空为 null
+	g_img = image;
+	// 
+	window.Repaint();
+}
+
+function on_size() {
+	ww = window.Width;
+	wh = window.Height;
+}
+
+function on_paint(gr) {
+
+	//bg
+	gr.FillSolidRect(0, 0, ww, wh, 0xffeeeeee);
+	if (g_img) {
+		if (keep_aspect_ratio) {
+			var scale_w = ww / g_img.Width;
+			var scale_h = wh / g_img.Height;
+			var scale = Math.min(scale_w, scale_h);
+			var pos_x = 0;
+			var pos_y = 0;
+			// 计算图片位置 (x, y)
+			if (scale_w < scale_h) {
+				pos_y = (wh - g_img.Height * scale) / 2;
+			} else {
+				pos_x = (ww - g_img.Width * scale) / 2;
+			}
+			// 画图
+			gr.DrawImage(g_img, pos_x, pos_y, g_img.Width * scale, g_img.Height * scale,
+					0, 0, g_img.Width, g_img.Height, 0, 255);
+		} else {
+			gr.DrawImage(g_img, 0, 0, ww, wh, 0, 0, g_img.Width, g_img.Height, 0, 255);
+		}
+	} else {
+        gr.GdiDrawText("[无图像]", if_font, 0xff000000, 0, 0, ww, wh, DT);
+    }
+
+}
+
+function on_mouse_rbtn_up(x, y, mask) {
+    if (mask == 4) {
+        return false;
+    }
+    if (x < 0 || y < 0 || x > ww || y > wh) {
+        return true;
+    }
+    // 创建菜单 _menu
+    var _menu = window.CreatePopupMenu();
+    var ret;
+    // 给 _menu 添加菜单项， 
+    _menu.AppendMenuItem(MF_STRING, 1, "保持宽高比");
+    _menu.CheckMenuItem(1, keep_aspect_ratio);
+    _menu.AppendMenuSeparator(); // 分割线
+    _menu.AppendMenuItem(MF_STRING, 2, "封面");
+    _menu.AppendMenuItem(MF_STRING, 3, "封底");
+    _menu.AppendMenuItem(MF_STRING, 4, "碟片");
+    _menu.AppendMenuItem(MF_STRING, 6, "艺术家");
+    _menu.CheckMenuRadioItem(2, 6, cover_id + 2)
+
+
+    ret = _menu.TrackPopupMenu(x, y);
+    if (ret == 1) {
+        keep_aspect_ratio = !keep_aspect_ratio;
+        window.SetProperty("保持宽高比", keep_aspect_ratio);
+        window.Repaint();
+    } else if (ret >= 2 && ret <= 6) {
+        cover_id = ret - 2;
+        on_metadb_changed();
+    }
+    _menu.Dispose();
+    return true;
+}
+
