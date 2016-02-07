@@ -138,7 +138,7 @@ Javascript 是面向对象的语言，声称`一切皆是对象`，不过它没�
 
 ```
 // 定义函数，添加 7 个属性
-function TextButton() {
+function TextButton(text, font, color1, color2) {
     this.x = 0;
     this.y = 0;
     this.w = 0;
@@ -148,9 +148,7 @@ function TextButton() {
     this.colors = [color1, color2];
 }
 // 在 prototype 上添加方法
-// 我们要画按钮，还要监控它在鼠标按下、松开时的动作， 这些由 draw, lbtn_up,
-// lbtn_down；判断指针是否在按钮上是个比较独立自主的过程，单独用个 is_mouse_over
-// 方法
+// 我们要画按钮，还要监控它在鼠标按下、松开时的动作， 这些由 draw, lbtn_up, lbtn_down；判断指针是否在按钮上是个比较独立自主的过程，单独用个 is_mouse_over 方法
 TextButton.prototype.draw = function(graphic, x, y, w, h) {
     // 设定属性值
     this.x = x;
@@ -163,12 +161,12 @@ TextButton.prototype.draw = function(graphic, x, y, w, h) {
     // 画文字
     graphic.GdiDrawText(this.text, this.font, RGB(255, 255, 255),
         x, y, w, h, DT_CENTER | DT_VCENTER | DT_CALCRECT);
-}
+    }
     
 TextButton.prototype.is_mouse_over = function(x, y) {
     return (x > this.x && x < this.x + this.w &&
         y > this.y && y < this.y + this.h);
-}
+    }
     
 TextButton.prototype.lbtn_down = function(x, y, mask) {
     if (this.is_mouse_over(x, y)) {
@@ -221,8 +219,7 @@ button1 = new TextButton("hello", bt_font, bt_color1, bt_color2);
 button2 = new TextButton("world", bt_font, bt_color1, bt_color3);
 
 // 回调(事件)函数
-// 可以看到，每个事件函数都比第一个例子短很多，虽然我们在前面多定义了个构造函数
-// ，但如果我们要画的按钮越多的话，那么节省的代码量也会越多（人总是很懒的）
+// 可以看到，每个事件函数都比第一个例子短很多，虽然我们在前面多定义了个构造函数，但如果我们要画的按钮越多的话，那么节省的代码量也会越多（人总是很懒的）
 
 function on_size() {
     ww = window.Width;
@@ -254,9 +251,207 @@ function on_mouse_lbtn_up(x, y, mask) {
 }
 ```
 
-效果图
-
+### 效果图
 ![](https://raw.githubusercontent.com/elia-is-me/WSH-Script-Tutorials/master/images/doc1/Pic_20160206003.png)
 
 
 ## 第三个例子
+
+这次我们做几个带有**具体功能**的按钮，而且也是第三个例子了，所以这次做个比较完善点的, 以后可以直接用，或者简单修改后用的按钮。
+
+### 示意图
+
+![](https://raw.githubusercontent.com/elia-is-me/WSH-Script-Tutorials/master/images/doc1/Pic_20160207003.png)
+
+先想象下其它软件上的按钮，它们的触发过程是怎么样的？
+
+- 鼠标移动到按钮上，按钮会变化（一般背景多出个浮动效果）
+- 鼠标点下去，按钮又变成按下去的效果
+- 鼠标松开，会触发按钮对应的功能
+- 如果鼠标按下去后，你有点后悔按下了，那么把指针移到按钮外再松开，不会触发对应的功能
+
+前面的 `TextButton` 是做不到上面的要求的，所以先对 `TextButton` 做点完善工作：
+
+```
+// 三个参数
+// font: 按钮文字的字体
+// colors: [color1, color2, color3] 这样的数组，分别表示三种状态的背景色
+// func: 按钮所触发的功能函数
+function TextButton(font, colors, func) {
+    this.font = font;
+    // colors: Array
+    // [color_normal, hover, down]
+    this.colors = colors;
+    this.x = 0;
+    this.y = 0;
+    this.w = 0;
+    this.h = 0;
+    this.state = 0; // 0: normal, 1: hover, 2: down
+    this.func = func;
+}
+
+// 添加方法
+// 在 prototype 上添加的方法一般叫公共方法
+TextButton.prototype = {
+    is_mouse_over: function(x, y) {
+        return (x > this.x && x < this.x + this.w &&
+            y > this.y && y < this.y + this.h);
+    },
+
+    draw: function(gr, text, x, y, w, h) {
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+        if (this.colors[this.state]) {
+            gr.FillSolidRect(x, y, w, h, this.colors[this.state]);
+        }
+        gr.GdiDrawText(text, this.font, RGB(255, 255, 255),
+            x, y, w, h, DT_VCENTER | DT_CENTER | DT_CALCRECT);
+    },
+
+    change_state: function(s) {
+        if (s == this.state) {
+            return;
+        }
+        this.state = s;
+        window.Repaint();
+    },
+
+    down: function(x, y, mask) {
+        if (this.is_mouse_over(x, y)) {
+            this.change_state(2);
+        }
+    },
+
+    up: function(x, y, mask) {
+        if (this.is_mouse_over(x, y)) {
+            this.change_state(1);
+            return true;
+        } else {
+            this.change_state(0);
+            return false;
+        }
+    },
+
+    move: function(x, y) {
+        if (this.state == 2) {
+            return;
+        } else {
+            if (this.is_mouse_over(x, y)) {
+                this.change_state(1);
+            } else {
+                this.change_state(0);
+            }
+        }
+    },
+
+    leave: function() {
+        this.change_state(0);
+    },
+
+    on_click: function(x, y) {
+        if (!this.func || typeof this.func != "function") {
+            return;
+        }
+        this.func(x, y);
+    }
+}
+```
+
+上面添加了一系列方法，其中 `draw` 方法在 `on_paint` 函数中执行，`move, down, up, leave` 则对应鼠标的移动、按下、松开、离开（面板）这几个关键动作。各个方法的逻辑并不复杂，看不懂还请有点耐心。
+
+```
+// 定义必须的常量、变量、函数
+var DT_LEFT = 0x00000000;
+var DT_CENTER = 0x00000001;
+var DT_RIGHT = 0x00000002;
+var DT_VCENTER = 0x00000004;
+var DT_CALCRECT = 0x00000400;
+var DT_NOPREFIX = 0x00000800;
+var DT_END_ELLIPSIS = 0x00008000;
+
+function RGB(r, g, b) {
+    return (0xff000000 | (r << 16) | (g << 8) | (b));
+}
+
+var ww = 0;
+var wh = 0;
+
+function on_size() {
+    ww = window.Width;
+    wh = window.Height;
+}
+
+// 声明按钮的字体，颜色
+var bt_font = gdi.Font("Segoe UI", 12);
+var bt_colors = [RGB(100, 100, 100), RGB(0, 100, 100), RGB(0, 50, 50)];
+// buttons 都存储在一个数组里，方便集中处理；
+var bt = [],
+    bt_len = 0;
+    
+// 添加实例化的按钮
+// 添加三个
+bt.push(new TextButton(bt_font, bt_colors, function() {
+    fb.Prev();
+}));
+bt.push(new TextButton(bt_font, bt_colors, function() {
+    fb.Next();
+}));
+bt.push(new TextButton(bt_font, bt_colors, function() {
+    fb.PlayOrPause();
+}));
+
+bt_len = bt.length;
+
+// 事件函数
+function on_paint(gr) {
+    // bg
+    gr.FillSolidRect(0, 0, ww, wh, RGB(245, 245, 245));
+
+    // buttons
+    bt[0].draw(gr, "前一首", 20, 20, 60, 28);
+    bt[1].draw(gr, "后一首", 100, 20, 60, 28);
+    bt[2].draw(gr, "播放/暂停", 180, 20, 80, 28);
+}
+
+// 由于每一个按钮的事件都是一样的，用个循环遍历一下
+function on_mouse_move(x, y) {
+    for (var i = 0; i < bt_len; i++) {
+        bt[i].move(x, y);
+    }
+}
+
+function on_mouse_lbtn_down(x, y, mask) {
+    for (var i = 0; i < bt_len; i++) {
+        bt[i].down(x, y, mask);
+    }
+}
+
+function on_mouse_lbtn_up(x, y, mask) {
+    for (var i = 0; i < bt_len; i++) {
+        if (bt[i].up(x, y, mask)) {
+            bt[i].on_click();
+            break;
+        }
+    }
+}
+
+function on_mouse_lbtn_dblclk(x, y, mask) {
+    for (var i = 0; i < bt_len; i++) {
+        bt[i].down(x, y);
+    }
+}
+
+function on_mouse_leave() {
+    for (var i = 0; i < bt_len; i++) {
+        bt[i].leave();
+    }
+}
+```
+
+外观来看，似乎并不怎么出彩的样子，不过这只是个示范。按钮的背景，文字都是在脚本里绘制的，而且还很简单，如果想做比较复杂的或者比较漂亮的按钮，那就要看你自己的美工水平了。本人并不擅长这个，所以没法随手就做个漂亮的按钮给你们看。
+
+代码优化的余地还有不少，比如那个 `for` 循环，怎么弄看你们自己了。按钮控件好多人做，所以例子很多，**Jensen** 和 **extremeHunter1972** 的按钮带动画效果，是目前看到的比较好的了；br3tt 的按钮则灵活性很高，用的时候很舒服；动画效果最好的目前是看到的一个日本人做的，然而他并没有分享，so...
+
+下次说什么呢？进度条和音量条吧。话说在写教程期间所有的示例都是现写的，写完估计可以积累不少吧... 都是准备弃坑的人了，哎...
