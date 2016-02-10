@@ -14,5 +14,6 @@
 ## 扩展阅读
 
 - [插件安装教程](https://github.com/elia-is-me/WSH-Script-Tutorials/blob/master/%E5%85%B6%E5%AE%83%E6%96%87%E7%AB%A0/foobar2000%20%E7%BB%84%E4%BB%B6%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B.md)
+- [WSH Panel Mod 发布讨论帖](https://hydrogenaud.io/index.php/topic,70363.0.html)
 - [WSH Panel Mod Script 讨论帖](https://hydrogenaud.io/index.php/topic,77883.0.html)
 - [JScript Panel 讨论帖](https://hydrogenaud.io/index.php/topic,110516.0.html)
