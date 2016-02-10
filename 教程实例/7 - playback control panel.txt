@@ -1,0 +1,440 @@
+﻿// vim: ft=javascript fileencoding=utf-8 bomb et:
+//
+// author: elia
+// update: 2016-02-10
+// license: NONE
+
+
+// 常用函数
+
+// 用在 gr.DrawString() 接口中
+function StringFormat() {
+	var h_align = 0,
+	v_align = 0,
+	trimming = 0,
+	flags = 0;
+	switch (arguments.length) {
+		case 4:
+			flags = arguments[3];
+		case 3:
+			trimming = arguments[2];
+		case 2:
+			v_align = arguments[1];
+		case 1:
+			h_align = arguments[0];
+			break;
+		default:
+			return 0;
+	};
+	return ((h_align << 28) | (v_align << 24) | (trimming << 20) | flags);
+}
+
+function RGBA(r, g, b, a) {
+	return ((a << 24) | (r << 16) | (g << 8) | (b));
+}
+
+function RGB(r, g, b) {
+	return (0xff000000 | (r << 16) | (g << 8) | (b));
+}
+
+// 常用常数，参考 Flag.txt
+var DT_LEFT = 0x00000000;
+var DT_CENTER = 0x00000001;
+var DT_RIGHT = 0x00000002;
+var DT_VCENTER = 0x00000004;
+var DT_WORDBREAK = 0x00000010;
+var DT_CALCRECT = 0x00000400;
+var DT_NOPREFIX = 0x00000800;
+var DT_END_ELLIPSIS = 0x00008000;
+var DT_SINGLELINE = 0x00000020;
+
+
+
+var Slider = function(nob_img, func_get, func_set) {
+	this.is_drag = false;
+	this.get = (function () {
+		return typeof func_get == "function" ? func_get : function() {};
+	})();
+	this.set = (function () {
+		return typeof func_set == "function" ? func_set : function () {};
+	})();
+	this.pos = this.get();
+	this.nob_img = nob_img ? nob_img : null;
+}
+Slider.prototype.draw = function(gr, x, y, w, h, y_offset, active_color, inactive_color) {
+	if (h <= y_offset * 2) {
+		y_offset = 0;
+	}
+	// 进度条背景
+	gr.FillSolidRect(x, y+y_offset, w, h - y_offset * 2, inactive_color);
+	if (this.pos > 0 && this.pos <= 1) {
+		gr.FillSolidRect(x, y+y_offset, w * this.pos, h-y_offset*2, active_color);
+	}
+	// nob 图片
+	if (this.nob_img) {
+		var img_w = nob_image.Width;
+		if (!(this.pos >= 0)) {
+			this.pos = 0;
+		}
+		gr.DrawImage(this.nob_img, x+w*this.pos - img_w/2, (h - img_w)/2+y, img_w, img_w,
+				0, 0, img_w, img_w, 0, 255);
+	};
+
+	this.x = x;
+	this.y = y;
+	this.w = w;
+	this.h = h;
+}
+Slider.prototype.is_mouse_over = function(x, y) {
+	return (x > this.x && x < this.x + this.w && y > this.y && y < this.y + this.h);
+}
+
+Slider.prototype.down = function(x, y) {
+	if (this.is_mouse_over(x, y)) {
+		this.is_drag = true;
+		this.move(x, y);
+	}
+}
+
+Slider.prototype.up = function(x, y) {
+	this.is_drag = false;
+}
+
+Slider.prototype.move = function(x, y) {
+	if (this.is_drag) {
+		x -= this.x ;
+		this.pos = x < 0 ? 0 : x > this.w ? 1 : x / this.w;
+		this.set(this.pos);
+		window.Repaint();
+	}
+}
+
+Slider.prototype.update = function() {
+	this.pos = this.get();
+	window.Repaint();
+}
+
+//> 
+
+var Button = function(func) {
+	this.func = func;
+	this.state = 0;
+}
+Button.prototype.is_mouse_over = function(x, y) {
+	return (x > this.x && x < this.x + this.w &&
+			y > this.y && y < this.y + this.h);
+};
+Button.prototype.draw = function(gr, img, x, y) {
+	this.x = x;
+	this.y = y;
+	this.w = img.Width;
+	this.h = img.Height;
+	var alpha = 255;
+	if (this.state == 2) {
+		alpha = 100;
+	}
+	gr.DrawImage(img, x, y, this.w, this.h, 0, 0, this.w, this.h, 0, alpha);
+}
+
+Button.prototype.is_mouse_over = function(x, y) {
+	return (x > this.x && x < this.x + this.w &&
+			y > this.y && y < this.y + this.h);
+}
+
+Button.prototype.change_state = function(s) {
+	if (s == this.state) {
+		return;
+	}
+	this.state = s;
+	window.Repaint();
+}
+Button.prototype.down = function (x, y) {
+	if (this.is_mouse_over(x, y)) {
+		this.change_state(2);
+	}
+}
+
+Button.prototype.up = function(x, y) {
+	if (this.is_mouse_over(x, y)) {
+		this.change_state(1);
+		return true;
+	} else {
+		this.change_state(0);
+		return false;
+	}
+}
+
+Button.prototype.move = function(x, y) {
+	if (this.state == 2) {
+		return;
+	} else {
+		if (this.is_mouse_over(x, y)) {
+			this.change_state(1);
+		} else {
+			this.change_state(0);
+		}
+	}
+}
+
+Button.prototype.leave = function() {
+	this.change_state(0);
+}
+
+Button.prototype.on_click = function(x, y) {
+	if (!this.func || typeof this.func != "function") {
+		return ;
+	}
+	this.func(x, y);
+}
+
+//>>
+function reset_time() {
+	length_time = "0:00";
+	playback_time = "0:00";
+	window.Repaint();
+}
+
+function prepare_images() {
+	var g;
+
+	nob_image = gdi.CreateImage(14, 14);
+	// 这里的 g 和 on_paint 的参数 gr 是同个品种
+	g = nob_image.GetGraphics();
+	g.SetSmoothingMode(4);
+	g.FillEllipse(1, 1, 12, 12, text_color);
+	g.FillEllipse(3, 3, 8, 8, back_color);
+	g.SetSmoothingMode(0);
+	nob_image.ReleaseGraphics(g); 
+
+	// 开始画图标
+	// 图标图片都是相同的，只有中间的字符不同
+
+	var ico_font = gdi.Font("Segoe MDL2 Assets", 15, 0);
+	// 之前估计有误，得 8 个图标图片
+	var ico_name = ["prev", "pause", "play", "next", "volume", "shuffle", "repeat", "repeat1"];
+	// 对应的 unicode 编码
+	var ico_code = ["\uE100", "\uE103", "\uE102", "\uE101", "\uE15D" , "\uE14B", "\uE149", "\uE1CC"];
+	var len = ico_code.length;
+	var w = 30;
+
+	for (var i = 0; i < len; i++) {
+		bt_images[ico_name[i]] = gdi.CreateImage(w, w);
+		g = bt_images[ico_name[i]].GetGraphics();
+
+		g.SetTextRenderingHint(3);
+		g.DrawString(ico_code[i], ico_font, text_color, 0, 0, w, w, StringFormat(1, 1));
+		g.DrawString(ico_code[i], ico_font, text_color, 0, 0, w, w, StringFormat(1, 1));
+		g.SetTextRenderingHint(0);
+
+		bt_images[ico_name[i]].ReleaseGraphics(g);
+	}
+
+	// repeat 和 shuffle 图标的状态背景，一个半透明圆
+	bt_images["round"] = gdi.CreateImage(w, w);
+	g = bt_images["round"].GetGraphics();
+	g.SetSmoothingMode(4);
+	g.FillEllipse(0, 0, w, w, 0x20000000);
+	g.SetSmoothingMode(0);
+	bt_images["round"].ReleaseGraphics(g);
+
+}
+
+//>
+
+// 公共变量
+var ww, wh;
+var back_color = RGB(50, 89, 3);
+var text_color = RGB(250, 250, 250);
+
+var nob_image = null;
+var bt_images = {};
+// playback seeker
+var sk; 
+var time_font = gdi.Font("Segoe UI Semibold", 12);
+var length_time = "0:00",
+	playback_time = "0:00";
+
+// buttons array
+var bt = [];
+
+//>>
+
+// on script load:
+
+// 限制面板高度的最大和最小值，两值相等
+// 则面板的高度固定不变，同样的还有 window.MaxWidth 
+// 和 window.MinWidth.
+window.MaxHeight = window.MinHeight = 130;
+prepare_images();
+
+sk = new Slider(nob_image, 
+		function() {
+			return fb.PlaybackTime / fb.PlaybackLength;
+		},
+		function (pos) {
+			fb.PlaybackTime = fb.PlaybackLength * pos;
+		});
+
+bt.push(new Button(function() {
+	fb.Prev();
+})); // Prev
+bt.push(new Button(function() {
+	fb.PlayOrPause();
+})); // Play or pause
+bt.push(new Button(function() {
+	fb.Next();
+})); // Next
+bt.push(new Button()); // Volume
+bt.push(new Button(function() {
+	if (fb.PlaybackOrder != 4) {
+		fb.PlaybackOrder = 4;
+	} else {
+		fb.PlaybackOrder = 0;
+	}
+})); // Shuffle
+bt.push(new Button(function() {
+	if (fb.PlaybackOrder == 1) {
+		fb.PlaybackOrder = 2;
+	} else if (fb.PlaybackOrder == 2) {
+		fb.PlaybackOrder = 0;
+	} else {
+		fb.PlaybackOrder = 1;
+	}
+})); // Repeat
+
+
+function on_size() {
+	ww = window.Width;
+	wh = window.Height;
+}
+
+function on_paint(gr) {
+	// Bg, 如果看到颜色却不知道 RGB 值，可以用取色软件，
+	// 比如本人用的是 PicPick，可以截图，取色
+	gr.FillSolidRect(0, 0, ww, wh, back_color);
+
+	// 进度条
+	sk.draw(gr, 70, 25, ww-140, 16, 7, text_color & 0xeeffffff, text_color & 0x20ffffff);
+	// 进度条两边的时间
+	gr.GdiDrawText(playback_time, time_font, text_color, 10, 20, 50, 26, DT_VCENTER | DT_CENTER | DT_CALCRECT);
+	gr.GdiDrawText(length_time, time_font, text_color, ww-60, 20, 50, 26, DT_VCENTER | DT_CENTER | DT_CALCRECT);
+
+	// 按钮
+	var y = 70;
+	var img_w = bt_images.prev.Width;
+	var pad = 20;
+	// 计算第一个按钮的 x 坐标
+	var x = Math.ceil((ww - img_w*bt.length - pad*(bt.length-1)) / 2);
+
+	var pb_order = fb.PlaybackOrder;
+
+	bt[0].draw(gr, bt_images.prev, x, y, img_w, img_w);
+
+	x+= (img_w+pad);
+	bt[1].draw(gr, fb.IsPlaying && !fb.IsPaused ? bt_images.pause : bt_images.play, x, y, img_w, img_w);
+
+	x+= (img_w+pad);
+	bt[2].draw(gr, bt_images.next, x, y, img_w, img_w);
+
+	x+= (img_w+pad);
+	bt[3].draw(gr, bt_images.volume, x, y, img_w, img_w);
+
+	x+= (img_w+pad);
+	if (pb_order == 4) {
+		gr.DrawImage(bt_images.round, x, y, img_w, img_w, 0, 0, img_w, img_w, 0, 255);
+	}
+	bt[4].draw(gr, bt_images.shuffle, x, y, img_w, img_w);
+
+	x+= (img_w+pad);
+	if (pb_order > 0 && pb_order < 3) {
+		gr.DrawImage(bt_images.round, x, y, img_w, img_w, 0, 0, img_w, img_w, 0, 255);
+	}
+	bt[5].draw(gr, pb_order == 2 ? bt_images.repeat1 : bt_images.repeat, x, y, img_w, img_w);
+
+
+}
+
+function on_mouse_move(x, y) {
+	if (fb.IsPlaying) {
+		sk.move(x, y);
+	}
+	//vl.move(x, y);
+
+	// buttons
+	for (var i = 0; i < bt.length; i++) {
+		bt[i].move(x, y);
+	}
+}
+
+function on_mouse_lbtn_down(x, y) {
+	if (fb.IsPlaying) {
+		sk.down(x, y);
+	}
+	//vl.down(x, y);
+
+	for (var i = 0; i < bt.length; i++) {
+		bt[i].down(x, y);
+	}
+}
+
+function on_mouse_lbtn_up(x, y) {
+	sk.up(x, y);
+	//vl.up(x, y);
+
+	for (var i = 0; i < bt.length; i++) {
+		if (bt[i].up(x, y)) {
+			bt[i].on_click(x, y);
+		}
+	}
+
+}
+
+function on_mouse_lbtn_dblclk(x, y, mask) {
+	on_mouse_lbtn_down(x, y, mask);
+}
+
+function on_mouse_leave() {
+	for (var i = 0; i < bt.length; i++) {
+		bt[i].leave();
+	}
+}
+
+
+
+function on_playback_starting() {
+	reset_time();
+	sk.update();
+}
+
+function on_playback_pause(state) {
+	window.Repaint();
+}
+
+function on_playback_order_changed(new_order) {
+	window.Repaint();
+}
+
+function on_playback_new_track(metadb) {
+	length_time = fb.TitleFormat("[%length%]").EvalWithMetadb(metadb);
+	window.Repaint();
+}
+
+function on_playback_stop(reason) {
+	if (reason != 2) {
+		sk.update();
+		reset_time();
+	}
+}
+
+function on_playback_time(time) {
+	playback_time = utils.FormatDuration(time);
+	sk.update();
+}
+
+// >
+// on script load 
+
+if (fb.IsPlaying) {
+	on_playback_new_track(fb.GetNowPlaying());
+	on_playback_time(fb.PlaybackTime);
+}
