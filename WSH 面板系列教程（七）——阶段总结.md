@@ -381,7 +381,7 @@ Button.prototype.on_click = function(x, y) {
 
 变动的地方很少. 
 
-然后将按钮画上去，再写出需要的事件函数，就 OK 了，前面东一段西一段代码很乱，到[这里]()看完整代码吧。
+然后将按钮画上去，再写出需要的事件函数，就 OK 了，前面东一段西一段代码很乱，到[这里](https://github.com/elia-is-me/WSH-Script-Tutorials/blob/master/%E6%95%99%E7%A8%8B%E5%AE%9E%E4%BE%8B/7%20-%20playback%20control%20panel.txt)看完整代码吧。
 （音量功能未完成。）
 
 这下，基本就完工了，差不多下图那个样子。不过还有很多细节可以修改，比如我觉得这个面板太高了点，比如各个部件的大小，位置等等。
