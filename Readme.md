@@ -8,7 +8,8 @@
 - [画一个封面显示面板](https://github.com/elia-is-me/WSH-Script-Tutorials/blob/master/WSH%20%E9%9D%A2%E6%9D%BF%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%EF%BC%88%E4%B8%89%EF%BC%89%E2%80%94%E2%80%94%E5%B0%81%E9%9D%A2%E6%98%BE%E7%A4%BA.md)
 - [给封面面板添加右键菜单](https://github.com/elia-is-me/WSH-Script-Tutorials/blob/master/WSH%20%E9%9D%A2%E6%9D%BF%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%E2%80%94%E2%80%94%E5%AE%8C%E5%96%84%E5%B0%81%E9%9D%A2%E6%98%BE%E7%A4%BA.md)
 - [按钮](https://github.com/elia-is-me/WSH-Script-Tutorials/blob/master/WSH%20%E9%9D%A2%E6%9D%BF%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%EF%BC%88%E4%BA%94%EF%BC%89%E2%80%94%E2%80%94%E6%8C%89%E9%92%AE.md)
-- [进度条--播放进度和音量](https://github.com/elia-is-me/WSH-Script-Tutorials/blob/master/WSH%20%E9%9D%A2%E6%9D%BF%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89%E2%80%94%E2%80%94%E8%BF%9B%E5%BA%A6%E6%9D%A1%E5%92%8C%E9%9F%B3%E9%87%8F%E6%9D%A1.md)
+- [进度条——播放进度和音量](https://github.com/elia-is-me/WSH-Script-Tutorials/blob/master/WSH%20%E9%9D%A2%E6%9D%BF%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89%E2%80%94%E2%80%94%E8%BF%9B%E5%BA%A6%E6%9D%A1%E5%92%8C%E9%9F%B3%E9%87%8F%E6%9D%A1.md)
+- [阶段总结——完整的播放控制面板](https://github.com/elia-is-me/WSH-Script-Tutorials/blob/master/WSH%20%E9%9D%A2%E6%9D%BF%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%EF%BC%88%E4%B8%83%EF%BC%89%E2%80%94%E2%80%94%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93.md)(未完成)
 
 ## 扩展阅读
 
