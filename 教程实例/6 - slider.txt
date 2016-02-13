@@ -1,4 +1,4 @@
-// vim: set ft=javascript fileencoding=utf-8 bomb et:
+﻿// vim: set ft=javascript fileencoding=utf-8 bomb et:
 // Demo file. 
 // author: elia
 // update: 2016-02-09

@@ -242,7 +242,7 @@ Methods:
     // Usage: meta.UpdateFileInfoSimple("ARTIST", "Enigma", "GENRE", "Downtempo;Ambient", "GENRE");
     //     GENRE will be treated as a multivalue field. So GENRE[0] = "Downtempo", GENRE[1] = "Ambient
     void UpdateFileInfoSimple(field1, value1 [, filed2, value2 [,...] ] [, multivalue_fields]);
-	// [Plus 1.5.7] New: from Jscript Panel
+	// [Plus 1.5.7] New: Codes pull request from colagen
 	void UpdateFileInfoArray([filed1, value1, field2, value2, ...])
     // [1.3.2] New
     // Compare two IFbMetadbHandle instances, pointer only.

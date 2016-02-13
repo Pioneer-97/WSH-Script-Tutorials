@@ -154,7 +154,7 @@ Slider.prototype.draw = function(gr, x, y, w, h, y_offset, active_color, inactiv
 	}
     // nob 图片
     if (this.nob_img) {
-        var img_w = nob_image.Width;
+        var img_w = this.nob_img.Width;
         if (!(this.pos >= 0)) {
             this.pos = 0;
         }
@@ -389,4 +389,3 @@ Button.prototype.on_click = function(x, y) {
 ![](https://raw.githubusercontent.com/elia-is-me/WSH-Script-Tutorials/master/images/doc1/Pic_20160210007.png)
 
 另外还可以扩展的就是，Groove 的底栏是响应式布局的，它很窄的时候才是这个样子，如果窗口被拉宽，就不是这个样子了。响应式布局这个名字很拉风——然而在 windows10 还没有诞生的时候 foobar2000 的界面就已经有应用了，不信看看 eiko 的播放列表，eiko 是什时候的事情了... 那时候还没 win7 呢。
-
