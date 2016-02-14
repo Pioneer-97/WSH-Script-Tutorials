@@ -1,0 +1,110 @@
+// vi:set ft=java ff=dos ts=4 sts=4 sw=4:
+﻿//==========//
+//回调函数说明//
+//==========//
+//获取歌词源信息时调用，返回值为歌词源名称。
+function get_my_name();
+//获取歌词源信息时调用，返回值为歌词源版本。
+function get_version();
+//获取歌词源信息时调用，返回值为歌词源作者。
+function get_author();
+//歌词搜索时调用。
+//参数info为ITrackInfo对象，callback为IESLyricCallback对象。
+function start_search(info,callback);
+//当启用搜索过滤时，歌词搜索时调用。
+//参数tf为ITitleFormat对象。
+//返回false表示禁止/不过滤当前音轨的歌词搜索，返回true则忽略搜索该音轨的歌词。
+function is_item_filtered(tf);
+//歌词搜索时调用，用于获取歌词搜索时使用的标题内容。
+//参数tf为ITitleFormat对象。
+//返回相应的用于后续歌词搜索中的关键字字符串。
+function get_title(tf);
+function get_artist(tf);。
+
+//接口说明
+// 全局对象:
+//   fb - IFbUtils
+//   utils - IESUtils
+
+//音轨信息接口描述
+interface ITrackInfo{
+属性:
+	(只读) String Title;//音轨标题
+	(只读) String Artist;
+	(只读) String Album;
+	(只读) String RawPath;//音轨路径(e.g "file://c:\\____.mp3")
+	(只读) UINT SubSong;
+	(只读) double Length;
+};
+
+//歌词信息接口描述
+interface ILyricInfo {
+属性:
+	(读,写) String Title;//获取的歌词标题
+	(读,写) String Artist;//获取的歌词艺术家，此两项信息必填，否则可能被ESLyric过滤。
+	(读,写) String Album;//可选
+	(读,写) String LyricText;//歌词纯文本
+	(读,写) String LyricData;//歌词数据
+	(读,写) String FileType;//歌词文件类型，缺省为"lrc"
+	(读,写) String Location;//歌词来源位置,可选
+	(读,写) String Source;//歌词来源，通常为外部歌词源名称
+方法:
+	void Dispose();//显式销毁歌词信息对象
+};
+
+//歌词添加回调接口描述
+interface IESLyricCallback {
+方法:
+    ILyricInfo CreateLyric();//创建一个新的歌词信息对象。
+	void AddLyric(ILyricInfo lyric);//添加一个新歌词。
+};
+
+//HTTP请求接口描述
+interface IHttpRequest {
+方法:
+	//e.g. "name: value"
+	void AddHeader(head_line);//添加一个请求头
+	void AddPostData(name,value);//添加POST数据，仅"POST"方式下有效。
+	String Run(url);//失败时(连接错误或响应无效等)返回空字符串。
+};
+
+//ESLyric辅助工具接口描述
+interface IESUtils {
+方法:
+	String ReadTextFile(filename, codepage = 0);
+	String LCMapString(src,lcid,flag);//LCMapString API的封装.
+	IHttpRequest CreateHttpRequest(type);参数：请求类型，当前支持："GET"与"POST"。
+	String ZCompress(data);
+	String ZUnCompress(data);
+	String ANSIToUnicode(data);
+	String ANSIToUTF8(data);
+	String UTF8ToUnicode(data);
+	String UTF8ToANSI(data);
+	String UnicodeToUTF8(data);
+	String UnicodeToANSI(data);
+};
+
+//FB2K辅助工具接口描述
+interface IFbUtils {
+属性:
+	(只读) String ComponentPath;
+	(只读) String FoobarPath;
+	(只读) String ProfilePath;
+方法:
+	void trace(...);//信息输出
+	IFbProfiler CreateProfiler(name="");
+};
+
+interface IFbProfiler {
+属性:
+    (只读) int Time;//ms
+    
+方法:
+    void Reset();
+    void Print();
+}
+
+interface ITitleFormat {
+方法：
+    String Eval(expr);//根据expr对当前音轨进行TitleFormat，返回结果。
+}
