@@ -45,6 +45,14 @@ ESLyric 是由 **ttsping** 写的一个 foobar2000 歌词组件。大概是 2014
 
 AsionWu 的汉化版 foobar2000 已经自带了最新的歌词源，安装时，勾选上 ESLyric 配置文件即可。天天动听的歌词源文件在[这里](https://github.com/elia-is-me/Foobar2000-WSH-Scripts/blob/master/ESLyric/ttpod.js)也可以下载。
 
+### 添加多个本地文件夹
+
+打开 `设置 > 工具 > ESLyric : 搜索` 的设置页面（就是 eslyric 的设置界面，搜索标签页）。`歌词来源` 列表里有个 `本地文件` 这一项。在上面双击，可以打开一个设置窗口（隐藏较深...）
+
+![](https://raw.githubusercontent.com/elia-is-me/WSH-Script-Tutorials/master/images/doc3/Pic_20160218001.png)
+
+你们都知道该怎么办。
+
 ### 歌词保存设置
 
 ![](https://raw.githubusercontent.com/elia-is-me/WSH-Script-Tutorials/master/images/doc3/Pic_20160214003.png)
@@ -72,6 +80,10 @@ function is_item_filtered(tf)
 ### 歌词面板
 
 根据自己的需求设置就行了，也没有难的。
+
+### 与 WSH Panel Mod（Plus）的互动
+
+(待完成)
 
 ### 歌词源脚本编写
 
