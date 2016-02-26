@@ -1180,8 +1180,8 @@ plist_items.UpdateFileInfoArray(toRemoveArray);
 /* ESLyric相关
 
 比如设置背景
-windows.NotifyOthers("_eslyric_set_background_image_",gdi.CreateImage(44,22));
-windows.NotifyOthers("_eslyric_set_background_color_",RGB(25,50,100));
+window.NotifyOthers("_eslyric_set_background_image_",gdi.CreateImage(44,22));
+window.NotifyOthers("_eslyric_set_background_color_",RGB(25,50,100));
 
 "_eslyric_set_text_color_normal_"
 "_eslyric_set_text_color_highlight_"
