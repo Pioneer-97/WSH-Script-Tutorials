@@ -79,7 +79,7 @@ foobar2000 吧 **ttsping** 至少发布过至少四个组件，分别是：
 
 - [eslyric 桌面歌词](http://tieba.baidu.com/p/2370754361).
 - [歌词秀扩展](http://tieba.baidu.com/p/2740822021).
-- [WSH Panel Mod Plus（扩展了 WSH Panel Mod） 的功能）](http://tieba.baidu.com/p/2639969090).
+- [WSH Panel Mod Plus（扩展了 WSH Panel Mod） 的功能）](https://github.com/ttsping/foo_uie_wsh_panel_mod_plus/releases).
 - [foo_fix](http://tieba.baidu.com/p/3332882408).
 
 
