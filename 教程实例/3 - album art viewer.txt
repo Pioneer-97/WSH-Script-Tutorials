@@ -24,7 +24,7 @@ var g_metadb = null;
 
 on_metadb_changed();
 
-function on_metadb_changed(metadb, fromhook) {
+function on_metadb_changed(handle_list, fromhook) {
 	// 
 	g_metadb = fb.IsPlaying ? fb.GetNowPlaying() : null;
 	if (g_metadb) {
