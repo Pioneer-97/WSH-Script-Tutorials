@@ -437,6 +437,14 @@ function on_process_locations_done(metadbs) {}
 // `IhttpRequest RunAsync(window_id, url)' will returns a cookie
 function on_http_run_done(cookie, string) {}
 
+
+// [Plus 1.5.7.4] New
+// param - info = IHttpRequestExCallbackInfo object
+function on_http_ex_run_status(info){}
+
+
 // [Plus 1.5.7] New
 // Do someting when items in library added/removed/changed 
 function on_library_changed(origin) {};
+
+

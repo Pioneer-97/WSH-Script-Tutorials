@@ -839,8 +839,8 @@ Methods:
 	// returns a string like "7.9 GB"
 	String FormatFileSize(bytes); 
 	
-
-
+    // [Plus 1.5.7.4] New
+    IHttpRequestEx CreateHttpRequestEx(window_id);
 }
 
 
@@ -1029,7 +1029,7 @@ Methods:
 // [ Plus 1.5.6 ] New: 
 interface IWindow {
 Properties:
-	//窗口左坐标
+	//窗口坐标
    (read, write) Left;
    (read, write) Top; 
    (read, write) Width; 
@@ -1089,6 +1089,72 @@ Methods:
     String Run(url);
 	//异步url请求，返回cookie值，完成后调用 on_http_run_done(cookie,string);
     int RunAsync(window_id, url);
+}
+
+
+// [ Plus 1.5.7.4 ] New
+interface IHttpRequestEx {
+Properties:
+    //文件保存路径，默认为%profile_path%\\cache
+    (r,w) String SavePath;
+Methods:
+    String Run(url, verb = "GET");
+    // 见 callbacks.txt: // function on_http_ex_run_status(info) {};
+    UINT RunAsync(id, url, fn = "", verb = "GET");
+}
+
+interface IHttpRequestExCallbackInfo {
+Properties:
+    //StatusHeadersAvailable = 1 << 0, StatusDataReadComplete = 1 << 1
+    (r) UINT Status;
+    //不为0时出现错误
+    (r) UINT Error;
+    //IHttpRequestEx.RunAsync中传入的ID
+    (r) UINT ID;
+    //当前请求的url
+    (r) String URL;
+    //文件保存路径
+    (r) String Path;
+    //已保存数据大小
+    (r) UINT Length;
+    //文件总大小，可能为无穷大
+    (r) UINT ContentLength;
+    //耗时
+    (r) double ElapsedTime;
+}
+
+interface IWSHUtils
+{
+Methods:
+    [new]
+        IHttpRequestEx CreateHttpRequestEx(window_id);
+}
+
+
+//examples
+
+var StatusHeadersAvailable = 1 << 0;
+var StatusDataReadComplete = 1 << 1;
+
+client = Utils.CreateHttpRequestEx(window.ID);
+client.SavePath = "D:\\Temp";
+
+
+client.RunAsync(0, "http://this/is/first/one.mp3", "filename");
+client.RunAsync(1, "http://second/second.mp4", "filename");
+
+function on_http_ex_run_status(info)
+{
+    if(info.Status & StatusDataReadComplete)//文件下载完成
+    {
+        if(info.ID == 0)fb.trace("one.mp3");
+        else if(info.ID == 1)fb.trace("second.mp4")
+    }
+    else
+    {
+        fb.trace(“Downloaded Bytes : ” + info.Length);
+        fb.trace(“Total Bytes : ” + info.ContentLength);
+    }
 }
 
 
