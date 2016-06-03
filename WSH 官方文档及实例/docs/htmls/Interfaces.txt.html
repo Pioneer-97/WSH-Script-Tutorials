@@ -4,7 +4,7 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <title>E:\GitHub\WSH-Script-Tutorials\WSH 官方文档及实例\docs\Interfaces.txt.html</title>
 <meta name="Generator" content="Vim/7.4">
-<meta name="plugin-version" content="vim7.4_v1">
+<meta name="plugin-version" content="vim7.4_v2">
 <meta name="syntax" content="java">
 <meta name="settings" content="number_lines,use_css,no_foldcolumn,expand_tabs,line_ids,prevent_copy=">
 <meta name="colorscheme" content="mermaid">
@@ -15,7 +15,9 @@ body { font-family: monospace; color: #d4d4d4; background-color: #1e1e1e; }
 * { font-size: 1em; }
 .Number { color: #9fdf77; background-color: #1e1e1e; padding-bottom: 1px; }
 .Constant { color: #cea3ce; background-color: #1e1e1e; padding-bottom: 1px; }
+.Conceal { color: #4d4d4d; }
 .Identifier { color: #569cd6; background-color: #1e1e1e; padding-bottom: 1px; }
+.Special { color: #cfbfaf; background-color: #1e1e1e; padding-bottom: 1px; }
 .LineNr { color: #5a5a5a; background-color: #1e1e1e; padding-bottom: 1px; }
 .Statement { color: #569cd6; background-color: #1e1e1e; padding-bottom: 1px; }
 .Comment { color: #608b4e; background-color: #1e1e1e; padding-bottom: 1px; }
@@ -895,8 +897,8 @@ if ('onhashchange' in window) {
 <span id="L839" class="LineNr"> 839 </span>    <span class="Comment">// returns a string like &quot;7.9 GB&quot;</span>
 <span id="L840" class="LineNr"> 840 </span>    String FormatFileSize(bytes);
 <span id="L841" class="LineNr"> 841 </span>
-<span id="L842" class="LineNr"> 842 </span>
-<span id="L843" class="LineNr"> 843 </span>
+<span id="L842" class="LineNr"> 842 </span>    <span class="Comment">// [Plus 1.5.7.4] New</span>
+<span id="L843" class="LineNr"> 843 </span>    IHttpRequestEx CreateHttpRequestEx(window_id);
 <span id="L844" class="LineNr"> 844 </span>}
 <span id="L845" class="LineNr"> 845 </span>
 <span id="L846" class="LineNr"> 846 </span>
@@ -1085,7 +1087,7 @@ if ('onhashchange' in window) {
 <span id="L1029" class="LineNr">1029 </span><span class="Comment">// [ Plus 1.5.6 ] New: </span>
 <span id="L1030" class="LineNr">1030 </span><span class="Type">interface</span> IWindow {
 <span id="L1031" class="LineNr">1031 </span><span class="Statement">Properties</span>:
-<span id="L1032" class="LineNr">1032 </span>    <span class="Comment">//窗口左坐标</span>
+<span id="L1032" class="LineNr">1032 </span>    <span class="Comment">//窗口坐标</span>
 <span id="L1033" class="LineNr">1033 </span>   (read, write) Left;
 <span id="L1034" class="LineNr">1034 </span>   (read, write) Top;
 <span id="L1035" class="LineNr">1035 </span>   (read, write) Width;
@@ -1148,120 +1150,186 @@ if ('onhashchange' in window) {
 <span id="L1092" class="LineNr">1092 </span>}
 <span id="L1093" class="LineNr">1093 </span>
 <span id="L1094" class="LineNr">1094 </span>
-<span id="L1095" class="LineNr">1095 </span><span class="Comment">/* Examples:</span>
-<span id="L1096" class="LineNr">1096 </span>
-<span id="L1097" class="LineNr">1097 </span><span class="Comment">var WS_CAPTION = 0x00C00000;</span>
-<span id="L1098" class="LineNr">1098 </span><span class="Comment">// 获取DUI界面下fb主窗口。注意，如果同时打开多个DUI的foobar2000，不要用此方法获取</span>
-<span id="L1099" class="LineNr">1099 </span><span class="Comment">var fb_wnd = utils.GetWND(&quot;{97E27FAA-C0B3-4b8e-A693-ED7881E99FC1}&quot;); //DUI</span>
-<span id="L1100" class="LineNr">1100 </span><span class="Comment">// 将主窗口位置向右移动1</span>
-<span id="L1101" class="LineNr">1101 </span><span class="Comment">fb_wnd.Left += 1;</span>
-<span id="L1102" class="LineNr">1102 </span><span class="Comment">// 去除主窗口WS_CAPTION风格</span>
-<span id="L1103" class="LineNr">1103 </span><span class="Comment">fb_wnd.Style &amp;= ~WS_CAPTION;</span>
-<span id="L1104" class="LineNr">1104 </span><span class="Comment">// 主窗口加上WS_CAPTION风格</span>
-<span id="L1105" class="LineNr">1105 </span><span class="Comment">fb_wnd.Style |= WS_CAPTION;</span>
-<span id="L1106" class="LineNr">1106 </span><span class="Comment">// 设置窗口标题(文本)</span>
-<span id="L1107" class="LineNr">1107 </span><span class="Comment">fb_wnd.Caption = &quot;主窗口标题&quot;;</span>
-<span id="L1108" class="LineNr">1108 </span><span class="Comment">// 获取窗口文本</span>
-<span id="L1109" class="LineNr">1109 </span><span class="Comment">fb.trace(fb_wnd.Caption);</span>
-<span id="L1110" class="LineNr">1110 </span>
-<span id="L1111" class="LineNr">1111 </span><span class="Comment">//获取第2个wsh plus面板的窗口对象</span>
-<span id="L1112" class="LineNr">1112 </span><span class="Comment">var wsh_wnd = fb_wnd.GetChild(&quot;uie_wsh_panel_mod_plus_class&quot;,2);</span>
-<span id="L1113" class="LineNr">1113 </span><span class="Comment">//获取根窗口</span>
-<span id="L1114" class="LineNr">1114 </span><span class="Comment">var fb_wnd2 = wsh_wnd.GetAncestor(2);</span>
-<span id="L1115" class="LineNr">1115 </span>
-<span id="L1116" class="LineNr">1116 </span><span class="Comment">//创建一个私有字体集合</span>
-<span id="L1117" class="LineNr">1117 </span><span class="Comment">var my_pfc = gdi.CreatePrivateFontCollection();</span>
-<span id="L1118" class="LineNr">1118 </span><span class="Comment">//添加一个字体</span>
-<span id="L1119" class="LineNr">1119 </span><span class="Comment">my_pfc.AddFont(&quot;c:\\文泉驿正黑.ttf&quot;);</span>
-<span id="L1120" class="LineNr">1120 </span><span class="Comment">//再添加一个字体</span>
-<span id="L1121" class="LineNr">1121 </span><span class="Comment">my_pfc.AddFont(&quot;c:\\华康少女体.ttf&quot;);</span>
-<span id="L1122" class="LineNr">1122 </span><span class="Comment">//还是...添加一个字体</span>
-<span id="L1123" class="LineNr">1123 </span><span class="Comment">my_pfc.AddFont(&quot;c:\\华文细黑.ttf&quot;);</span>
-<span id="L1124" class="LineNr">1124 </span><span class="Comment">//现在集合里面有3个字体了</span>
-<span id="L1125" class="LineNr">1125 </span><span class="Comment">fb.trace(my_pfc.FamilyCount);</span>
-<span id="L1126" class="LineNr">1126 </span><span class="Comment">//在集合中取得一个IGdiFont对象，大小38，常规字型</span>
-<span id="L1127" class="LineNr">1127 </span><span class="Comment">var font1 = my_pfc.GetFont(&quot;华康少女文字W5(P)&quot;,38,0);</span>
-<span id="L1128" class="LineNr">1128 </span><span class="Comment">//创建一张200*200大小的图片，初始透明</span>
-<span id="L1129" class="LineNr">1129 </span><span class="Comment">var img = gdi.CreateImage(200,200);</span>
-<span id="L1130" class="LineNr">1130 </span><span class="Comment">//获取图片的一个IGdiGraphics接口的对象</span>
-<span id="L1131" class="LineNr">1131 </span><span class="Comment">var g = img.GetGraphics();</span>
-<span id="L1132" class="LineNr">1132 </span><span class="Comment">//以点(1,2)为左上角，画一个长199，宽198的黑色矩形</span>
-<span id="L1133" class="LineNr">1133 </span><span class="Comment">g.FillSolidRect(1,2,199,198,0xef000000);</span>
-<span id="L1134" class="LineNr">1134 </span><span class="Comment">//用上面的font1画个文字，注:flag请用helper.txt里面的StringFormat()设置，颜色使用RGB(r,g,b)。</span>
-<span id="L1135" class="LineNr">1135 </span><span class="Comment">g.DrawString(&quot;示例文字&quot;,font1,0xEFFFFFFF,0,0,200,200);</span>
-<span id="L1136" class="LineNr">1136 </span><span class="Comment">//用完记得释放这个IGdiGraphics接口的对象;</span>
-<span id="L1137" class="LineNr">1137 </span><span class="Comment">img.ReleaseGraphics(g);</span>
-<span id="L1138" class="LineNr">1138 </span><span class="Comment">//在on_paint(gr){} 中可以用gr.DrawImage(img,....);</span>
-<span id="L1139" class="LineNr">1139 </span><span class="Comment">*/</span>
-<span id="L1140" class="LineNr">1140 </span>
-<span id="L1141" class="LineNr">1141 </span><span class="Comment">/*</span>
-<span id="L1142" class="LineNr">1142 </span><span class="Comment">example1: var fav_playlist_items = fb.GetQueryItems(plman.GetPlaylistItems(plman.ActivePlaylist), &quot;rating IS 5&quot;);</span>
-<span id="L1143" class="LineNr">1143 </span><span class="Comment">example2: var fav_library_items = fb.GetQueryItems(fb.GetLibraryItems(), &quot;rating IS 5&quot;);</span>
-<span id="L1144" class="LineNr">1144 </span><span class="Comment">results are unsorted</span>
+<span id="L1095" class="LineNr">1095 </span><span class="Comment">// [ Plus 1.5.7.4 ] New</span>
+<span id="L1096" class="LineNr">1096 </span><span class="Type">interface</span> IHttpRequestEx {
+<span id="L1097" class="LineNr">1097 </span><span class="Statement">Properties</span>:
+<span id="L1098" class="LineNr">1098 </span>    <span class="Comment">//文件保存路径，默认为%profile_path%\\cache</span>
+<span id="L1099" class="LineNr">1099 </span>    (r,w) String SavePath;
+<span id="L1100" class="LineNr">1100 </span><span class="Statement">Methods</span>:
+<span id="L1101" class="LineNr">1101 </span>    String Run(url, verb = <span class="Constant">&quot;GET&quot;</span>);
+<span id="L1102" class="LineNr">1102 </span>    <span class="Comment">// 见 callbacks.txt: // function on_http_ex_run_status(info) {};</span>
+<span id="L1103" class="LineNr">1103 </span>    UINT RunAsync(id, url, fn = <span class="Constant">&quot;&quot;</span>, verb = <span class="Constant">&quot;GET&quot;</span>);
+<span id="L1104" class="LineNr">1104 </span>}
+<span id="L1105" class="LineNr">1105 </span>
+<span id="L1106" class="LineNr">1106 </span><span class="Type">interface</span> IHttpRequestExCallbackInfo {
+<span id="L1107" class="LineNr">1107 </span><span class="Statement">Properties</span>:
+<span id="L1108" class="LineNr">1108 </span>    <span class="Comment">//StatusHeadersAvailable = 1 &lt;&lt; 0, StatusDataReadComplete = 1 &lt;&lt; 1</span>
+<span id="L1109" class="LineNr">1109 </span>    (r) UINT Status;
+<span id="L1110" class="LineNr">1110 </span>    <span class="Comment">//不为0时出现错误</span>
+<span id="L1111" class="LineNr">1111 </span>    (r) UINT Error;
+<span id="L1112" class="LineNr">1112 </span>    <span class="Comment">//IHttpRequestEx.RunAsync中传入的ID</span>
+<span id="L1113" class="LineNr">1113 </span>    (r) UINT ID;
+<span id="L1114" class="LineNr">1114 </span>    <span class="Comment">//当前请求的url</span>
+<span id="L1115" class="LineNr">1115 </span>    (r) String URL;
+<span id="L1116" class="LineNr">1116 </span>    <span class="Comment">//文件保存路径</span>
+<span id="L1117" class="LineNr">1117 </span>    (r) String Path;
+<span id="L1118" class="LineNr">1118 </span>    <span class="Comment">//已保存数据大小</span>
+<span id="L1119" class="LineNr">1119 </span>    (r) UINT Length;
+<span id="L1120" class="LineNr">1120 </span>    <span class="Comment">//文件总大小，可能为无穷大</span>
+<span id="L1121" class="LineNr">1121 </span>    (r) UINT ContentLength;
+<span id="L1122" class="LineNr">1122 </span>    <span class="Comment">//耗时</span>
+<span id="L1123" class="LineNr">1123 </span>    (r) <span class="Type">double</span> ElapsedTime;
+<span id="L1124" class="LineNr">1124 </span>}
+<span id="L1125" class="LineNr">1125 </span>
+<span id="L1126" class="LineNr">1126 </span><span class="Type">interface</span> IWSHUtils
+<span id="L1127" class="LineNr">1127 </span>{
+<span id="L1128" class="LineNr">1128 </span><span class="Statement">Methods</span>:
+<span id="L1129" class="LineNr">1129 </span>    [<span class="Statement">new</span>]
+<span id="L1130" class="LineNr">1130 </span>    <span class="Conceal">|</span>   IHttpRequestEx CreateHttpRequestEx(window_id);
+<span id="L1131" class="LineNr">1131 </span>}
+<span id="L1132" class="LineNr">1132 </span>
+<span id="L1133" class="LineNr">1133 </span>
+<span id="L1134" class="LineNr">1134 </span><span class="Comment">//examples</span>
+<span id="L1135" class="LineNr">1135 </span>
+<span id="L1136" class="LineNr">1136 </span>var StatusHeadersAvailable = <span class="Number">1</span> &lt;&lt; <span class="Number">0</span>;
+<span id="L1137" class="LineNr">1137 </span>var StatusDataReadComplete = <span class="Number">1</span> &lt;&lt; <span class="Number">1</span>;
+<span id="L1138" class="LineNr">1138 </span>
+<span id="L1139" class="LineNr">1139 </span>client = Utils.CreateHttpRequestEx(window.ID);
+<span id="L1140" class="LineNr">1140 </span>client.SavePath = <span class="Constant">&quot;D:</span><span class="Special">\\</span><span class="Constant">Temp&quot;</span>;
+<span id="L1141" class="LineNr">1141 </span>
+<span id="L1142" class="LineNr">1142 </span>
+<span id="L1143" class="LineNr">1143 </span>client.RunAsync(<span class="Number">0</span>, <span class="Constant">&quot;<a href="http://this/is/first/one.mp3">http://this/is/first/one.mp3</a>&quot;</span>, <span class="Constant">&quot;filename&quot;</span>);
+<span id="L1144" class="LineNr">1144 </span>client.RunAsync(<span class="Number">1</span>, <span class="Constant">&quot;<a href="http://second/second.mp4">http://second/second.mp4</a>&quot;</span>, <span class="Constant">&quot;filename&quot;</span>);
 <span id="L1145" class="LineNr">1145 </span>
-<span id="L1146" class="LineNr">1146 </span><span class="Comment">NOTE: use try/catch to handle invalid queries. An empty handle list will be returned if the query is valid but there are no results.</span>
-<span id="L1147" class="LineNr">1147 </span><span class="Comment">*/</span>
-<span id="L1148" class="LineNr">1148 </span>
-<span id="L1149" class="LineNr">1149 </span>
-<span id="L1150" class="LineNr">1150 </span><span class="Comment">/*example</span>
-<span id="L1151" class="LineNr">1151 </span><span class="Comment">var items = fb.GetLibraryItems();</span>
-<span id="L1152" class="LineNr">1152 </span><span class="Comment">items.OrderByPath();</span>
-<span id="L1153" class="LineNr">1153 </span><span class="Comment">var current = &quot;&quot;;</span>
-<span id="L1154" class="LineNr">1154 </span><span class="Comment">var folders = [];</span>
-<span id="L1155" class="LineNr">1155 </span><span class="Comment">for (var i = 0; i &lt; items.Count; i++) {    </span>
-<span id="L1156" class="LineNr">1156 </span><span class="Comment">    var temp = items.Item(i).Path.replace(fb.GetLibraryRelativePath(items.Item(i)), &quot;&quot;);</span>
-<span id="L1157" class="LineNr">1157 </span><span class="Comment">    if (temp != current) {</span>
-<span id="L1158" class="LineNr">1158 </span><span class="Comment">        current = temp;</span>
-<span id="L1159" class="LineNr">1159 </span><span class="Comment">        folders.push(current);</span>
-<span id="L1160" class="LineNr">1160 </span><span class="Comment">    }</span>
-<span id="L1161" class="LineNr">1161 </span><span class="Comment">}</span>
-<span id="L1162" class="LineNr">1162 </span><span class="Comment">fb.ShowPopupMessage(folders.join(&quot;\n&quot;));</span>
-<span id="L1163" class="LineNr">1163 </span><span class="Comment">*/</span>
-<span id="L1164" class="LineNr">1164 </span>
-<span id="L1165" class="LineNr">1165 </span>
-<span id="L1166" class="LineNr">1166 </span><span class="Comment">/*example</span>
-<span id="L1167" class="LineNr">1167 </span><span class="Comment">var toRemoveArray=Array();</span>
-<span id="L1168" class="LineNr">1168 </span><span class="Comment">var toKeepArray=[&quot;album&quot;,&quot;artist&quot;,&quot;composer&quot;,&quot;date&quot;,&quot;genre&quot;,&quot;title&quot;,&quot;tracknumber&quot;];</span>
-<span id="L1169" class="LineNr">1169 </span><span class="Comment">var track_FileInfo = plist_items.Item(0).GetFileInfo();</span>
-<span id="L1170" class="LineNr">1170 </span><span class="Comment">for (var i = 0; i &lt;= track_FileInfo.MetaCount; i++) {</span>
-<span id="L1171" class="LineNr">1171 </span><span class="Comment">       if(!arrayContains(toKeepArray , track_FileInfo.MetaName(i))) {</span>
-<span id="L1172" class="LineNr">1172 </span><span class="Comment">           toRemoveArray[toRemoveArray.length]=track_FileInfo.MetaName(i);</span>
-<span id="L1173" class="LineNr">1173 </span><span class="Comment">           toRemoveArray[toRemoveArray.length]=&quot;&quot;;</span>
-<span id="L1174" class="LineNr">1174 </span><span class="Comment">       }</span>
-<span id="L1175" class="LineNr">1175 </span><span class="Comment">}</span>
-<span id="L1176" class="LineNr">1176 </span><span class="Comment">plist_items.UpdateFileInfoArray(toRemoveArray);</span>
-<span id="L1177" class="LineNr">1177 </span><span class="Comment">*/</span>
-<span id="L1178" class="LineNr">1178 </span>
-<span id="L1179" class="LineNr">1179 </span>
-<span id="L1180" class="LineNr">1180 </span><span class="Comment">/* ESLyric相关</span>
+<span id="L1146" class="LineNr">1146 </span>function on_http_ex_run_status(info)
+<span id="L1147" class="LineNr">1147 </span>{
+<span id="L1148" class="LineNr">1148 </span>    <span class="Statement">if</span>(info.Status &amp; StatusDataReadComplete)<span class="Comment">//文件下载完成</span>
+<span id="L1149" class="LineNr">1149 </span>    {
+<span id="L1150" class="LineNr">1150 </span>    <span class="Conceal">|</span>   <span class="Statement">if</span>(info.ID == <span class="Number">0</span>)fb.trace(<span class="Constant">&quot;one.mp3&quot;</span>);
+<span id="L1151" class="LineNr">1151 </span>    <span class="Conceal">|</span>   <span class="Statement">else</span> <span class="Statement">if</span>(info.ID == <span class="Number">1</span>)fb.trace(<span class="Constant">&quot;second.mp4&quot;</span>)
+<span id="L1152" class="LineNr">1152 </span>    }
+<span id="L1153" class="LineNr">1153 </span>    <span class="Statement">else</span>
+<span id="L1154" class="LineNr">1154 </span>    {
+<span id="L1155" class="LineNr">1155 </span>    <span class="Conceal">|</span>   fb.trace(“Downloaded Bytes : ” + info.Length);
+<span id="L1156" class="LineNr">1156 </span>    <span class="Conceal">|</span>   fb.trace(“Total Bytes : ” + info.ContentLength);
+<span id="L1157" class="LineNr">1157 </span>    }
+<span id="L1158" class="LineNr">1158 </span>}
+<span id="L1159" class="LineNr">1159 </span>
+<span id="L1160" class="LineNr">1160 </span>
+<span id="L1161" class="LineNr">1161 </span><span class="Comment">/* Examples:</span>
+<span id="L1162" class="LineNr">1162 </span>
+<span id="L1163" class="LineNr">1163 </span><span class="Comment">var WS_CAPTION = 0x00C00000;</span>
+<span id="L1164" class="LineNr">1164 </span><span class="Comment">// 获取DUI界面下fb主窗口。注意，如果同时打开多个DUI的foobar2000，不要用此方法获取</span>
+<span id="L1165" class="LineNr">1165 </span><span class="Comment">var fb_wnd = utils.GetWND(&quot;{97E27FAA-C0B3-4b8e-A693-ED7881E99FC1}&quot;); //DUI</span>
+<span id="L1166" class="LineNr">1166 </span><span class="Comment">// 将主窗口位置向右移动1</span>
+<span id="L1167" class="LineNr">1167 </span><span class="Comment">fb_wnd.Left += 1;</span>
+<span id="L1168" class="LineNr">1168 </span><span class="Comment">// 去除主窗口WS_CAPTION风格</span>
+<span id="L1169" class="LineNr">1169 </span><span class="Comment">fb_wnd.Style &amp;= ~WS_CAPTION;</span>
+<span id="L1170" class="LineNr">1170 </span><span class="Comment">// 主窗口加上WS_CAPTION风格</span>
+<span id="L1171" class="LineNr">1171 </span><span class="Comment">fb_wnd.Style |= WS_CAPTION;</span>
+<span id="L1172" class="LineNr">1172 </span><span class="Comment">// 设置窗口标题(文本)</span>
+<span id="L1173" class="LineNr">1173 </span><span class="Comment">fb_wnd.Caption = &quot;主窗口标题&quot;;</span>
+<span id="L1174" class="LineNr">1174 </span><span class="Comment">// 获取窗口文本</span>
+<span id="L1175" class="LineNr">1175 </span><span class="Comment">fb.trace(fb_wnd.Caption);</span>
+<span id="L1176" class="LineNr">1176 </span>
+<span id="L1177" class="LineNr">1177 </span><span class="Comment">//获取第2个wsh plus面板的窗口对象</span>
+<span id="L1178" class="LineNr">1178 </span><span class="Comment">var wsh_wnd = fb_wnd.GetChild(&quot;uie_wsh_panel_mod_plus_class&quot;,2);</span>
+<span id="L1179" class="LineNr">1179 </span><span class="Comment">//获取根窗口</span>
+<span id="L1180" class="LineNr">1180 </span><span class="Comment">var fb_wnd2 = wsh_wnd.GetAncestor(2);</span>
 <span id="L1181" class="LineNr">1181 </span>
-<span id="L1182" class="LineNr">1182 </span><span class="Comment">比如设置背景</span>
-<span id="L1183" class="LineNr">1183 </span><span class="Comment">window.NotifyOthers(&quot;_eslyric_set_background_image_&quot;,gdi.CreateImage(44,22));</span>
-<span id="L1184" class="LineNr">1184 </span><span class="Comment">window.NotifyOthers(&quot;_eslyric_set_background_color_&quot;,RGB(25,50,100));</span>
-<span id="L1185" class="LineNr">1185 </span>
-<span id="L1186" class="LineNr">1186 </span><span class="Comment">&quot;_eslyric_set_text_color_normal_&quot;</span>
-<span id="L1187" class="LineNr">1187 </span><span class="Comment">&quot;_eslyric_set_text_color_highlight_&quot;</span>
-<span id="L1188" class="LineNr">1188 </span><span class="Comment">&quot;_eslyric_set_background_color_&quot;</span>
-<span id="L1189" class="LineNr">1189 </span><span class="Comment">&quot;_eslyric_set_text_font_&quot;</span>
-<span id="L1190" class="LineNr">1190 </span><span class="Comment">&quot;_eslyric_set_text_titleformat_fallback_&quot;</span>
-<span id="L1191" class="LineNr">1191 </span><span class="Comment">&quot;_eslyric_set_text_fallback_&quot;</span>
-<span id="L1192" class="LineNr">1192 </span><span class="Comment">&quot;_eslyric_set_background_image_&quot;</span>
-<span id="L1193" class="LineNr">1193 </span>
-<span id="L1194" class="LineNr">1194 </span><span class="Comment">设置颜色的后面的参数都是 RGB(xx,xx,xx)</span>
-<span id="L1195" class="LineNr">1195 </span><span class="Comment">设置字体的就是 IGdiFont</span>
-<span id="L1196" class="LineNr">1196 </span><span class="Comment">图片IGdiBitmap</span>
-<span id="L1197" class="LineNr">1197 </span><span class="Comment">*/</span>
-<span id="L1198" class="LineNr">1198 </span>
-<span id="L1199" class="LineNr">1199 </span>
-<span id="L1200" class="LineNr">1200 </span><span class="Comment">/* Changelog</span>
-<span id="L1201" class="LineNr">1201 </span><span class="Comment"> </span>
-<span id="L1202" class="LineNr">1202 </span><span class="Comment">[2016-02-05]</span>
-<span id="L1203" class="LineNr">1203 </span>
-<span id="L1204" class="LineNr">1204 </span><span class="Comment">- ADD: Plus 和 Jscript Panel 的接口</span>
-<span id="L1205" class="LineNr">1205 </span><span class="Comment">- ADD: 一些帮助内容</span>
-<span id="L1206" class="LineNr">1206 </span><span class="Comment">- CHG: 注释掉过期接口</span>
-<span id="L1207" class="LineNr">1207 </span>
-<span id="L1208" class="LineNr">1208 </span><span class="Comment">*/</span>
+<span id="L1182" class="LineNr">1182 </span><span class="Comment">//创建一个私有字体集合</span>
+<span id="L1183" class="LineNr">1183 </span><span class="Comment">var my_pfc = gdi.CreatePrivateFontCollection();</span>
+<span id="L1184" class="LineNr">1184 </span><span class="Comment">//添加一个字体</span>
+<span id="L1185" class="LineNr">1185 </span><span class="Comment">my_pfc.AddFont(&quot;c:\\文泉驿正黑.ttf&quot;);</span>
+<span id="L1186" class="LineNr">1186 </span><span class="Comment">//再添加一个字体</span>
+<span id="L1187" class="LineNr">1187 </span><span class="Comment">my_pfc.AddFont(&quot;c:\\华康少女体.ttf&quot;);</span>
+<span id="L1188" class="LineNr">1188 </span><span class="Comment">//还是...添加一个字体</span>
+<span id="L1189" class="LineNr">1189 </span><span class="Comment">my_pfc.AddFont(&quot;c:\\华文细黑.ttf&quot;);</span>
+<span id="L1190" class="LineNr">1190 </span><span class="Comment">//现在集合里面有3个字体了</span>
+<span id="L1191" class="LineNr">1191 </span><span class="Comment">fb.trace(my_pfc.FamilyCount);</span>
+<span id="L1192" class="LineNr">1192 </span><span class="Comment">//在集合中取得一个IGdiFont对象，大小38，常规字型</span>
+<span id="L1193" class="LineNr">1193 </span><span class="Comment">var font1 = my_pfc.GetFont(&quot;华康少女文字W5(P)&quot;,38,0);</span>
+<span id="L1194" class="LineNr">1194 </span><span class="Comment">//创建一张200*200大小的图片，初始透明</span>
+<span id="L1195" class="LineNr">1195 </span><span class="Comment">var img = gdi.CreateImage(200,200);</span>
+<span id="L1196" class="LineNr">1196 </span><span class="Comment">//获取图片的一个IGdiGraphics接口的对象</span>
+<span id="L1197" class="LineNr">1197 </span><span class="Comment">var g = img.GetGraphics();</span>
+<span id="L1198" class="LineNr">1198 </span><span class="Comment">//以点(1,2)为左上角，画一个长199，宽198的黑色矩形</span>
+<span id="L1199" class="LineNr">1199 </span><span class="Comment">g.FillSolidRect(1,2,199,198,0xef000000);</span>
+<span id="L1200" class="LineNr">1200 </span><span class="Comment">//用上面的font1画个文字，注:flag请用helper.txt里面的StringFormat()设置，颜色使用RGB(r,g,b)。</span>
+<span id="L1201" class="LineNr">1201 </span><span class="Comment">g.DrawString(&quot;示例文字&quot;,font1,0xEFFFFFFF,0,0,200,200);</span>
+<span id="L1202" class="LineNr">1202 </span><span class="Comment">//用完记得释放这个IGdiGraphics接口的对象;</span>
+<span id="L1203" class="LineNr">1203 </span><span class="Comment">img.ReleaseGraphics(g);</span>
+<span id="L1204" class="LineNr">1204 </span><span class="Comment">//在on_paint(gr){} 中可以用gr.DrawImage(img,....);</span>
+<span id="L1205" class="LineNr">1205 </span><span class="Comment">*/</span>
+<span id="L1206" class="LineNr">1206 </span>
+<span id="L1207" class="LineNr">1207 </span><span class="Comment">/*</span>
+<span id="L1208" class="LineNr">1208 </span><span class="Comment">example1: var fav_playlist_items = fb.GetQueryItems(plman.GetPlaylistItems(plman.ActivePlaylist), &quot;rating IS 5&quot;);</span>
+<span id="L1209" class="LineNr">1209 </span><span class="Comment">example2: var fav_library_items = fb.GetQueryItems(fb.GetLibraryItems(), &quot;rating IS 5&quot;);</span>
+<span id="L1210" class="LineNr">1210 </span><span class="Comment">results are unsorted</span>
+<span id="L1211" class="LineNr">1211 </span>
+<span id="L1212" class="LineNr">1212 </span><span class="Comment">NOTE: use try/catch to handle invalid queries. An empty handle list will be returned if the query is valid but there are no results.</span>
+<span id="L1213" class="LineNr">1213 </span><span class="Comment">*/</span>
+<span id="L1214" class="LineNr">1214 </span>
+<span id="L1215" class="LineNr">1215 </span>
+<span id="L1216" class="LineNr">1216 </span><span class="Comment">/*example</span>
+<span id="L1217" class="LineNr">1217 </span><span class="Comment">var items = fb.GetLibraryItems();</span>
+<span id="L1218" class="LineNr">1218 </span><span class="Comment">items.OrderByPath();</span>
+<span id="L1219" class="LineNr">1219 </span><span class="Comment">var current = &quot;&quot;;</span>
+<span id="L1220" class="LineNr">1220 </span><span class="Comment">var folders = [];</span>
+<span id="L1221" class="LineNr">1221 </span><span class="Comment">for (var i = 0; i &lt; items.Count; i++) {    </span>
+<span id="L1222" class="LineNr">1222 </span><span class="Comment">    var temp = items.Item(i).Path.replace(fb.GetLibraryRelativePath(items.Item(i)), &quot;&quot;);</span>
+<span id="L1223" class="LineNr">1223 </span><span class="Comment">    if (temp != current) {</span>
+<span id="L1224" class="LineNr">1224 </span><span class="Comment">    </span><span class="Conceal">|</span><span class="Comment">   current = temp;</span>
+<span id="L1225" class="LineNr">1225 </span><span class="Comment">    </span><span class="Conceal">|</span><span class="Comment">   folders.push(current);</span>
+<span id="L1226" class="LineNr">1226 </span><span class="Comment">    }</span>
+<span id="L1227" class="LineNr">1227 </span><span class="Comment">}</span>
+<span id="L1228" class="LineNr">1228 </span><span class="Comment">fb.ShowPopupMessage(folders.join(&quot;\n&quot;));</span>
+<span id="L1229" class="LineNr">1229 </span><span class="Comment">*/</span>
+<span id="L1230" class="LineNr">1230 </span>
+<span id="L1231" class="LineNr">1231 </span>
+<span id="L1232" class="LineNr">1232 </span><span class="Comment">/*example</span>
+<span id="L1233" class="LineNr">1233 </span><span class="Comment">var toRemoveArray=Array();</span>
+<span id="L1234" class="LineNr">1234 </span><span class="Comment">var toKeepArray=[&quot;album&quot;,&quot;artist&quot;,&quot;composer&quot;,&quot;date&quot;,&quot;genre&quot;,&quot;title&quot;,&quot;tracknumber&quot;];</span>
+<span id="L1235" class="LineNr">1235 </span><span class="Comment">var track_FileInfo = plist_items.Item(0).GetFileInfo();</span>
+<span id="L1236" class="LineNr">1236 </span><span class="Comment">for (var i = 0; i &lt;= track_FileInfo.MetaCount; i++) {</span>
+<span id="L1237" class="LineNr">1237 </span><span class="Comment">    </span><span class="Conceal">|</span><span class="Comment">  if(!arrayContains(toKeepArray , track_FileInfo.MetaName(i))) {</span>
+<span id="L1238" class="LineNr">1238 </span><span class="Comment">    </span><span class="Conceal">|</span><span class="Comment">   </span><span class="Conceal">|</span><span class="Comment">  toRemoveArray[toRemoveArray.length]=track_FileInfo.MetaName(i);</span>
+<span id="L1239" class="LineNr">1239 </span><span class="Comment">    </span><span class="Conceal">|</span><span class="Comment">   </span><span class="Conceal">|</span><span class="Comment">  toRemoveArray[toRemoveArray.length]=&quot;&quot;;</span>
+<span id="L1240" class="LineNr">1240 </span><span class="Comment">    </span><span class="Conceal">|</span><span class="Comment">  }</span>
+<span id="L1241" class="LineNr">1241 </span><span class="Comment">}</span>
+<span id="L1242" class="LineNr">1242 </span><span class="Comment">plist_items.UpdateFileInfoArray(toRemoveArray);</span>
+<span id="L1243" class="LineNr">1243 </span><span class="Comment">*/</span>
+<span id="L1244" class="LineNr">1244 </span>
+<span id="L1245" class="LineNr">1245 </span>
+<span id="L1246" class="LineNr">1246 </span><span class="Comment">/* ESLyric相关</span>
+<span id="L1247" class="LineNr">1247 </span>
+<span id="L1248" class="LineNr">1248 </span><span class="Comment">比如设置背景</span>
+<span id="L1249" class="LineNr">1249 </span><span class="Comment">window.NotifyOthers(&quot;_eslyric_set_background_image_&quot;,gdi.CreateImage(44,22));</span>
+<span id="L1250" class="LineNr">1250 </span><span class="Comment">window.NotifyOthers(&quot;_eslyric_set_background_color_&quot;,RGB(25,50,100));</span>
+<span id="L1251" class="LineNr">1251 </span>
+<span id="L1252" class="LineNr">1252 </span><span class="Comment">&quot;_eslyric_set_text_color_normal_&quot;</span>
+<span id="L1253" class="LineNr">1253 </span><span class="Comment">&quot;_eslyric_set_text_color_highlight_&quot;</span>
+<span id="L1254" class="LineNr">1254 </span><span class="Comment">&quot;_eslyric_set_background_color_&quot;</span>
+<span id="L1255" class="LineNr">1255 </span><span class="Comment">&quot;_eslyric_set_text_font_&quot;</span>
+<span id="L1256" class="LineNr">1256 </span><span class="Comment">&quot;_eslyric_set_text_titleformat_fallback_&quot;</span>
+<span id="L1257" class="LineNr">1257 </span><span class="Comment">&quot;_eslyric_set_text_fallback_&quot;</span>
+<span id="L1258" class="LineNr">1258 </span><span class="Comment">&quot;_eslyric_set_background_image_&quot;</span>
+<span id="L1259" class="LineNr">1259 </span>
+<span id="L1260" class="LineNr">1260 </span><span class="Comment">设置颜色的后面的参数都是 RGB(xx,xx,xx)</span>
+<span id="L1261" class="LineNr">1261 </span><span class="Comment">设置字体的就是 IGdiFont</span>
+<span id="L1262" class="LineNr">1262 </span><span class="Comment">图片IGdiBitmap</span>
+<span id="L1263" class="LineNr">1263 </span><span class="Comment">*/</span>
+<span id="L1264" class="LineNr">1264 </span>
+<span id="L1265" class="LineNr">1265 </span>
+<span id="L1266" class="LineNr">1266 </span><span class="Comment">/* Changelog</span>
+<span id="L1267" class="LineNr">1267 </span><span class="Comment"> </span>
+<span id="L1268" class="LineNr">1268 </span><span class="Comment">[2016-02-05]</span>
+<span id="L1269" class="LineNr">1269 </span>
+<span id="L1270" class="LineNr">1270 </span><span class="Comment">- ADD: Plus 和 Jscript Panel 的接口</span>
+<span id="L1271" class="LineNr">1271 </span><span class="Comment">- ADD: 一些帮助内容</span>
+<span id="L1272" class="LineNr">1272 </span><span class="Comment">- CHG: 注释掉过期接口</span>
+<span id="L1273" class="LineNr">1273 </span>
+<span id="L1274" class="LineNr">1274 </span><span class="Comment">*/</span>
 </pre>
 </body>
 </html>
