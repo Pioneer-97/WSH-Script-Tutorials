@@ -62,6 +62,11 @@ Methods:
 	//		   img.SaveAs("D:\\img.png");
 	boolean SaveAs(path, format = "image/png");
     void Dispose();
+
+    // [Plus 1.5.7.4 2016-07-03] New;
+    // radius: [0, 255]
+    // core: [1, 20] 线程数
+    StackBlur(radius, core);
 }
     
 interface IGdiRawBitmap {

@@ -1,0 +1,79 @@
+﻿// vi:set ft=javascript ff=dos ts=4 sts=4 sw=4 et:
+
+// ==PREPROCESSOR==
+// @name "StackBlur"
+// @autor "Elia"
+// ==/PREPROCESSOR==
+
+/*
+This is an example script using `IGDIBitmap.StackBlur()` to generate blurred
+image, which is better than `IGdiBitmap.BoxBlur()`.
+*/
+
+// -- globals
+var ww = 0, wh = 0;
+var img_path = fb.ComponentPath + "\\samples\\images\\image2.jpg";
+var img_to_blur = gdi.Image(img_path);
+var img;
+var font = gdi.Font("tahoma", 12);
+var core = 2;
+var radius = 0;
+
+blur(radius);
+
+function blur(radius) {
+    if (radius < 0 || radius > 255)
+        radius = 0;
+    img && img.Dispose();
+    img = img_to_blur.Clone(0, 0, img_to_blur.Width, img_to_blur.Height);
+    if (radius > 0)
+        img.StackBlur(radius, core);
+    
+}
+
+function on_paint(gr) {
+    // bg
+    gr.FillSolidRect(0, 0, window.Width, window.Height, 0xffaaaaaa);
+    // blurred img
+    img && gr.DrawImage(img, 50, 30, img.Width, img.Height, 0, 0, img.Width, img.Height, 0, 255);
+    
+    // seeker
+    gr.FillSolidRect(50, 320, 255, 4, 0xffffffff);
+    gr.FillSolidRect(50, 320, radius, 4, 0xff000000);
+    gr.GdiDrawText("radius: " + radius, font, 0xff000000, 50, 330, 255, 25, 0);
+}
+
+var temp_out;
+var drag = false;
+
+function isOverSeek(x, y) {
+    return x > 50 && x < 50 + 255 && y > 320-10 && y < 320+20;
+}
+
+function on_mouse_lbtn_down(x, y, mask) {
+    if (isOverSeek(x, y)) {
+        drag = true;
+        radius = x - 50;
+        blur(radius);
+        window.Repaint();
+    }
+    
+}
+    
+function on_mouse_move(x, y) {
+    if (drag) {
+        if (x < 50) x = 50;
+        if (x > 50+255) x = 50+255;
+        radius = x - 50;
+        temp_out && window.ClearTimeout(temp_out);
+        temp_out = window.SetTimeout(function() {
+            blur(radius);
+            window.Repaint();
+        }, 200);
+        window.Repaint();
+    }
+}
+
+function on_mouse_lbtn_up(x, y) {
+    drag = false;
+}
